@@ -374,7 +374,7 @@
               </div>
             </div>
 
-            <!-- YENİ: HEDEF GÜN SEÇİMİ (HAP BUTONLAR) -->
+            <!-- HEDEF GÜN SEÇİMİ (HAP BUTONLAR) -->
             <div class="p-2.5 rounded-xl bg-blue-50/60 border border-blue-200">
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-black text-blue-950">
@@ -415,7 +415,33 @@
           </div>
         </div>
 
-        <!-- 4. KİTAP OKUMA GÖREVİ -->
+        <!-- 4. YENİ: GÜNLÜK SABİT SINAV RUTİNLERİ (SADECE LGS, LİSE MAARİF VE YKS'DE GÖRÜNÜR) -->
+        <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-bolt-lightning mr-2 text-indigo-600 text-base"></i> Günlük Sabit Sınav Rutinleri
+            </h3>
+            <span class="text-[10.5px] text-indigo-800 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-md font-black">Hergün</span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium mb-3">Sınav gruplarına her gün çözülmesi gereken sabit soru sayılarını belirleyin.</p>
+          
+          <div class="grid grid-cols-2 gap-3 mb-2.5">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-book-open text-blue-600 mr-1"></i> Günlük Paragraf</label>
+              <input type="text" id="inp-routine-paragraf" placeholder="Örn: 20 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-brain text-amber-600 mr-1"></i> Günlük Problem</label>
+              <input type="text" id="inp-routine-problem" placeholder="Örn: 15 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev (İsteğe Bağlı)</label>
+            <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük 1 Branş Denemesi / Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- 5. KİTAP OKUMA GÖREVİ -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center">
@@ -547,27 +573,58 @@
                 </table>
               </div>
 
-              <!-- ÇIKTI ALT BİLGİ & KİTAP OKUMA -->
+              <!-- ÇIKTI ALT BİLGİ, RUTİNLER & KİTAP OKUMA -->
               <div class="mt-2.5 pt-2 border-t-2 border-blue-200 space-y-2">
                 
-                <div id="out-book-container" class="hidden bg-emerald-50 border border-emerald-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
-                  <div class="flex items-center space-x-2.5">
-                    <div class="w-7 h-7 rounded-md bg-emerald-600 text-white flex items-center justify-center text-sm">
-                      <i class="fa-solid fa-book-open-reader"></i>
+                <!-- YENİ: ÇIKTI GÜNLÜK RUTİNLER BANTI (TATLI VE KOMPAKT İKONLU) -->
+                <div id="out-routines-container" class="hidden bg-gradient-to-r from-indigo-50 via-purple-50 to-blue-50 border border-indigo-200 p-2 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-6 h-6 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0">
+                      <i class="fa-solid fa-bolt-lightning"></i>
+                    </span>
+                    <span class="font-black text-indigo-950 uppercase tracking-wide text-[10.5px]">Günlük Sabit Rutinler:</span>
+                  </div>
+                  <div class="flex items-center flex-wrap gap-2.5">
+                    <div id="out-routine-paragraf-box" class="hidden items-center space-x-1.5 bg-white px-2 py-0.5 rounded border border-blue-200 shadow-2xs">
+                      <span class="text-blue-600 text-xs">📖</span>
+                      <span class="text-slate-600 font-bold text-[10.5px]">Paragraf:</span>
+                      <span id="out-routine-paragraf-val" class="font-black text-blue-900 text-[10.5px]"></span>
                     </div>
-                    <div>
-                      <span class="font-black text-emerald-950 uppercase tracking-wide mr-2">Kitap Okuma Görevi:</span>
-                      <span id="out-book-title" class="font-bold text-emerald-900"></span>
-                      <span id="out-book-target" class="ml-2 bg-emerald-200 text-emerald-950 px-2 py-0.5 rounded font-extrabold"></span>
-                      <span id="out-book-note" class="ml-2 text-slate-700 font-semibold italic"></span>
+                    <div id="out-routine-problem-box" class="hidden items-center space-x-1.5 bg-white px-2 py-0.5 rounded border border-amber-200 shadow-2xs">
+                      <span class="text-amber-600 text-xs">📐</span>
+                      <span class="text-slate-600 font-bold text-[10.5px]">Problem:</span>
+                      <span id="out-routine-problem-val" class="font-black text-amber-900 text-[10.5px]"></span>
+                    </div>
+                    <div id="out-routine-custom-box" class="hidden items-center space-x-1.5 bg-white px-2 py-0.5 rounded border border-purple-200 shadow-2xs">
+                      <span class="text-purple-600 text-xs">🎯</span>
+                      <span id="out-routine-custom-val" class="font-bold text-purple-950 text-[10.5px]"></span>
                     </div>
                   </div>
-                  <div class="flex items-center space-x-2 whitespace-nowrap">
-                    <span class="text-emerald-950 font-black">Tamamlandı:</span>
-                    <div class="w-4 h-4 rounded border-2 border-emerald-700 bg-white inline-block"></div>
+                  <div class="text-[9.5px] font-extrabold text-indigo-900 bg-indigo-100/80 px-2 py-0.5 rounded border border-indigo-200">
+                    Haftalık Takip: Pzt [ ] Sal [ ] Çar [ ] Per [ ] Cum [ ] Cmt [ ]
                   </div>
                 </div>
 
+                <!-- KİTAP OKUMA -->
+                <div id="out-book-container" class="hidden bg-emerald-50 border border-emerald-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
+                  <div class="flex items-center space-x-2.5">
+                    <div class="w-6 h-6 rounded-md bg-emerald-600 text-white flex items-center justify-center text-xs">
+                      <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                      <span class="font-black text-emerald-950 uppercase tracking-wide mr-2 text-[10.5px]">Kitap Okuma Görevi:</span>
+                      <span id="out-book-title" class="font-bold text-emerald-900"></span>
+                      <span id="out-book-target" class="ml-2 bg-emerald-200 text-emerald-950 px-2 py-0.5 rounded font-extrabold text-[10.5px]"></span>
+                      <span id="out-book-note" class="ml-2 text-slate-700 font-semibold italic text-[10.5px]"></span>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2 whitespace-nowrap text-[10.5px]">
+                    <span class="text-emerald-950 font-black">Tamamlandı:</span>
+                    <div class="w-3.5 h-3.5 rounded border-2 border-emerald-700 bg-white inline-block"></div>
+                  </div>
+                </div>
+
+                <!-- ÖĞRETMEN NOTU -->
                 <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-start justify-between gap-4 text-xs">
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
@@ -705,12 +762,21 @@
       document.getElementById('active-mod-badge').innerText = badgeMap[mod];
       document.getElementById('out-sub-program-badge').innerText = badgeMap[mod];
 
+      // GÜNLÜK SABİT RUTİNLER PANELİ KONTROLÜ (SADECE LGS, LİSE VE YKS İÇİN AÇILIR)
+      const routinesBox = document.getElementById('box-daily-routines-input');
+      if (mod === 'lgs' || mod === 'lise_maarif' || mod === 'yks') {
+        routinesBox.classList.remove('hidden');
+      } else {
+        routinesBox.classList.add('hidden');
+      }
+
       if (mod === 'ilkokul') currentGrade = '1. Sınıf';
       if (mod === 'ortaokul_maarif') currentGrade = '5. Sınıf';
       if (mod === 'lise_maarif') currentGrade = '9. Sınıf';
 
       renderSubFilter();
       populateSubjects();
+      updateSheet();
     }
 
     function renderSubFilter() {
@@ -1068,6 +1134,52 @@
       document.getElementById('out-due-date').innerText = formatDateStr(dueDate);
       document.getElementById('out-general-note').innerText = genNote;
 
+      // GÜNLÜK SABİT RUTİNLER GÜNCELLEMESİ (LGS, LİSE, YKS)
+      const isExamMod = (currentModule === 'lgs' || currentModule === 'lise_maarif' || currentModule === 'yks');
+      const paragrafVal = document.getElementById('inp-routine-paragraf').value.trim();
+      const problemVal = document.getElementById('inp-routine-problem').value.trim();
+      const customVal = document.getElementById('inp-routine-custom').value.trim();
+      const routinesCont = document.getElementById('out-routines-container');
+
+      if (isExamMod && (paragrafVal || problemVal || customVal)) {
+        routinesCont.classList.remove('hidden');
+        routinesCont.classList.add('flex');
+
+        const boxPara = document.getElementById('out-routine-paragraf-box');
+        if (paragrafVal) {
+          boxPara.classList.remove('hidden');
+          boxPara.classList.add('flex');
+          document.getElementById('out-routine-paragraf-val').innerText = paragrafVal;
+        } else {
+          boxPara.classList.add('hidden');
+          boxPara.classList.remove('flex');
+        }
+
+        const boxProb = document.getElementById('out-routine-problem-box');
+        if (problemVal) {
+          boxProb.classList.remove('hidden');
+          boxProb.classList.add('flex');
+          document.getElementById('out-routine-problem-val').innerText = problemVal;
+        } else {
+          boxProb.classList.add('hidden');
+          boxProb.classList.remove('flex');
+        }
+
+        const boxCust = document.getElementById('out-routine-custom-box');
+        if (customVal) {
+          boxCust.classList.remove('hidden');
+          boxCust.classList.add('flex');
+          document.getElementById('out-routine-custom-val').innerText = customVal;
+        } else {
+          boxCust.classList.add('hidden');
+          boxCust.classList.remove('flex');
+        }
+      } else {
+        routinesCont.classList.add('hidden');
+        routinesCont.classList.remove('flex');
+      }
+
+      // KİTAP OKUMA GÜNCELLEMESİ
       const bookTitle = document.getElementById('inp-book-title').value.trim();
       const bookTarget = document.getElementById('inp-book-target').value.trim();
       const bookNote = document.getElementById('inp-book-note').value.trim();
@@ -1082,6 +1194,7 @@
         bookContainer.classList.add('hidden');
       }
 
+      // KURUM BİLGİSİ
       const instContainer = document.getElementById('out-institution-container');
       const defaultTitle = document.getElementById('out-default-title');
       const instLogoImg = document.getElementById('out-inst-logo');
@@ -1105,6 +1218,7 @@
         defaultTitle.classList.remove('hidden');
       }
 
+      // TABLO
       const tbody = document.getElementById('out-table-body');
       if (tasks.length === 0) {
         tbody.innerHTML = `
