@@ -5,15 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ÖDEV-VER v1.0 | Akıllı Ödev Takip ve Dağıtım Portalı</title>
   
-  <!-- Mobil/Tablet İkonları -->
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Pro/Free CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -32,6 +28,25 @@
       font-size: 14px;
     }
     
+    /* Logo Sabit Boyut Sınırlaması */
+    .app-header-logo {
+      width: 48px !important;
+      height: 48px !important;
+      max-width: 48px !important;
+      max-height: 48px !important;
+      object-fit: contain;
+      display: block;
+    }
+
+    .sheet-logo {
+      width: 44px !important;
+      height: 44px !important;
+      max-width: 44px !important;
+      max-height: 44px !important;
+      object-fit: contain;
+      display: block;
+    }
+
     #preview-viewport {
       width: 100%;
       overflow: hidden;
@@ -49,7 +64,6 @@
       transition: transform 0.15s ease-out;
     }
 
-    /* Kart Mikro-Animasyonu */
     .module-card {
       transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -104,23 +118,23 @@
 
   <!-- ÜST BAR -->
   <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white shadow-md sticky top-0 z-50 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-4">
       
-      <div class="flex items-center space-x-3.5">
-        <div class="w-13 h-13 rounded-2xl bg-white/10 flex items-center justify-center p-1.5 border border-white/20 shadow-inner">
-          <img src="logo.png" alt="ÖDEV-VER" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=white';">
+      <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center p-1 border border-white/20 shadow-inner overflow-hidden flex-shrink-0">
+          <img src="logo.png" alt="ÖDEV-VER" class="app-header-logo" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=white';">
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="text-2xl sm:text-3xl font-black tracking-tight drop-shadow-sm">ÖDEV-VER</span>
-            <span class="bg-white/20 text-white text-xs font-black px-2.5 py-0.5 rounded-full backdrop-blur-sm border border-white/20">v1.0</span>
+            <span class="text-xl sm:text-2xl font-black tracking-tight drop-shadow-sm">ÖDEV-VER</span>
+            <span class="bg-white/20 text-white text-[11px] font-black px-2 py-0.5 rounded-full border border-white/20">v1.0</span>
           </div>
-          <p class="text-xs sm:text-sm text-blue-200 font-medium tracking-wide">Akıllı Ödevlendirme & Çıktı Portalı</p>
+          <p class="text-xs text-blue-200 font-medium">Akıllı Ödevlendirme & Çıktı Portalı</p>
         </div>
       </div>
       
-      <div class="flex items-center space-x-2 bg-black/30 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-blue-100 border border-white/15 shadow-sm">
-        <i class="fa-solid fa-graduation-cap text-amber-400 text-base"></i>
+      <div class="flex items-center space-x-2 bg-black/30 px-3.5 py-1.5 rounded-xl text-xs font-bold text-blue-100 border border-white/15 shadow-sm">
+        <i class="fa-solid fa-graduation-cap text-amber-400 text-sm"></i>
         <span>HAZIRLAYAN: YILDIRAY HOCA</span>
       </div>
     </div>
@@ -133,20 +147,20 @@
     <div class="mb-6 max-w-3xl mx-auto no-print">
       <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-950 p-3.5 rounded-xl shadow-sm border border-amber-200">
         <div class="flex items-center space-x-3.5">
-          <div class="w-10 h-10 rounded-lg bg-amber-200/80 flex items-center justify-center flex-shrink-0 text-amber-800 text-lg">
+          <div class="w-9 h-9 rounded-lg bg-amber-200/80 flex items-center justify-center flex-shrink-0 text-amber-800 text-base">
             <i class="fa-solid fa-bullhorn"></i>
           </div>
           <div>
-            <p class="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed uppercase tracking-wide">
+            <p class="text-xs font-bold text-amber-950 leading-relaxed uppercase tracking-wide">
               Bu program öğrencilerin ve tüm eğitimcilerin bireysel ve kurumsal çalışmalarında kullanmaları için hazırlanmıştır. Faydalı olması dileğiyle.
             </p>
-            <span class="text-xs font-black text-amber-800 block mt-0.5">YILDIRAY HOCA</span>
+            <span class="text-[11px] font-black text-amber-800 block mt-0.5">YILDIRAY HOCA</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5 ANA MODÜL KARTI (YENİ SIRALAMA & MİKRO-ANİMASYONLU) -->
+    <!-- 5 ANA MODÜL KARTI -->
     <div class="mb-8 no-print text-center">
       <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Ödevlendirme Türünü Seçin</h2>
       <p class="text-xs sm:text-sm font-medium text-slate-600 mb-4">Müfredat ve kademeye uygun sistemi belirleyin</p>
@@ -277,7 +291,7 @@
           </div>
         </div>
 
-        <!-- 2. ÖDEV SATIRI EKLEME FORMU (AYRI TEMA & KAZANIMLI) -->
+        <!-- 2. ÖDEV SATIRI EKLEME FORMU -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3.5">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
@@ -302,13 +316,13 @@
               </div>
             </div>
 
-            <!-- AYRI ALT KAZANIM SEÇİMİ (Maarif ve İlkokul İçin) -->
+            <!-- AYRI ALT KAZANIM SEÇİMİ -->
             <div id="wrapper-kazanim">
               <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
               <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
             </div>
 
-            <!-- ÇALIŞMA TÜRÜ: KONU ÇALIŞMASI / SORU ÇÖZÜMÜ -->
+            <!-- ÇALIŞMA TÜRÜ -->
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <label class="block text-xs font-bold text-slate-800 mb-1.5">Çalışma Türü (İkisi de Seçilebilir):</label>
               <div class="flex items-center space-x-6 text-xs font-bold text-slate-800">
@@ -323,7 +337,6 @@
               </div>
             </div>
 
-            <!-- SINAV ÇIKMIŞ SORU FREKANSI BİLGİ KUTUSU -->
             <div id="box-freq-info" class="hidden p-2.5 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-950 text-xs font-bold flex items-center justify-between">
               <span><i class="fa-solid fa-chart-column mr-1.5 text-indigo-600"></i> Son 3 Yıl Çıkmış Soru:</span>
               <span id="txt-freq-info" class="font-extrabold text-indigo-800"></span>
@@ -367,7 +380,7 @@
           </div>
         </div>
 
-        <!-- 4. KİTAP OKUMA GÖREVİ (EN ALTTA) -->
+        <!-- 4. KİTAP OKUMA GÖREVİ -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center">
@@ -395,7 +408,7 @@
 
       </div>
 
-      <!-- SAĞ PANEL: CANLI ÇIKTI ŞABLONU & DİNAMİK ÖLÇEKLEME -->
+      <!-- SAĞ PANEL: CANLI ÇIKTI ŞABLONU -->
       <div class="lg:col-span-7 space-y-4">
         
         <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
@@ -425,8 +438,8 @@
                   
                   <!-- SOL: ÖDEV-VER LOGO & İSİM -->
                   <div class="flex items-center space-x-3 w-1/4">
-                    <div class="w-12 h-12 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center p-1 flex-shrink-0">
-                      <img src="logo.png" alt="ÖDEV-VER" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=%231d4ed8';">
+                    <div class="w-12 h-12 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center p-1 flex-shrink-0 overflow-hidden">
+                      <img src="logo.png" alt="ÖDEV-VER" class="sheet-logo" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=%231d4ed8';">
                     </div>
                     <div>
                       <h1 class="text-xl font-black text-blue-700 tracking-tight leading-none">ÖDEV-VER</h1>
@@ -477,7 +490,7 @@
                 </div>
               </div>
 
-              <!-- ÇIKTI TABLOSU (PDF UYUMLU RENK KODLARIYLA) -->
+              <!-- ÇIKTI TABLOSU -->
               <div class="flex-1 overflow-hidden my-1">
                 <table class="w-full text-left border-collapse" style="font-size: 11px;">
                   <thead>
@@ -550,7 +563,6 @@
     </div>
   </footer>
 
-  <!-- ÇEVRİM DIŞI SERVICE WORKER -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js')
@@ -559,7 +571,6 @@
     }
   </script>
 
-  <!-- DB BAĞLANTISI VE MANTIK -->
   <script src="db.js"></script>
   <script>
     let currentModule = 'ilkokul';
@@ -750,7 +761,6 @@
         else if (currentModule === 'ortaokul_maarif') items = (DB.ortaokul_maarif[currentGrade] && DB.ortaokul_maarif[currentGrade][subject]) || [];
         else if (currentModule === 'lise_maarif') items = (DB.lise_maarif[currentGrade] && DB.lise_maarif[currentGrade][subject]) || [];
 
-        // Benzersiz temaları çek
         const uniqueThemes = [...new Set(items.map(it => it.tema || 'Genel Temalar'))];
         uniqueThemes.forEach(t => {
           const opt = document.createElement('option');
@@ -761,7 +771,6 @@
 
         onThemeChange();
       } else {
-        // LGS ve YKS için tema yerine doğrudan Sınav Konuları
         kazanimWrapper.classList.add('hidden');
         lblTheme.innerText = 'Sınav Konusu';
         themeSelect.innerHTML = '<option value="">Konu Seçiniz</option>';
@@ -812,7 +821,6 @@
           kazanimSelect.appendChild(opt);
         });
       } else {
-        // LGS / YKS Soru frekansı gösterimi
         const topicIdx = themeVal;
         if (currentModule === 'lgs') {
           const item = DB.lgs[subject][topicIdx];
@@ -867,7 +875,6 @@
         displaySubject = `[${currentYksSub.toUpperCase()}] ${subject}`;
       }
 
-      // Çalışma Türü
       const isStudy = document.getElementById('chk-type-study').checked;
       const isSolve = document.getElementById('chk-type-solve').checked;
       let workType = '';
