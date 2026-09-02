@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ÖDEV-VER v1.0 | Akıllı Ödev Takip ve Dağıtım Portalı</title>
   
-  <!-- Mobil/Tablet Ana Ekran Logosu -->
+  <!-- Mobil/Tablet İkonları -->
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome Pro/Free CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -20,6 +19,12 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
     
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
     body { 
       font-family: 'Plus Jakarta Sans', sans-serif; 
       background-color: #f1f5f9; 
@@ -42,6 +47,21 @@
     #preview-scaler {
       transform-origin: top center;
       transition: transform 0.15s ease-out;
+    }
+
+    /* Kart Mikro-Animasyonu */
+    .module-card {
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .module-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 28px -6px rgba(15, 23, 42, 0.12), 0 8px 14px -6px rgba(15, 23, 42, 0.08);
+    }
+    .module-card:hover .icon-box {
+      transform: scale(1.1) rotate(-3deg);
+    }
+    .icon-box {
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     @media print {
@@ -68,6 +88,15 @@
         padding: 12px !important;
         margin: 0 !important;
       }
+      .table-header-row {
+        background-color: #1d4ed8 !important;
+        color: #ffffff !important;
+      }
+      .table-header-cell {
+        background-color: #1d4ed8 !important;
+        color: #ffffff !important;
+        border-color: #1e40af !important;
+      }
     }
   </style>
 </head>
@@ -75,10 +104,10 @@
 
   <!-- ÜST BAR -->
   <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white shadow-md sticky top-0 z-50 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
       
       <div class="flex items-center space-x-3.5">
-        <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center p-1.5 border border-white/20 shadow-inner">
+        <div class="w-13 h-13 rounded-2xl bg-white/10 flex items-center justify-center p-1.5 border border-white/20 shadow-inner">
           <img src="logo.png" alt="ÖDEV-VER" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=white';">
         </div>
         <div>
@@ -91,7 +120,7 @@
       </div>
       
       <div class="flex items-center space-x-2 bg-black/30 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-blue-100 border border-white/15 shadow-sm">
-        <i class="fa-solid fa-graduation-cap text-yellow-400 text-base"></i>
+        <i class="fa-solid fa-graduation-cap text-amber-400 text-base"></i>
         <span>HAZIRLAYAN: YILDIRAY HOCA</span>
       </div>
     </div>
@@ -102,86 +131,86 @@
     
     <!-- BİLGİ KUTUSU -->
     <div class="mb-6 max-w-3xl mx-auto no-print">
-      <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-950 p-4 rounded-xl shadow-sm border border-amber-200">
+      <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-950 p-3.5 rounded-xl shadow-sm border border-amber-200">
         <div class="flex items-center space-x-3.5">
           <div class="w-10 h-10 rounded-lg bg-amber-200/80 flex items-center justify-center flex-shrink-0 text-amber-800 text-lg">
-            <i class="fa-solid fa-circle-info"></i>
+            <i class="fa-solid fa-bullhorn"></i>
           </div>
           <div>
             <p class="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed uppercase tracking-wide">
               Bu program öğrencilerin ve tüm eğitimcilerin bireysel ve kurumsal çalışmalarında kullanmaları için hazırlanmıştır. Faydalı olması dileğiyle.
             </p>
-            <span class="text-xs font-black text-amber-800 block mt-1">YILDIRAY HOCA</span>
+            <span class="text-xs font-black text-amber-800 block mt-0.5">YILDIRAY HOCA</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5 ANA KARTLI MODÜL SEÇİMİ -->
+    <!-- 5 ANA MODÜL KARTI (YENİ SIRALAMA & MİKRO-ANİMASYONLU) -->
     <div class="mb-8 no-print text-center">
       <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Ödevlendirme Türünü Seçin</h2>
       <p class="text-xs sm:text-sm font-medium text-slate-600 mb-4">Müfredat ve kademeye uygun sistemi belirleyin</p>
       
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 text-left">
         
-        <!-- Kart 1: İlkokul -->
-        <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="cursor-pointer bg-white border-2 border-transparent hover:border-blue-500 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group">
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="w-11 h-11 rounded-xl bg-teal-600 text-white flex items-center justify-center text-lg shadow-md shadow-teal-200">
+        <!-- 1. İLKOKUL ÖDEVLENDİRME -->
+        <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-3">
+            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-700 text-white flex items-center justify-center text-xl shadow-lg shadow-teal-200/60">
               <i class="fa-solid fa-shapes"></i>
             </div>
-            <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">1, 2, 3, 4</span>
+            <span class="text-[11px] font-black text-teal-800 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded-md">1, 2, 3, 4</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1">1. İLKOKUL</h3>
+          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">1. İLKOKUL ÖDEVLENDİRME</h3>
           <p class="text-[11px] text-slate-600 leading-relaxed font-medium">1–4. Sınıf tüm dersler ve Maarif/MEB kazanımları.</p>
         </div>
 
-        <!-- Kart 2: LGS -->
-        <div onclick="setModule('lgs')" id="card-mod-lgs" class="cursor-pointer bg-white border-2 border-transparent hover:border-blue-500 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group">
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center text-lg shadow-md shadow-red-200">
+        <!-- 2. ORTAOKUL MAARİF ÖDEVLENDİRME -->
+        <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-3">
+            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-200/60">
+              <i class="fa-solid fa-compass-drafting"></i>
+            </div>
+            <span class="text-[11px] font-black text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">5, 6, 7, 8</span>
+          </div>
+          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">2. ORTAOKUL MAARİF ÖDEVLENDİRME</h3>
+          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">Türkiye Yüzyılı Maarif Modeli tema ve kazanımları.</p>
+        </div>
+
+        <!-- 3. LİSE MAARİF ÖDEVLENDİRME -->
+        <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-3">
+            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-xl shadow-lg shadow-amber-200/60">
+              <i class="fa-solid fa-atom"></i>
+            </div>
+            <span class="text-[11px] font-black text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">9, 10, 11, 12</span>
+          </div>
+          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">3. LİSE MAARİF ÖDEVLENDİRME</h3>
+          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">9–12. Sınıf lise dersleri ve güncel tema kazanımları.</p>
+        </div>
+
+        <!-- 4. LGS ÖDEVLENDİRME -->
+        <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-3">
+            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-red-700 text-white flex items-center justify-center text-xl shadow-lg shadow-red-200/60">
               <i class="fa-solid fa-trophy"></i>
             </div>
-            <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">8. Sınıf</span>
+            <span class="text-[11px] font-black text-rose-800 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md">8. Sınıf Sınav</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1">2. LGS ÖDEVİ</h3>
+          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">4. LGS ÖDEVLENDİRME</h3>
           <p class="text-[11px] text-slate-600 leading-relaxed font-medium">8. Sınıf müfredatı ve 2024–2026 çıkmış soru analizleri.</p>
         </div>
 
-        <!-- Kart 3: Ortaokul Maarif -->
-        <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="cursor-pointer bg-white border-2 border-transparent hover:border-blue-500 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group">
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200">
-              <i class="fa-solid fa-compass"></i>
-            </div>
-            <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">5, 6, 7, 8</span>
-          </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1">3. ORTAOKUL MAARİF</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">Türkiye Yüzyılı Maarif Modeli temaları ve kazanımları.</p>
-        </div>
-
-        <!-- Kart 4: YKS -->
-        <div onclick="setModule('yks')" id="card-mod-yks" class="cursor-pointer bg-white border-2 border-transparent hover:border-blue-500 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group">
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="w-11 h-11 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200">
+        <!-- 5. YKS ÖDEVLENDİRME -->
+        <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-3">
+            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-xl shadow-lg shadow-purple-200/60">
               <i class="fa-solid fa-award"></i>
             </div>
-            <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">YKS (TYT/AYT)</span>
+            <span class="text-[11px] font-black text-purple-800 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-md">TYT / AYT</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1">4. YKS ÖDEVİ</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">TYT-AYT dersleri ve son 3 yıl soru frekans dağılımları.</p>
-        </div>
-
-        <!-- Kart 5: Lise Maarif -->
-        <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="cursor-pointer bg-white border-2 border-transparent hover:border-blue-500 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group">
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="w-11 h-11 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-md shadow-amber-200">
-              <i class="fa-solid fa-atom"></i>
-            </div>
-            <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">9, 10, 11, 12</span>
-          </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1">5. LİSE MAARİF</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">9–12. Sınıf TYMM lise dersleri ve tema kazanımları.</p>
+          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">5. YKS ÖDEVLENDİRME</h3>
+          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">TYT-AYT dersleri ve 3 yıllık soru frekans dağılımları.</p>
         </div>
 
       </div>
@@ -202,11 +231,11 @@
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Öğretmen Adı Soyadı</label>
-                <input type="text" id="inp-teacher-name" placeholder="Örn: Mustafa Bey" value="" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
+                <input type="text" id="inp-teacher-name" placeholder="Örn: Mustafa Bey" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenci Adı Soyadı</label>
-                <input type="text" id="inp-student-name" placeholder="Örn: Kemal" value="" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
+                <input type="text" id="inp-student-name" placeholder="Örn: Kemal" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
               </div>
             </div>
 
@@ -248,27 +277,35 @@
           </div>
         </div>
 
-        <!-- 2. ÖDEV SATIRI EKLEME FORMU -->
+        <!-- 2. ÖDEV SATIRI EKLEME FORMU (AYRI TEMA & KAZANIMLI) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3.5">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
               <i class="fa-solid fa-square-plus mr-2 text-blue-600"></i> 2. Ödev Satırı Ekle
             </h3>
-            <span id="active-mod-badge" class="bg-blue-100 text-blue-900 text-xs font-bold px-2.5 py-0.5 rounded-full">LGS Modülü</span>
+            <span id="active-mod-badge" class="bg-blue-100 text-blue-900 text-xs font-black px-2.5 py-0.5 rounded-full">İLKOKUL ÖDEV PLANI</span>
           </div>
 
           <form id="form-add-task" onsubmit="addTask(event)" class="space-y-3.5">
+            
             <div id="container-sub-filter" class="grid grid-cols-2 gap-3"></div>
 
+            <!-- DERS VE TEMA -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Ders</label>
                 <select id="sel-subject" onchange="onSubjectChange()" required class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
               </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-800 mb-1">Konu / Tema</label>
-                <select id="sel-topic" onchange="onTopicChange()" required class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+              <div id="wrapper-theme">
+                <label id="lbl-theme" class="block text-xs font-bold text-slate-800 mb-1">Tema / Ünite</label>
+                <select id="sel-theme" onchange="onThemeChange()" required class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
               </div>
+            </div>
+
+            <!-- AYRI ALT KAZANIM SEÇİMİ (Maarif ve İlkokul İçin) -->
+            <div id="wrapper-kazanim">
+              <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
+              <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
             </div>
 
             <!-- ÇALIŞMA TÜRÜ: KONU ÇALIŞMASI / SORU ÇÖZÜMÜ -->
@@ -286,6 +323,7 @@
               </div>
             </div>
 
+            <!-- SINAV ÇIKMIŞ SORU FREKANSI BİLGİ KUTUSU -->
             <div id="box-freq-info" class="hidden p-2.5 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-950 text-xs font-bold flex items-center justify-between">
               <span><i class="fa-solid fa-chart-column mr-1.5 text-indigo-600"></i> Son 3 Yıl Çıkmış Soru:</span>
               <span id="txt-freq-info" class="font-extrabold text-indigo-800"></span>
@@ -406,7 +444,7 @@
                       KİŞİYE ÖZEL ÖDEVLENDİRME
                     </div>
                     <span id="out-sub-program-badge" class="inline-block mt-0.5 text-xs font-black text-slate-700 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-300">
-                      LGS ÖDEV PLANI
+                      İLKOKUL ÖDEV PLANI
                     </span>
                   </div>
 
@@ -439,21 +477,21 @@
                 </div>
               </div>
 
-              <!-- ÇIKTI TABLOSU -->
+              <!-- ÇIKTI TABLOSU (PDF UYUMLU RENK KODLARIYLA) -->
               <div class="flex-1 overflow-hidden my-1">
                 <table class="w-full text-left border-collapse" style="font-size: 11px;">
                   <thead>
-                    <tr class="bg-blue-700 text-white font-black uppercase text-[10px] tracking-wider">
-                      <th class="p-2 border border-blue-800 text-center w-10">Durum</th>
-                      <th class="p-2 border border-blue-800 text-center w-7">#</th>
-                      <th class="p-2 border border-blue-800 w-32">Ders</th>
-                      <th class="p-2 border border-blue-800">Konu / Kazanım</th>
-                      <th class="p-2 border border-blue-800 text-center w-28">Çalışma Türü</th>
-                      <th class="p-2 border border-blue-800 text-center w-24">Son 3 Yıl</th>
-                      <th class="p-2 border border-blue-800 w-24">Kaynak</th>
-                      <th class="p-2 border border-blue-800 text-center w-16">Sayfa</th>
-                      <th class="p-2 border border-blue-800 text-center w-14">Soru</th>
-                      <th class="p-2 border border-blue-800 w-32">Açıklama / Not</th>
+                    <tr class="table-header-row font-black uppercase text-[10px] tracking-wider" style="background-color: #1d4ed8 !important; color: #ffffff !important;">
+                      <th class="table-header-cell p-2 text-center w-10" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Durum</th>
+                      <th class="table-header-cell p-2 text-center w-7" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">#</th>
+                      <th class="table-header-cell p-2 w-32" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Ders</th>
+                      <th class="table-header-cell p-2" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Konu / Kazanım</th>
+                      <th class="table-header-cell p-2 text-center w-28" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Çalışma Türü</th>
+                      <th class="table-header-cell p-2 text-center w-24" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Son 3 Yıl</th>
+                      <th class="table-header-cell p-2 w-24" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Kaynak</th>
+                      <th class="table-header-cell p-2 text-center w-16" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Sayfa</th>
+                      <th class="table-header-cell p-2 text-center w-14" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Soru</th>
+                      <th class="table-header-cell p-2 w-32" style="background-color: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #1e40af !important;">Açıklama / Not</th>
                     </tr>
                   </thead>
                   <tbody id="out-table-body" class="divide-y divide-slate-300 text-slate-950 font-medium"></tbody>
@@ -512,16 +550,16 @@
     </div>
   </footer>
 
-  <!-- ÇEVRİM DIŞI (OFFLINE) SERVICE WORKER KAYDI -->
+  <!-- ÇEVRİM DIŞI SERVICE WORKER -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('Çevrim dışı çalışma motoru (Service Worker) devrede!'))
+        .then(() => console.log('Çevrim dışı çalışma motoru devrede.'))
         .catch((err) => console.log('SW hatası:', err));
     }
   </script>
 
-  <!-- DB.JS BAĞLANTISI -->
+  <!-- DB BAĞLANTISI VE MANTIK -->
   <script src="db.js"></script>
   <script>
     let currentModule = 'ilkokul';
@@ -572,21 +610,21 @@
     function setModule(mod) {
       currentModule = mod;
       
-      ['ilkokul', 'lgs', 'ortaokul_maarif', 'yks', 'lise_maarif'].forEach(m => {
+      ['ilkokul', 'ortaokul_maarif', 'lise_maarif', 'lgs', 'yks'].forEach(m => {
         const card = document.getElementById('card-mod-' + m);
         if (m === mod) {
-          card.className = 'cursor-pointer bg-blue-50/70 border-2 border-blue-600 ring-2 ring-blue-500/30 p-3.5 rounded-2xl shadow-md transition duration-200 relative group';
+          card.className = 'module-card cursor-pointer bg-blue-50/70 border-2 border-blue-600 ring-2 ring-blue-500/30 p-4 rounded-2xl shadow-md relative group';
         } else {
-          card.className = 'cursor-pointer bg-white border-2 border-transparent hover:border-slate-300 p-3.5 rounded-2xl shadow-sm transition duration-200 relative group';
+          card.className = 'module-card cursor-pointer bg-white border-2 border-transparent hover:border-slate-300 p-4 rounded-2xl shadow-sm relative group';
         }
       });
 
       const badgeMap = {
         'ilkokul': 'İLKOKUL ÖDEV PLANI',
+        'ortaokul_maarif': 'ORTAOKUL MAARİF ÖDEV PLANI',
+        'lise_maarif': 'LİSE MAARİF ÖDEV PLANI',
         'lgs': 'LGS ÖDEV PLANI',
-        'ortaokul_maarif': 'ORTAOKUL MAARİF MODELİ ÖDEV PLANI',
-        'yks': 'YKS ÖDEV PLANI',
-        'lise_maarif': 'LİSE MAARİF MODELİ ÖDEV PLANI'
+        'yks': 'YKS ÖDEV PLANI'
       };
       document.getElementById('active-mod-badge').innerText = badgeMap[mod];
       document.getElementById('out-sub-program-badge').innerText = badgeMap[mod];
@@ -614,16 +652,6 @@
             </select>
           </div>
         `;
-      } else if (currentModule === 'yks') {
-        container.innerHTML = `
-          <div class="col-span-2">
-            <label class="block text-xs font-bold text-slate-800 mb-1">YKS Sınav Grubu</label>
-            <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setYksSub('tyt')" id="btn-yks-tyt" class="py-1.5 px-3 rounded-lg text-xs font-black transition ${currentYksSub === 'tyt' ? 'bg-blue-600 text-white shadow' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'}">TYT Konuları</button>
-              <button type="button" onclick="setYksSub('ayt')" id="btn-yks-ayt" class="py-1.5 px-3 rounded-lg text-xs font-black transition ${currentYksSub === 'ayt' ? 'bg-blue-600 text-white shadow' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'}">AYT Konuları</button>
-            </div>
-          </div>
-        `;
       } else if (currentModule === 'ortaokul_maarif') {
         const grades = ['5. Sınıf', '6. Sınıf', '7. Sınıf', '8. Sınıf'];
         let options = grades.map(g => `<option value="${g}" ${g === currentGrade ? 'selected' : ''}>${g}</option>`).join('');
@@ -644,6 +672,16 @@
             <select id="sel-grade" onchange="onGradeChange(this.value)" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
               ${options}
             </select>
+          </div>
+        `;
+      } else if (currentModule === 'yks') {
+        container.innerHTML = `
+          <div class="col-span-2">
+            <label class="block text-xs font-bold text-slate-800 mb-1">YKS Sınav Grubu</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setYksSub('tyt')" id="btn-yks-tyt" class="py-1.5 px-3 rounded-lg text-xs font-black transition ${currentYksSub === 'tyt' ? 'bg-blue-600 text-white shadow' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'}">TYT Konuları</button>
+              <button type="button" onclick="setYksSub('ayt')" id="btn-yks-ayt" class="py-1.5 px-3 rounded-lg text-xs font-black transition ${currentYksSub === 'ayt' ? 'bg-blue-600 text-white shadow' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'}">AYT Konuları</button>
+            </div>
           </div>
         `;
       }
@@ -667,10 +705,10 @@
       let subjects = [];
       if (typeof DB !== 'undefined') {
         if (currentModule === 'ilkokul') subjects = Object.keys((DB.ilkokul && DB.ilkokul[currentGrade]) || {});
-        else if (currentModule === 'lgs') subjects = Object.keys(DB.lgs || {});
-        else if (currentModule === 'yks') subjects = Object.keys(DB[currentYksSub] || {});
         else if (currentModule === 'ortaokul_maarif') subjects = Object.keys((DB.ortaokul_maarif && DB.ortaokul_maarif[currentGrade]) || {});
         else if (currentModule === 'lise_maarif') subjects = Object.keys((DB.lise_maarif && DB.lise_maarif[currentGrade]) || {});
+        else if (currentModule === 'lgs') subjects = Object.keys(DB.lgs || {});
+        else if (currentModule === 'yks') subjects = Object.keys(DB[currentYksSub] || {});
       }
 
       subjects.forEach(s => {
@@ -685,119 +723,151 @@
 
     function onSubjectChange() {
       const subject = document.getElementById('sel-subject').value;
-      const topicSelect = document.getElementById('sel-topic');
+      const themeSelect = document.getElementById('sel-theme');
+      const kazanimWrapper = document.getElementById('wrapper-kazanim');
+      const kazanimSelect = document.getElementById('sel-kazanim');
+      const lblTheme = document.getElementById('lbl-theme');
       const freqBox = document.getElementById('box-freq-info');
       
-      topicSelect.innerHTML = '<option value="">Konu / Tema Seçiniz</option>';
+      themeSelect.innerHTML = '';
+      kazanimSelect.innerHTML = '';
       freqBox.classList.add('hidden');
 
-      if (!subject || typeof DB === 'undefined') return;
-
-      if (currentModule === 'ilkokul') {
-        const list = (DB.ilkokul[currentGrade] && DB.ilkokul[currentGrade][subject]) || [];
-        list.forEach((item, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = (item.tema ? item.tema + ' - ' : '') + item.kazanim;
-          topicSelect.appendChild(opt);
-        });
-      } else if (currentModule === 'lgs') {
-        const list = DB.lgs[subject] || [];
-        list.forEach((item, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = item.konu;
-          topicSelect.appendChild(opt);
-        });
-      } else if (currentModule === 'yks') {
-        const list = DB[currentYksSub][subject] || [];
-        list.forEach((item, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = item.konu;
-          topicSelect.appendChild(opt);
-        });
-      } else if (currentModule === 'ortaokul_maarif') {
-        const list = (DB.ortaokul_maarif[currentGrade] && DB.ortaokul_maarif[currentGrade][subject]) || [];
-        list.forEach((item, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = (item.tema ? item.tema + ' - ' : '') + item.kazanim;
-          topicSelect.appendChild(opt);
-        });
-      } else if (currentModule === 'lise_maarif') {
-        const list = (DB.lise_maarif[currentGrade] && DB.lise_maarif[currentGrade][subject]) || [];
-        list.forEach((item, idx) => {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = (item.tema ? item.tema + ' - ' : '') + item.kazanim;
-          topicSelect.appendChild(opt);
-        });
+      if (!subject || typeof DB === 'undefined') {
+        themeSelect.innerHTML = '<option value="">Önce Ders Seçiniz</option>';
+        return;
       }
 
-      onTopicChange();
+      const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+
+      if (isCurriculum) {
+        kazanimWrapper.classList.remove('hidden');
+        lblTheme.innerText = 'Tema / Ünite';
+        themeSelect.innerHTML = '<option value="">Tema / Ünite Seçiniz</option>';
+
+        let items = [];
+        if (currentModule === 'ilkokul') items = (DB.ilkokul[currentGrade] && DB.ilkokul[currentGrade][subject]) || [];
+        else if (currentModule === 'ortaokul_maarif') items = (DB.ortaokul_maarif[currentGrade] && DB.ortaokul_maarif[currentGrade][subject]) || [];
+        else if (currentModule === 'lise_maarif') items = (DB.lise_maarif[currentGrade] && DB.lise_maarif[currentGrade][subject]) || [];
+
+        // Benzersiz temaları çek
+        const uniqueThemes = [...new Set(items.map(it => it.tema || 'Genel Temalar'))];
+        uniqueThemes.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          opt.textContent = t;
+          themeSelect.appendChild(opt);
+        });
+
+        onThemeChange();
+      } else {
+        // LGS ve YKS için tema yerine doğrudan Sınav Konuları
+        kazanimWrapper.classList.add('hidden');
+        lblTheme.innerText = 'Sınav Konusu';
+        themeSelect.innerHTML = '<option value="">Konu Seçiniz</option>';
+
+        let list = [];
+        if (currentModule === 'lgs') list = DB.lgs[subject] || [];
+        else if (currentModule === 'yks') list = DB[currentYksSub][subject] || [];
+
+        list.forEach((item, idx) => {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = item.konu;
+          themeSelect.appendChild(opt);
+        });
+
+        onThemeChange();
+      }
     }
 
-    function onTopicChange() {
+    function onThemeChange() {
       const subject = document.getElementById('sel-subject').value;
-      const topicIdx = document.getElementById('sel-topic').value;
+      const themeVal = document.getElementById('sel-theme').value;
+      const kazanimSelect = document.getElementById('sel-kazanim');
       const freqBox = document.getElementById('box-freq-info');
       const freqText = document.getElementById('txt-freq-info');
 
-      if (topicIdx === '' || !subject || typeof DB === 'undefined') {
+      kazanimSelect.innerHTML = '<option value="">Tüm Kazanımlar / Genel Konu</option>';
+
+      if (themeVal === '' || !subject || typeof DB === 'undefined') {
         freqBox.classList.add('hidden');
         return;
       }
 
-      if (currentModule === 'lgs') {
-        const item = DB.lgs[subject][topicIdx];
-        if (item) {
-          freqText.innerText = `2026: ${item.y26} Soru | 2025: ${item.y25} Soru | 2024: ${item.y24} Soru`;
-          freqBox.classList.remove('hidden');
-        }
-      } else if (currentModule === 'yks') {
-        const item = DB[currentYksSub][subject][topicIdx];
-        if (item) {
-          freqText.innerText = `2026: ${item.y26} Soru | 2025: ${item.y25} Soru | 2024: ${item.y24} Soru`;
-          freqBox.classList.remove('hidden');
-        }
-      } else {
+      const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+
+      if (isCurriculum) {
         freqBox.classList.add('hidden');
+        let items = [];
+        if (currentModule === 'ilkokul') items = DB.ilkokul[currentGrade][subject] || [];
+        else if (currentModule === 'ortaokul_maarif') items = DB.ortaokul_maarif[currentGrade][subject] || [];
+        else if (currentModule === 'lise_maarif') items = DB.lise_maarif[currentGrade][subject] || [];
+
+        const filtered = items.filter(it => (it.tema || 'Genel Temalar') === themeVal);
+        filtered.forEach((it, idx) => {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = (it.kod ? `[${it.kod}] ` : '') + it.kazanim;
+          kazanimSelect.appendChild(opt);
+        });
+      } else {
+        // LGS / YKS Soru frekansı gösterimi
+        const topicIdx = themeVal;
+        if (currentModule === 'lgs') {
+          const item = DB.lgs[subject][topicIdx];
+          if (item) {
+            freqText.innerText = `2026: ${item.y26} Soru | 2025: ${item.y25} Soru | 2024: ${item.y24} Soru`;
+            freqBox.classList.remove('hidden');
+          }
+        } else if (currentModule === 'yks') {
+          const item = DB[currentYksSub][subject][topicIdx];
+          if (item) {
+            freqText.innerText = `2026: ${item.y26} Soru | 2025: ${item.y25} Soru | 2024: ${item.y24} Soru`;
+            freqBox.classList.remove('hidden');
+          }
+        }
       }
     }
 
     function addTask(e) {
       e.preventDefault();
       const subject = document.getElementById('sel-subject').value;
-      const topicSelect = document.getElementById('sel-topic');
-      const topicIdx = topicSelect.value;
+      const themeSelect = document.getElementById('sel-theme');
+      const kazanimSelect = document.getElementById('sel-kazanim');
+      const themeVal = themeSelect.value;
       
-      if (!subject || topicIdx === '') {
-        alert('Lütfen bir ders ve konu seçiniz!');
+      if (!subject || themeVal === '') {
+        alert('Lütfen bir ders ve konu/tema seçiniz!');
         return;
       }
 
-      let topicName = topicSelect.options[topicSelect.selectedIndex].text;
+      const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+      let topicFullName = '';
       let freqData = '';
       let displaySubject = subject;
 
-      if (currentModule === 'ilkokul') {
+      if (isCurriculum) {
         displaySubject = `[${currentGrade}] ${subject}`;
-      } else if (currentModule === 'yks') {
-        const item = DB[currentYksSub][subject][topicIdx];
-        topicName = item.konu;
-        freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
-        displaySubject = `[${currentYksSub.toUpperCase()}] ${subject}`;
+        const selectedKazanimText = kazanimSelect.selectedIndex > 0 ? kazanimSelect.options[kazanimSelect.selectedIndex].text : '';
+        if (selectedKazanimText) {
+          topicFullName = `${themeVal} • ${selectedKazanimText}`;
+        } else {
+          topicFullName = themeVal;
+        }
       } else if (currentModule === 'lgs') {
-        const item = DB.lgs[subject][topicIdx];
-        topicName = item.konu;
+        const item = DB.lgs[subject][themeVal];
+        topicFullName = item.konu;
         freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
         displaySubject = `[LGS] ${subject}`;
-      } else if (currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif') {
-        displaySubject = `[${currentGrade}] ${subject}`;
+      } else if (currentModule === 'yks') {
+        const item = DB[currentYksSub][subject][themeVal];
+        topicFullName = item.konu;
+        freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
+        displaySubject = `[${currentYksSub.toUpperCase()}] ${subject}`;
       }
 
-      // Çalışma Türü Belirleme
+      // Çalışma Türü
       const isStudy = document.getElementById('chk-type-study').checked;
       const isSolve = document.getElementById('chk-type-solve').checked;
       let workType = '';
@@ -814,7 +884,7 @@
       tasks.push({
         id: Date.now(),
         subject: displaySubject,
-        topic: topicName,
+        topic: topicFullName,
         workType: workType,
         freq: freqData,
         source: source,
