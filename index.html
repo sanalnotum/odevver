@@ -370,7 +370,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Soru Sayısı</label>
-                <input type="text" id="inp-questions" placeholder="Örn: 60 Soru" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <input type="text" id="inp-questions" placeholder="Örn: 60" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
               </div>
             </div>
 
@@ -404,18 +404,69 @@
           </form>
         </div>
 
-        <!-- 3. EKLENEN ÖDEVLER LİSTESİ -->
+        <!-- 3. EKLENEN ÖDEVLER LİSTESİ & HIZLI ŞABLON (JSON) KAYDET/YÜKLE -->
         <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-extrabold text-slate-800 uppercase">Eklenen Ödevler (<span id="task-count">0</span>)</span>
             <button onclick="clearAllTasks()" class="text-red-600 hover:text-red-800 text-xs font-bold">Tümünü Temizle</button>
           </div>
-          <div id="task-list-quick" class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-slate-700 font-medium">
+          <div id="task-list-quick" class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-slate-700 font-medium mb-3">
             <p class="text-slate-400 italic text-center py-2">Henüz ödev maddesi eklenmedi.</p>
+          </div>
+
+          <!-- JSON ŞABLON YÖNETİMİ -->
+          <div class="pt-2.5 border-t border-slate-200 grid grid-cols-2 gap-2">
+            <button type="button" onclick="exportTemplateJSON()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold py-2 px-3 rounded-xl border border-slate-300 transition flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-download text-blue-600"></i>
+              <span>Şablonu Kaydet</span>
+            </button>
+            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold py-2 px-3 rounded-xl border border-slate-300 transition flex items-center justify-center space-x-1.5 text-center truncate">
+              <i class="fa-solid fa-upload text-emerald-600"></i>
+              <span>Şablonu Yükle</span>
+              <input type="file" id="inp-upload-json" accept=".json" onchange="importTemplateJSON(event)" class="hidden">
+            </label>
           </div>
         </div>
 
-        <!-- 4. YENİ: GÜNLÜK SABİT SINAV RUTİNLERİ (SADECE LGS, LİSE MAARİF VE YKS'DE GÖRÜNÜR) -->
+        <!-- 4. HAFTALIK DENEME SINAVI GÖREVİ (YENİ MODÜL) -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200">
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs sm:text-sm font-bold text-amber-950 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-stopwatch-20 mr-2 text-amber-600 text-base"></i> Haftalık Deneme Sınavı Görevi
+            </h3>
+            <span class="text-[10.5px] text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-md font-black">Deneme Takibi</span>
+          </div>
+          <div class="space-y-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">Deneme Türü</label>
+                <select id="sel-exam-type" onchange="onExamTypeChange()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                  <option value="">Deneme Yok (Boş)</option>
+                  <option value="LGS Genel Deneme">LGS Genel Deneme</option>
+                  <option value="TYT Genel Deneme">TYT Genel Deneme</option>
+                  <option value="AYT Genel Deneme">AYT Genel Deneme</option>
+                  <option value="Branş Denemesi">Branş Denemesi</option>
+                </select>
+              </div>
+              <div id="wrapper-exam-branch" class="hidden">
+                <label class="block text-xs font-bold text-slate-800 mb-1">Branş / Ders Adı</label>
+                <input type="text" id="inp-exam-branch" placeholder="Örn: TYT Matematik" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">Yayın / Kaynak & Süre</label>
+                <input type="text" id="inp-exam-source" placeholder="Örn: 3D Yayınları (135 Dk)" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">Uygulama Günü / Not</label>
+                <input type="text" id="inp-exam-day" placeholder="Örn: Cumartesi 10:00 (Süre Tutulacak)" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. GÜNLÜK SABİT SINAV RUTİNLERİ (LGS, LİSE, YKS) -->
         <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
@@ -423,7 +474,7 @@
             </h3>
             <span class="text-[10.5px] text-indigo-800 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-md font-black">Hergün</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium mb-3">Sınav gruplarına her gün çözülmesi gereken sabit soru sayılarını belirleyin.</p>
+          <p class="text-[11px] text-slate-500 font-medium mb-3">Her gün çözülecek sabit soru sayılarını belirleyin.</p>
           
           <div class="grid grid-cols-2 gap-3 mb-2.5">
             <div>
@@ -437,11 +488,11 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev (İsteğe Bağlı)</label>
-            <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük 1 Branş Denemesi / Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
         </div>
 
-        <!-- 5. KİTAP OKUMA GÖREVİ -->
+        <!-- 6. KİTAP OKUMA GÖREVİ -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center">
@@ -508,7 +559,7 @@
                     </div>
                   </div>
 
-                  <!-- ORTA: BAŞLIK VE ROZET -->
+                  <!-- ORTA: BAŞLIK, ROZET & TOPLAM SORU SAYACI -->
                   <div class="flex-1 text-center px-2 flex flex-col items-center justify-center">
                     <div id="out-institution-container" class="hidden items-center justify-center space-x-2">
                       <img id="out-inst-logo" src="" alt="Kurum Logosu" class="max-h-10 max-w-20 object-contain hidden">
@@ -517,9 +568,15 @@
                     <div id="out-default-title" class="text-lg font-black text-blue-900 tracking-wider uppercase">
                       KİŞİYE ÖZEL ÖDEVLENDİRME
                     </div>
-                    <span id="out-sub-program-badge" class="inline-block mt-0.5 text-xs font-black text-slate-700 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-300">
-                      İLKOKUL ÖDEV PLANI
-                    </span>
+                    <div class="flex items-center space-x-2 mt-0.5">
+                      <span id="out-sub-program-badge" class="inline-block text-xs font-black text-slate-700 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-300">
+                        İLKOKUL ÖDEV PLANI
+                      </span>
+                      <!-- HAFTALIK CANLI SORU SAYACI ROZETİ -->
+                      <span id="out-total-question-badge" class="hidden text-xs font-black text-blue-950 bg-blue-100 border border-blue-300 px-2.5 py-0.5 rounded-full shadow-2xs">
+                        <i class="fa-solid fa-bullseye mr-1 text-blue-700"></i> Toplam Hedef: <span id="out-total-question-val">0</span> Soru
+                      </span>
+                    </div>
                   </div>
 
                   <!-- SAĞ: TARİHLER -->
@@ -573,10 +630,32 @@
                 </table>
               </div>
 
-              <!-- ÇIKTI ALT BİLGİ, RUTİNLER & KİTAP OKUMA -->
+              <!-- ÇIKTI ALT BİLGİ: DENEME, RUTİNLER, KİTAP VE NOT -->
               <div class="mt-2.5 pt-2 border-t-2 border-blue-200 space-y-2">
                 
-                <!-- YENİ: ÇIKTI GÜNLÜK RUTİNLER BANTI (TATLI VE KOMPAKT İKONLU) -->
+                <!-- DENEME SINAVI GÖREVİ ŞERİDİ -->
+                <div id="out-exam-container" class="hidden bg-amber-50/90 border border-amber-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
+                  <div class="flex items-center space-x-2.5">
+                    <div class="w-6 h-6 rounded-md bg-amber-600 text-white flex items-center justify-center text-xs flex-shrink-0">
+                      <i class="fa-solid fa-stopwatch-20"></i>
+                    </div>
+                    <div>
+                      <span class="font-black text-amber-950 uppercase tracking-wide text-[10.5px]">Haftalık Deneme Görevi:</span>
+                      <span id="out-exam-title" class="font-black text-amber-900 text-[11px] ml-1"></span>
+                      <span id="out-exam-source" class="ml-2 bg-amber-200 text-amber-950 px-2 py-0.5 rounded font-extrabold text-[10px]"></span>
+                      <span id="out-exam-day" class="ml-2 text-slate-700 font-semibold italic text-[10.5px]"></span>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-3 text-[10px] font-bold text-amber-950 whitespace-nowrap">
+                    <span>D: [ &nbsp; ]</span>
+                    <span>Y: [ &nbsp; ]</span>
+                    <span>Net: [ &nbsp;&nbsp;&nbsp; ]</span>
+                    <span class="border-l border-amber-300 pl-2">Tamamlandı:</span>
+                    <div class="w-3.5 h-3.5 rounded border-2 border-amber-700 bg-white inline-block"></div>
+                  </div>
+                </div>
+
+                <!-- ÇIKTI GÜNLÜK RUTİNLER BANTI -->
                 <div id="out-routines-container" class="hidden bg-gradient-to-r from-indigo-50 via-purple-50 to-blue-50 border border-indigo-200 p-2 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
                   <div class="flex items-center space-x-2">
                     <span class="w-6 h-6 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0">
@@ -701,6 +780,17 @@
       document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('selected'));
     }
 
+    function onExamTypeChange() {
+      const type = document.getElementById('sel-exam-type').value;
+      const branchWrapper = document.getElementById('wrapper-exam-branch');
+      if (type === 'Branş Denemesi') {
+        branchWrapper.classList.remove('hidden');
+      } else {
+        branchWrapper.classList.add('hidden');
+      }
+      updateSheet();
+    }
+
     function getDynamicFilename() {
       const studentInput = document.getElementById('inp-student-name').value.trim();
       const givenDateInput = document.getElementById('inp-given-date').value;
@@ -762,7 +852,6 @@
       document.getElementById('active-mod-badge').innerText = badgeMap[mod];
       document.getElementById('out-sub-program-badge').innerText = badgeMap[mod];
 
-      // GÜNLÜK SABİT RUTİNLER PANELİ KONTROLÜ (SADECE LGS, LİSE VE YKS İÇİN AÇILIR)
       const routinesBox = document.getElementById('box-daily-routines-input');
       if (mod === 'lgs' || mod === 'lise_maarif' || mod === 'yks') {
         routinesBox.classList.remove('hidden');
@@ -1091,6 +1180,92 @@
       `).join('');
     }
 
+    // JSON ŞABLON DIŞA AKTAR / İÇE AKTAR
+    function exportTemplateJSON() {
+      if (tasks.length === 0) {
+        alert('Kaydedilecek en az bir ödev maddesi ekleyiniz!');
+        return;
+      }
+
+      const templateData = {
+        version: "1.0",
+        module: currentModule,
+        grade: currentGrade,
+        yksSub: currentYksSub,
+        tasks: tasks,
+        exam: {
+          type: document.getElementById('sel-exam-type').value,
+          branch: document.getElementById('inp-exam-branch').value,
+          source: document.getElementById('inp-exam-source').value,
+          day: document.getElementById('inp-exam-day').value
+        },
+        routines: {
+          paragraf: document.getElementById('inp-routine-paragraf').value,
+          problem: document.getElementById('inp-routine-problem').value,
+          custom: document.getElementById('inp-routine-custom').value
+        },
+        book: {
+          title: document.getElementById('inp-book-title').value,
+          target: document.getElementById('inp-book-target').value,
+          note: document.getElementById('inp-book-note').value
+        }
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(templateData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `ODEV_SABLON_${currentModule.toUpperCase()}_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function importTemplateJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.module) setModule(data.module);
+          if (data.grade) currentGrade = data.grade;
+          if (data.yksSub) currentYksSub = data.yksSub;
+          
+          tasks = data.tasks || [];
+
+          if (data.exam) {
+            document.getElementById('sel-exam-type').value = data.exam.type || '';
+            document.getElementById('inp-exam-branch').value = data.exam.branch || '';
+            document.getElementById('inp-exam-source').value = data.exam.source || '';
+            document.getElementById('inp-exam-day').value = data.exam.day || '';
+            onExamTypeChange();
+          }
+
+          if (data.routines) {
+            document.getElementById('inp-routine-paragraf').value = data.routines.paragraf || '';
+            document.getElementById('inp-routine-problem').value = data.routines.problem || '';
+            document.getElementById('inp-routine-custom').value = data.routines.custom || '';
+          }
+
+          if (data.book) {
+            document.getElementById('inp-book-title').value = data.book.title || '';
+            document.getElementById('inp-book-target').value = data.book.target || '';
+            document.getElementById('inp-book-note').value = data.book.note || '';
+          }
+
+          updateSheet();
+          renderQuickList();
+          setTimeout(adjustScale, 100);
+          alert('Şablon başarıyla yüklendi!');
+        } catch (err) {
+          alert('Geçersiz şablon dosyası!');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
     function handleInstLogoUpload(event) {
       const file = event.target.files[0];
       if (file) {
@@ -1134,7 +1309,26 @@
       document.getElementById('out-due-date').innerText = formatDateStr(dueDate);
       document.getElementById('out-general-note').innerText = genNote;
 
-      // GÜNLÜK SABİT RUTİNLER GÜNCELLEMESİ (LGS, LİSE, YKS)
+      // DENEME SINAVI GÜNCELLEMESİ
+      const examType = document.getElementById('sel-exam-type').value;
+      const examBranch = document.getElementById('inp-exam-branch').value.trim();
+      const examSource = document.getElementById('inp-exam-source').value.trim();
+      const examDay = document.getElementById('inp-exam-day').value.trim();
+      const examCont = document.getElementById('out-exam-container');
+
+      if (examType) {
+        examCont.classList.remove('hidden');
+        examCont.classList.add('flex');
+        const displayExamTitle = (examType === 'Branş Denemesi' && examBranch) ? `Branş Denemesi (${examBranch})` : examType;
+        document.getElementById('out-exam-title').innerText = displayExamTitle;
+        document.getElementById('out-exam-source').innerText = examSource || 'Genel Deneme';
+        document.getElementById('out-exam-day').innerText = examDay ? `(${examDay})` : '';
+      } else {
+        examCont.classList.add('hidden');
+        examCont.classList.remove('flex');
+      }
+
+      // GÜNLÜK SABİT RUTİNLER GÜNCELLEMESİ
       const isExamMod = (currentModule === 'lgs' || currentModule === 'lise_maarif' || currentModule === 'yks');
       const paragrafVal = document.getElementById('inp-routine-paragraf').value.trim();
       const problemVal = document.getElementById('inp-routine-problem').value.trim();
@@ -1216,6 +1410,23 @@
         instContainer.classList.add('hidden');
         instContainer.classList.remove('flex');
         defaultTitle.classList.remove('hidden');
+      }
+
+      // HAFTALIK CANLI SORU SAYACI HESAPLAMA
+      let totalQuestions = 0;
+      tasks.forEach(t => {
+        const matches = t.questions.match(/\d+/g);
+        if (matches) {
+          matches.forEach(num => totalQuestions += parseInt(num, 10));
+        }
+      });
+
+      const totalBadge = document.getElementById('out-total-question-badge');
+      if (totalQuestions > 0) {
+        totalBadge.classList.remove('hidden');
+        document.getElementById('out-total-question-val').innerText = totalQuestions;
+      } else {
+        totalBadge.classList.add('hidden');
       }
 
       // TABLO
