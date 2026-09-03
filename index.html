@@ -538,11 +538,6 @@
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi (Yatay Form)
           </div>
           <div class="flex items-center space-x-2">
-            <!-- SES AÇ / KAPAT BUTONU -->
-            <button id="btn-sound-toggle" onclick="toggleSound()" title="Efekt Sesini Aç / Kapat" class="p-2 w-9 h-9 rounded-xl border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center justify-center">
-              <i id="icon-sound" class="fa-solid fa-volume-high text-xs text-blue-600"></i>
-            </button>
-
             <button onclick="downloadAsImage()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-4 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-brands fa-whatsapp text-sm mr-1.5"></i> Resim İndir (WhatsApp)
             </button>
@@ -767,121 +762,6 @@
     let customInstLogoBase64 = null;
     let selectedDays = [];
 
-    // ==========================================
-    // AKILLI SES MOTORU (WEB AUDIO API)
-    // ==========================================
-    let isSoundEnabled = localStorage.getItem('odevver_sound') !== 'false';
-    let audioCtx = null;
-
-    function getAudioContext() {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
-
-    function updateSoundIcon() {
-      const icon = document.getElementById('icon-sound');
-      const btn = document.getElementById('btn-sound-toggle');
-      if (isSoundEnabled) {
-        icon.className = 'fa-solid fa-volume-high text-xs text-blue-600';
-        btn.classList.remove('bg-rose-50', 'border-rose-300');
-      } else {
-        icon.className = 'fa-solid fa-volume-xmark text-xs text-slate-400';
-        btn.classList.add('bg-rose-50', 'border-rose-300');
-      }
-    }
-
-    function toggleSound() {
-      isSoundEnabled = !isSoundEnabled;
-      localStorage.setItem('odevver_sound', isSoundEnabled);
-      updateSoundIcon();
-      if (isSoundEnabled) {
-        playCameraClickSound(); // Açıldığını hissettiren anlık onay sesi
-      }
-    }
-
-    // 1. Ekran Görüntüsü / Deklanşör Sesi (Resim İndir Butonu İçin)
-    function playCameraClickSound() {
-      if (!isSoundEnabled) return;
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-
-        // 1. Klik vuruşu
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(140, now);
-        osc1.frequency.exponentialRampToValueAtTime(30, now + 0.05);
-        gain1.gain.setValueAtTime(0.4, now);
-        gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-        osc1.connect(gain1);
-        gain1.connect(ctx.destination);
-        osc1.start(now);
-        osc1.stop(now + 0.05);
-
-        // 2. Şak / Perde kapanış efekti (60ms sonra)
-        const osc2 = ctx.createOscillator();
-        const gain2 = ctx.createGain();
-        osc2.type = 'sine';
-        osc2.frequency.setValueAtTime(420, now + 0.06);
-        osc2.frequency.exponentialRampToValueAtTime(80, now + 0.16);
-        gain2.gain.setValueAtTime(0.35, now + 0.06);
-        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
-        osc2.connect(gain2);
-        gain2.connect(ctx.destination);
-        osc2.start(now + 0.06);
-        osc2.stop(now + 0.16);
-      } catch (e) {
-        console.log('Ses çalınamadı:', e);
-      }
-    }
-
-    // 2. Modern Yazıcı / Çıktı Başlatma Sesi (PDF / Yazdır Butonu İçin)
-    function playPrinterSound() {
-      if (!isSoundEnabled) return;
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-
-        // Mekanik dişli/kağıt çekme tonu
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(220, now);
-        osc.frequency.linearRampToValueAtTime(260, now + 0.12);
-        osc.frequency.linearRampToValueAtTime(180, now + 0.25);
-        
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.25);
-
-        // Başarılı onay tonu (Ding)
-        const chime = ctx.createOscillator();
-        const chimeGain = ctx.createGain();
-        chime.type = 'sine';
-        chime.frequency.setValueAtTime(880, now + 0.22); // A5
-        chimeGain.gain.setValueAtTime(0.25, now + 0.22);
-        chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
-
-        chime.connect(chimeGain);
-        chimeGain.connect(ctx.destination);
-        chime.start(now + 0.22);
-        chime.stop(now + 0.65);
-      } catch (e) {
-        console.log('Ses çalınamadı:', e);
-      }
-    }
-
     function toggleDayBtn(btn, day) {
       if (selectedDays.includes(day)) {
         selectedDays = selectedDays.filter(d => d !== day);
@@ -955,7 +835,6 @@
       document.getElementById('inp-given-date').value = today.toISOString().split('T')[0];
       document.getElementById('inp-due-date').value = due.toISOString().split('T')[0];
 
-      updateSoundIcon();
       setModule('ilkokul');
       updateSheet();
       setTimeout(adjustScale, 150);
@@ -1594,8 +1473,6 @@
     }
 
     function downloadAsImage() {
-      playCameraClickSound(); // Canlı deklanşör efekti
-      
       const sourceSheet = document.getElementById('preview-sheet');
       const filename = getDynamicFilename();
 
@@ -1631,18 +1508,12 @@
     }
 
     function printOrSavePDF() {
-      playPrinterSound(); // Mekanik yazıcı & ding efekti
-
       const originalTitle = document.title;
       document.title = getDynamicFilename();
-      
-      // Ses efektinin duyulabilmesi için yazdırma penceresini 250ms sonra tetikliyoruz
+      window.print();
       setTimeout(() => {
-        window.print();
-        setTimeout(() => {
-          document.title = originalTitle;
-        }, 1000);
-      }, 250);
+        document.title = originalTitle;
+      }, 1000);
     }
   </script>
 </body>
