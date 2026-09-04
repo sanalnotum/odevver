@@ -190,29 +190,48 @@
       </div>
     </div>
 
-    <!-- 6 ANA MODÜL KARTI -->
-    <div class="mb-8 no-print text-center">
-      <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Ödevlendirme Türünü Seçin</h2>
-      <p class="text-xs sm:text-sm font-medium text-slate-600 mb-4">Müfredat, sınav hazırlık veya serbest metin formatını belirleyin</p>
-      
+    <!-- YENİ VİTRİN KUTUSU: KATEGORİ SEÇİM BAŞLIĞI -->
+    <div class="mb-5 no-print">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 p-4 sm:p-5 rounded-2xl shadow-md border border-indigo-900/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-11 h-11 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 text-xl flex-shrink-0 shadow-inner">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <div class="flex items-center justify-center sm:justify-start space-x-2 mb-0.5">
+              <span class="bg-blue-500/30 text-blue-200 text-[10px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider border border-blue-400/20">ADIM 1</span>
+              <h2 class="text-base sm:text-lg font-black text-white tracking-tight">Ödevlendirme Türünü Seçin</h2>
+            </div>
+            <p class="text-xs text-blue-200 font-medium">Müfredat, sınav hazırlık veya tamamen serbest metin formatını belirleyin</p>
+          </div>
+        </div>
+        <div class="text-[11px] font-bold text-blue-200 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
+          <i class="fa-solid fa-circle-info text-amber-400"></i>
+          <span>Seçilen türe göre form dinamik güncellenir</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 ANA MODÜL KARTI (BİRBİRİNDEN TAMAMEN FARKLI CANLI RENKLER) -->
+    <div class="mb-8 no-print">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-left">
         
-        <!-- 1. İLKOKUL -->
+        <!-- 1. İLKOKUL (CANLI AÇIK MAVİ / SKY BLUE) -->
         <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 text-white flex items-center justify-center text-lg shadow-md shadow-cyan-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center text-lg shadow-md shadow-sky-200">
               <i class="fa-solid fa-shapes"></i>
             </div>
-            <span class="text-xs font-black text-teal-900 bg-teal-100 border border-teal-300 px-2 py-0.5 rounded-md">1–4. Sınıf</span>
+            <span class="text-xs font-black text-sky-950 bg-sky-100 border border-sky-300 px-2 py-0.5 rounded-md">1–4. Sınıf</span>
           </div>
           <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">1. İLKOKUL</h3>
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">1–4. Sınıf MEB kazanımları.</p>
         </div>
 
-        <!-- 2. ORTAOKUL MAARİF -->
+        <!-- 2. ORTAOKUL MAARİF (ZÜMRÜT YEŞİLİ / EMERALD) -->
         <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-green-800 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200">
               <i class="fa-solid fa-compass-drafting"></i>
             </div>
             <span class="text-xs font-black text-emerald-950 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md">5–8. Sınıf</span>
@@ -221,22 +240,22 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Maarif Modeli kazanımları.</p>
         </div>
 
-        <!-- 3. LİSE MAARİF -->
+        <!-- 3. LİSE MAARİF (SICAK TURUNCU / ORANGE) -->
         <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-lg shadow-md shadow-amber-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-lg shadow-md shadow-orange-200">
               <i class="fa-solid fa-atom"></i>
             </div>
-            <span class="text-xs font-black text-amber-950 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-md">9–12. Sınıf</span>
+            <span class="text-xs font-black text-orange-950 bg-orange-100 border border-orange-300 px-2 py-0.5 rounded-md">9–12. Sınıf</span>
           </div>
           <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">3. LİSE MAARİF</h3>
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Lise tema kazanımları.</p>
         </div>
 
-        <!-- 4. LGS -->
+        <!-- 4. LGS (ATEŞ KIRMIZISI / RED) -->
         <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-700 text-white flex items-center justify-center text-lg shadow-md shadow-red-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 text-white flex items-center justify-center text-lg shadow-md shadow-red-200">
               <i class="fa-solid fa-trophy"></i>
             </div>
             <span class="text-xs font-black text-rose-950 bg-rose-100 border border-rose-300 px-2 py-0.5 rounded-md">8. Sınıf</span>
@@ -245,10 +264,10 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">3 yıllık soru frekansları.</p>
         </div>
 
-        <!-- 5. YKS -->
+        <!-- 5. YKS (DERİN MENEKŞE / PURPLE) -->
         <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200">
               <i class="fa-solid fa-award"></i>
             </div>
             <span class="text-xs font-black text-purple-950 bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-md">TYT / AYT</span>
@@ -257,10 +276,10 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">TYT-AYT soru dağılımları.</p>
         </div>
 
-        <!-- 6. SERBEST / ÖZEL ÖDEVLENDİRME -->
+        <!-- 6. SERBEST ÖDEV (CANLI FUŞYA / FUCHSIA) -->
         <div onclick="setModule('serbest')" id="card-mod-serbest" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
-            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center text-lg shadow-md shadow-fuchsia-200/60">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center text-lg shadow-md shadow-fuchsia-200">
               <i class="fa-solid fa-feather-pointed"></i>
             </div>
             <span class="text-xs font-black text-fuchsia-950 bg-fuchsia-100 border border-fuchsia-300 px-2 py-0.5 rounded-md">Özgür</span>
@@ -278,7 +297,7 @@
       <!-- SOL PANEL: FORM GİRİŞLERİ (5 Sütun) -->
       <div class="xl:col-span-5 space-y-4 no-print">
         
-        <!-- 1. GENEL BİLGİLER VE OTOMATİK HAFIZA (LOCALSTORAGE) -->
+        <!-- 1. GENEL BİLGİLER VE OTOMATİK HAFIZA -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
@@ -340,7 +359,7 @@
           </div>
         </div>
 
-        <!-- 2. ÖDEV SATIRI EKLEME FORMU (MÜFREDAT VEYA SERBEST) -->
+        <!-- 2. ÖDEV SATIRI EKLEME FORMU -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3.5">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
@@ -353,7 +372,7 @@
             
             <div id="container-sub-filter" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- DERS VE TEMA ALANI (STANDART VEYA SERBEST) -->
+            <!-- STANDART MÜFREDAT ALANLARI -->
             <div id="wrapper-standard-fields" class="space-y-3.5">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -366,14 +385,13 @@
                 </div>
               </div>
 
-              <!-- KAZANIM -->
               <div id="wrapper-kazanim">
                 <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
                 <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
               </div>
             </div>
 
-            <!-- SERBEST ALAN GİRİŞİ (SADECE SERBEST MODÜLÜ SEÇİLİNCE GÖRÜNÜR) -->
+            <!-- SERBEST ÖDEV ALANLARI -->
             <div id="wrapper-custom-fields" class="hidden space-y-3">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -569,35 +587,25 @@
       <!-- SAĞ PANEL: Havada Asılı Duran (Sticky) Canlı Çıktı & Butonlar (7 Sütun) -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <!-- ÜST BUTONLAR VE HIZLI PAYLAŞIM -->
+        <!-- ÜST BUTONLAR (SADELEŞTİRİLMİŞ: SADECE TOPLU ÜRET, PNG VE PDF) -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
           
-          <div class="flex items-center flex-wrap gap-2">
+          <div class="flex items-center space-x-2">
             <!-- TOPLU ÖDEV BUTONU -->
-            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
+            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-users mr-1.5"></i> Toplu Ödev Üret
             </button>
 
-            <!-- WHATSAPP BUTONU -->
-            <button onclick="shareViaWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="WhatsApp ile Paylaş">
-              <i class="fa-brands fa-whatsapp text-sm mr-1.5"></i> WhatsApp
-            </button>
-
-            <!-- E-POSTA BUTONU -->
-            <button onclick="shareViaEmail()" class="bg-slate-700 hover:bg-slate-800 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="E-Posta ile Gönder">
-              <i class="fa-solid fa-envelope text-sm mr-1.5"></i> E-Posta
-            </button>
-
-            <!-- RESİM İNDİR -->
-            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="Görsel Olarak Kaydet">
+            <!-- RESİM İNDİR (PNG) -->
+            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center" title="Görsel Olarak İndir">
               <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
             </button>
 
             <!-- PDF / YAZDIR -->
-            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
+            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF
             </button>
           </div>
@@ -638,7 +646,6 @@
                       <span id="out-sub-program-badge" class="inline-block text-xs font-black text-slate-700 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-300">
                         İLKOKUL ÖDEV PLANI
                       </span>
-                      <!-- HAFTALIK CANLI SORU SAYACI ROZETİ -->
                       <span id="out-total-question-badge" class="hidden text-xs font-black text-blue-950 bg-blue-100 border border-blue-300 px-2.5 py-0.5 rounded-full shadow-2xs">
                         <i class="fa-solid fa-bullseye mr-1 text-blue-700"></i> Toplam Hedef: <span id="out-total-question-val">0</span> Soru
                       </span>
@@ -674,7 +681,7 @@
                 </div>
               </div>
 
-              <!-- ÇIKTI TABLOSU (HEDEF GÜN SÜTUNLU) -->
+              <!-- ÇIKTI TABLOSU -->
               <div class="flex-1 overflow-hidden my-1">
                 <table class="w-full text-left border-collapse" style="font-size: 11px;">
                   <thead>
@@ -844,7 +851,7 @@
           <i class="fa-solid fa-file-pdf text-sm"></i>
           <span>Tek PDF (Ayrı Sayfalar)</span>
         </button>
-        <button type="button" onclick="startBulkGeneration('zip_images')" id="btn-bulk-zip" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow flex items-center justify-center space-x-1.5">
+        <button type="button" onclick="startBulkGeneration('zip_images')" id="btn-bulk-zip" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow flex items-center justify-center space-x-1.5">
           <i class="fa-solid fa-file-zipper text-sm"></i>
           <span>Ayrı PNG'ler (ZIP İndir)</span>
         </button>
@@ -878,7 +885,7 @@
     let selectedDays = [];
 
     // ==========================================
-    // 1. KALICI PROFİL HAFIZASI (LOCALSTORAGE)
+    // 1. KALICI PROFİL HAFIZASI
     // ==========================================
     function loadSavedProfile() {
       const savedTeacher = localStorage.getItem('odevver_teacher_name');
@@ -943,16 +950,25 @@
     }
 
     // ==========================================
-    // 2. MODÜL VE DERS SEÇİM YÖNETİMİ (SERBEST MOD DESTEKLİ)
+    // 2. MODÜL VE DERS SEÇİMİ
     // ==========================================
     function setModule(mod) {
       currentModule = mod;
       
+      const cardColorConfig = {
+        'ilkokul': 'bg-sky-50/80 border-sky-500 ring-2 ring-sky-500/30',
+        'ortaokul_maarif': 'bg-emerald-50/80 border-emerald-500 ring-2 ring-emerald-500/30',
+        'lise_maarif': 'bg-orange-50/80 border-orange-500 ring-2 ring-orange-500/30',
+        'lgs': 'bg-rose-50/80 border-rose-500 ring-2 ring-rose-500/30',
+        'yks': 'bg-purple-50/80 border-purple-500 ring-2 ring-purple-500/30',
+        'serbest': 'bg-fuchsia-50/80 border-fuchsia-500 ring-2 ring-fuchsia-500/30'
+      };
+
       ['ilkokul', 'ortaokul_maarif', 'lise_maarif', 'lgs', 'yks', 'serbest'].forEach(m => {
         const card = document.getElementById('card-mod-' + m);
         if (card) {
           if (m === mod) {
-            card.className = 'module-card cursor-pointer bg-blue-50/70 border-2 border-blue-600 ring-2 ring-blue-500/30 p-3.5 rounded-2xl shadow-md relative group';
+            card.className = `module-card cursor-pointer border-2 p-3.5 rounded-2xl shadow-md relative group ${cardColorConfig[m]}`;
           } else {
             card.className = 'module-card cursor-pointer bg-white border-2 border-transparent hover:border-slate-300 p-3.5 rounded-2xl shadow-sm relative group';
           }
@@ -1171,7 +1187,7 @@
     }
 
     // ==========================================
-    // 3. ÖDEV SATIRI EKLEME & YÖNETİM
+    // 3. ÖDEV SATIRI İŞLEMLERİ
     // ==========================================
     function toggleDayBtn(btn, day) {
       if (selectedDays.includes(day)) {
@@ -1346,7 +1362,7 @@
     }
 
     // ==========================================
-    // 4. ŞABLON KAYDET & YÜKLE (JSON)
+    // 4. ŞABLON YÖNETİMİ (JSON)
     // ==========================================
     function exportTemplateJSON() {
       if (tasks.length === 0) {
@@ -1434,7 +1450,7 @@
     }
 
     // ==========================================
-    // 5. ÇIKTI ŞABLONUNU GÜNCELLEME
+    // 5. ÇIKTI ŞABLONU OLUŞTURMA
     // ==========================================
     function formatDateStr(str) {
       if (!str) return '-';
@@ -1648,7 +1664,7 @@
     });
 
     // ==========================================
-    // 6. ÇIKTI & İNDİRME FONKSİYONLARI
+    // 6. ÇIKTI ALMA (PNG & PDF)
     // ==========================================
     async function captureSheetCanvas(customStudentName) {
       if (customStudentName) {
@@ -1707,81 +1723,7 @@
     }
 
     // ==========================================
-    // 7. AKILLI PAYLAŞIM (WHATSAPP & E-POSTA)
-    // ==========================================
-    async function shareViaWhatsApp() {
-      const studentName = document.getElementById('inp-student-name').value.trim() || 'Öğrenci';
-      const defaultText = `Merhaba ${studentName}, haftalık ödev planın ekteki gibidir. Başarılar ve iyi çalışmalar dilerim!`;
-
-      try {
-        const canvas = await captureSheetCanvas();
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob], `${getDynamicFilename()}.png`, { type: 'image/png' });
-
-          // Tablet veya Mobilde Doğrudan Web Share API
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-              await navigator.share({
-                title: 'Ödev Takip Planı',
-                text: defaultText,
-                files: [file]
-              });
-              return;
-            } catch (shareErr) {
-              console.log('Share penceresi kapatıldı veya iptal edildi.');
-            }
-          }
-
-          // Bilgisayar / Masaüstü için: Panoya Kopyala ve WhatsApp Web Aç
-          try {
-            if (navigator.clipboard && navigator.clipboard.write) {
-              await navigator.clipboard.write([
-                new ClipboardItem({ 'image/png': blob })
-              ]);
-              alert('Ödev görseli panoya kopyalandı! Açılan WhatsApp Web penceresinde sohbete tıklayıp Ctrl + V (Yapıştır) yapmanız yeterlidir.');
-            } else {
-              // Pano desteklenmiyorsa görseli bilgisayara indir
-              const link = document.createElement('a');
-              link.download = `${getDynamicFilename()}.png`;
-              link.href = canvas.toDataURL('image/png');
-              link.click();
-              alert('Ödev görseli indirildi! Açılan WhatsApp Web penceresinden öğrencinize sürükleyip gönderebilirsiniz.');
-            }
-          } catch (clipErr) {
-            const link = document.createElement('a');
-            link.download = `${getDynamicFilename()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-          }
-
-          const waUrl = `https://web.whatsapp.com/send?text=${encodeURIComponent(defaultText)}`;
-          window.open(waUrl, '_blank');
-        }, 'image/png');
-
-      } catch (err) {
-        alert('Paylaşım görseli oluşturulurken hata oluştu.');
-      }
-    }
-
-    async function shareViaEmail() {
-      const studentName = document.getElementById('inp-student-name').value.trim() || 'Öğrenci';
-      const subject = encodeURIComponent(`Haftalık Ödev Takip Planı - ${studentName}`);
-      const body = encodeURIComponent(`Merhaba ${studentName},\n\nHaftalık ödev takip planın hazırlanmıştır. Ekteki yönergelere göre çalışmalarını zamanında tamamlamanı rica ederim.\n\nİyi çalışmalar!`);
-
-      // Görseli otomatik bilgisayara indir ve Mail uygulamasını aç
-      try {
-        const canvas = await captureSheetCanvas();
-        const link = document.createElement('a');
-        link.download = `${getDynamicFilename()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      } catch (e) {}
-
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    }
-
-    // ==========================================
-    // 8. TOPLU ÖDEV MODAL & EXCEL/ZIP SİSTEMİ
+    // 7. TOPLU ÜRETİM (MODAL & EXCEL)
     // ==========================================
     function openBulkModal() {
       if (tasks.length === 0) {
@@ -1854,7 +1796,6 @@
 
       try {
         if (type === 'single_pdf') {
-          // jsPDF ile tek PDF ve çoklu sayfalar
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
@@ -1876,7 +1817,6 @@
           alert('Tüm sınıfın ödevleri tek bir PDF dosyasında başarıyla oluşturuldu!');
 
         } else if (type === 'zip_images') {
-          // JSZip ile ayrı ayrı PNG'ler
           const zip = new JSZip();
 
           for (let i = 0; i < names.length; i++) {
@@ -1904,7 +1844,6 @@
         console.error(err);
         alert('Toplu üretim esnasında bir hata oluştu.');
       } finally {
-        // Asıl öğrenci adını geri yükle
         document.getElementById('out-student-name').innerText = originalStudent || 'Belirtilmedi';
         progressBox.classList.add('hidden');
         document.getElementById('btn-bulk-single').disabled = false;
