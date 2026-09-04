@@ -176,7 +176,6 @@
       </div>
       
       <div class="flex items-center flex-wrap gap-2.5">
-        <!-- ARŞİV BUTONU -->
         <button onclick="openArchiveModal()" class="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 px-3.5 py-1.5 rounded-xl text-xs font-black text-white shadow-md transition">
           <i class="fa-solid fa-box-archive text-sm"></i>
           <span>Öğrenci Takip & Arşiv (<span id="btn-archive-count">0</span>)</span>
@@ -197,7 +196,6 @@
   <!-- ANA İÇERİK -->
   <main class="max-w-[1440px] mx-auto px-3 sm:px-6 py-6 w-full flex-1">
     
-    <!-- BİLGİ KUTUSU -->
     <div class="mb-6 max-w-5xl mx-auto no-print">
       <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-950 p-3.5 rounded-xl shadow-sm border border-amber-200">
         <div class="flex items-center space-x-3.5">
@@ -214,7 +212,6 @@
       </div>
     </div>
 
-    <!-- VİTRİN KUTUSU -->
     <div class="mb-6 no-print flex justify-center">
       <div class="max-w-2xl w-full bg-gradient-to-r from-blue-50 via-indigo-50/70 to-sky-50 p-4 rounded-2xl border border-blue-200 shadow-sm text-center">
         <div class="inline-flex items-center space-x-2 bg-blue-600 text-white text-[10.5px] font-black uppercase px-3 py-0.5 rounded-full tracking-wider mb-2 shadow-xs">
@@ -233,7 +230,6 @@
     <!-- 6 ANA MODÜL KARTI -->
     <div class="mb-8 no-print">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-left">
-        
         <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center text-lg shadow-md shadow-sky-200">
@@ -299,7 +295,6 @@
           <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">6. SERBEST ÖDEV</h3>
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Kendi ders & konunu yaz.</p>
         </div>
-
       </div>
     </div>
 
@@ -380,7 +375,6 @@
           </div>
 
           <form id="form-add-task" onsubmit="addTask(event)" class="space-y-3.5">
-            
             <div id="container-sub-filter" class="grid grid-cols-2 gap-3"></div>
 
             <div id="wrapper-standard-fields" class="space-y-3.5">
@@ -500,7 +494,7 @@
           </div>
         </div>
 
-        <!-- MEB KAREKODLARI -->
+        <!-- DİJİTAL MEB KAYNAKLARI (KAREKOD) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-sky-950 uppercase tracking-wider flex items-center">
@@ -633,35 +627,30 @@
       <!-- SAĞ PANEL -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <!-- ÜST BUTONLAR: YENİ "ÖDEVİ KAYDET / ARŞİVE EKLE" BUTONU -->
+        <!-- ÜST BUTONLAR -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
           
           <div class="flex items-center flex-wrap gap-2">
-            <!-- YENİ: ARŞİVE KAYDET -->
             <button onclick="saveCurrentAssignmentToArchive()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Bu ödevi öğrencinin takip arşivine kaydeder">
               <i class="fa-solid fa-bookmark mr-1.5"></i> Ödevi Kaydet
             </button>
 
-            <!-- VELİ METNİNİ KOPYALA -->
             <button onclick="copyParentNote()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-regular fa-copy mr-1.5"></i> Veli Metni
             </button>
 
-            <!-- TOPLU ÖDEV BUTONU -->
             <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-users mr-1.5"></i> Toplu Üret
             </button>
 
-            <!-- RESİM İNDİR (PNG) -->
             <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
             </button>
 
-            <!-- PDF / YAZDIR -->
-            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
+            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF
             </button>
           </div>
@@ -670,7 +659,6 @@
         <!-- VIEWPORT -->
         <div id="preview-viewport">
           <div id="preview-scaler">
-            
             <div id="preview-sheet" class="bg-white rounded-lg shadow-xl text-slate-900 p-6 relative flex flex-col justify-between" style="width: 1000px; min-height: 640px; box-sizing: border-box; border: 2.5px solid #1d4ed8;">
               
               <!-- ÇIKTI ÜST ALANI -->
@@ -824,7 +812,6 @@
                   </div>
                 </div>
 
-                <!-- ÖĞRETMEN NOTU & KAREKODLAR -->
                 <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-center justify-between gap-3 text-xs">
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
@@ -840,7 +827,6 @@
               </div>
 
             </div>
-
           </div>
         </div>
 
@@ -850,11 +836,10 @@
 
   </main>
 
-  <!-- YENİ MODAL: ÖĞRENCİ TAKİP & GELİŞİM ARŞİVİ -->
+  <!-- ÖĞRENCİ TAKİP & GELİŞİM ARŞİVİ MODAL -->
   <div id="modal-archive" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
     <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       
-      <!-- BAŞLIK -->
       <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-purple-700 to-indigo-800 text-white">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
@@ -870,10 +855,9 @@
         </button>
       </div>
 
-      <!-- İÇERİK BÖLÜMÜ (SOL LİSTE - SAĞ DETAY & RAPOR) -->
       <div class="flex-1 overflow-hidden grid grid-cols-1 md:grid-cols-12">
         
-        <!-- SOL LİSTE: ÖĞRENCİLER VE ÖDEVLERİ -->
+        <!-- SOL LİSTE -->
         <div class="md:col-span-4 border-r border-slate-200 p-4 bg-slate-50 flex flex-col h-full overflow-y-auto">
           <div class="mb-3">
             <label class="block text-xs font-black text-slate-800 mb-1">Öğrenciye Göre Filtrele</label>
@@ -886,9 +870,26 @@
           </div>
 
           <div id="archive-items-list" class="space-y-2 flex-1 overflow-y-auto pr-1 text-xs"></div>
+
+          <!-- YEDEKLEME VE AKTARMA BUTONLARI -->
+          <div class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-2 gap-2">
+            <button onclick="exportArchiveJSON()" class="bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1" title="Tüm arşivi tablete veya başka cihaza aktarmak için JSON dosyası olarak indirir">
+              <i class="fa-solid fa-cloud-arrow-down text-purple-700"></i>
+              <span>Yedek İndir (JSON)</span>
+            </button>
+            <label class="cursor-pointer bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1 text-center truncate" title="Başka cihazdan indirilen JSON yedeğini yükler">
+              <i class="fa-solid fa-cloud-arrow-up text-purple-700"></i>
+              <span>Yedeği Yükle</span>
+              <input type="file" id="inp-import-archive-json" accept=".json" onchange="importArchiveJSON(event)" class="hidden">
+            </label>
+          </div>
+          <button onclick="exportArchiveExcel()" class="w-full mt-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1.5" title="Tüm öğrenci arşivini resmi Excel raporu olarak indirir">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i>
+            <span>Tüm Arşivi Excel (.xlsx) Olarak İndir</span>
+          </button>
         </div>
 
-        <!-- SAĞ PANEL: ÖDEV KONTROL PANELİ VEYA VELİ GELİŞİM RAPORU -->
+        <!-- SAĞ PANEL -->
         <div class="md:col-span-8 p-6 flex flex-col h-full overflow-y-auto bg-white" id="archive-detail-panel">
           <div class="flex-1 flex flex-col items-center justify-center text-slate-400 p-8 text-center">
             <i class="fa-solid fa-clipboard-check text-5xl mb-3 text-slate-300"></i>
@@ -902,7 +903,7 @@
     </div>
   </div>
 
-  <!-- TOPLU ÖDEV MODAL PENCERESİ -->
+  <!-- TOPLU ÖDEV MODAL -->
   <div id="modal-bulk" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -1415,7 +1416,7 @@
         questions: questions,
         targetDay: targetDayStr,
         desc: desc,
-        status: 'pending', // pending, done, partial, missing
+        status: 'pending',
         solvedQuestions: ''
       });
 
@@ -1577,7 +1578,7 @@
     }
 
     // ==========================================
-    // 5. YEREL ARŞİV VE GELİŞİM MOTORU (INDEXEDDB / LOCALSTORAGE)
+    // 5. YEREL ARŞİV VE GELİŞİM MOTORU
     // ==========================================
     function getArchive() {
       try {
@@ -1625,7 +1626,7 @@
         dueDate: document.getElementById('inp-due-date').value,
         totalQuestions: totalQ,
         solvedQuestions: 0,
-        status: 'pending', // pending = beklemede, completed = teslim alındı
+        status: 'pending',
         completionRate: 0,
         tasks: JSON.parse(JSON.stringify(tasks)),
         exam: {
@@ -1646,7 +1647,7 @@
       archive.unshift(newRecord);
       saveArchive(archive);
 
-      alert(`✅ "${studentName}" öğrencisinin ödevi başarıyla arşive kaydedildi!\nÖğrenci ödevi getirdiğinde üstteki "Öğrenci Takip & Arşiv" butonundan teslim alıp tikleyebilirsiniz.`);
+      alert(`✅ "${studentName}" öğrencisinin ödevi başarıyla arşive kaydedildi!\nÖğrenci ödevi getirdiğinde üstteki "Öğrenci Takip & Arşiv" butonundan teslim alıp kontrol edebilirsiniz.`);
     }
 
     function openArchiveModal() {
@@ -1698,7 +1699,6 @@
 
       const panel = document.getElementById('archive-detail-panel');
 
-      // ÖĞRENCİNİN TÜM GEÇMİŞİNİ AL VE RAPOR ÇIKAR
       const studentAllRecords = archive.filter(r => r.studentName.toLowerCase() === record.studentName.toLowerCase());
       const completedRecords = studentAllRecords.filter(r => r.status === 'completed');
       
@@ -1718,8 +1718,6 @@
 
       panel.innerHTML = `
         <div class="space-y-4">
-          
-          <!-- ÜST KART: ÖĞRENCİ VE ÖDEV ÖZETİ -->
           <div class="bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 p-4 rounded-2xl border border-purple-200 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div class="flex items-center space-x-2">
@@ -1741,7 +1739,6 @@
             </div>
           </div>
 
-          <!-- VELİ BİLGİLENDİRME & GELİŞİM ÇUBUKLARI -->
           <div class="grid grid-cols-3 gap-3">
             <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-2xs">
               <span class="block text-[11px] text-slate-500 font-bold uppercase">Toplam Kayıtlı Ödev</span>
@@ -1757,7 +1754,6 @@
             </div>
           </div>
 
-          <!-- HAFTALIK ÖDEV SATIRLARI TESLİM KONTROLÜ -->
           <div class="bg-white rounded-2xl border border-slate-200 p-4">
             <div class="flex items-center justify-between mb-3">
               <h4 class="text-xs font-black text-slate-800 uppercase flex items-center">
@@ -1774,7 +1770,6 @@
                     <div class="text-[11px] text-slate-500 mt-0.5">Hedef: ${t.questions} Soru • ${t.source}</div>
                   </div>
 
-                  <!-- DURUM SEÇİCİLER -->
                   <div class="flex items-center space-x-1.5">
                     <button type="button" onclick="setTaskStatus('${record.id}', ${idx}, 'done')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${t.status === 'done' ? 'bg-emerald-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700 hover:bg-emerald-50'}">
                       ✓ Yapıldı
@@ -1790,7 +1785,6 @@
               `).join('')}
             </div>
 
-            <!-- ÖĞRETMEN DEĞERLENDİRME & GERİ BİLDİRİM NOTU -->
             <div class="mt-4 pt-3 border-t border-slate-200">
               <label class="block text-xs font-bold text-slate-800 mb-1">Bu Hafta İçin Öğretmen Değerlendirmesi / Veli Notu</label>
               <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması çok iyiydi ancak 15 soru eksik kaldı. Hafta içi telafi edilecek." class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
@@ -1802,7 +1796,6 @@
             </button>
           </div>
 
-          <!-- HAFTALIK GELİŞİM GRAFİĞİ -->
           <div class="bg-white rounded-2xl border border-slate-200 p-4">
             <h4 class="text-xs font-black text-slate-800 uppercase mb-3 flex items-center">
               <i class="fa-solid fa-chart-line mr-1.5 text-indigo-600"></i> Öğrencinin Haftalık Başarı Çizelgesi
@@ -1907,6 +1900,108 @@
         renderArchiveList();
         document.getElementById('archive-detail-panel').innerHTML = '';
       }
+    }
+
+    // ==========================================
+    // ARŞİV YEDEKLEME, AKTARMA VE EXCEL
+    // ==========================================
+    function exportArchiveJSON() {
+      const archive = getArchive();
+      if (archive.length === 0) {
+        alert('İndirilecek kayıtlı öğrenci arşivi bulunmuyor!');
+        return;
+      }
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(archive, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `ODEV_VER_OGRENCI_ARSIV_YEDEK_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function importArchiveJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const incoming = JSON.parse(e.target.result);
+          if (!Array.isArray(incoming)) {
+            alert('Geçersiz arşiv dosyası biçimi!');
+            return;
+          }
+
+          const existing = getArchive();
+          const shouldMerge = confirm(
+            `Yedek dosyasında ${incoming.length} kayıt bulundu.\n\n` +
+            `• 'Tamam' derseniz mevcut kayıtlarınızın üzerine eklenecektir (Birleştirme).\n` +
+            `• 'İptal' derseniz işlem durdurulur.`
+          );
+
+          if (shouldMerge) {
+            const idMap = new Map();
+            existing.forEach(item => idMap.set(item.id, item));
+            incoming.forEach(item => idMap.set(item.id, item));
+            
+            const merged = Array.from(idMap.values());
+            saveArchive(merged);
+            renderArchiveList();
+            alert(`✅ Arşiv başarıyla güncellendi! Toplam ${merged.length} kayıt hafızada.`);
+          }
+        } catch (err) {
+          alert('Arşiv yedeği yüklenirken bir hata oluştu!');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function exportArchiveExcel() {
+      const archive = getArchive();
+      if (archive.length === 0) {
+        alert('Excel dökümü alınacak kayıtlı ödev bulunmuyor!');
+        return;
+      }
+
+      const rows = [];
+      archive.forEach(rec => {
+        rec.tasks.forEach((t, idx) => {
+          rows.push({
+            "Öğrenci Adı": rec.studentName,
+            "Öğretmen": rec.teacherName,
+            "Modül": rec.module.toUpperCase(),
+            "Veriliş Tarihi": formatDateStr(rec.givenDate),
+            "Teslim Tarihi": formatDateStr(rec.dueDate),
+            "Genel Başarı": `%${rec.completionRate || 0}`,
+            "Teslim Durumu": rec.status === 'completed' ? 'Teslim Alındı' : 'Beklemede',
+            "Görev No": idx + 1,
+            "Ders": t.subject,
+            "Konu / Kazanım": t.topic,
+            "Kaynak": t.source,
+            "Sayfa": t.pages,
+            "Hedef Soru": t.questions,
+            "Görev Durumu": t.status === 'done' ? 'Yapıldı' : t.status === 'partial' ? 'Eksik' : t.status === 'missing' ? 'Yapılmadı' : 'Bekliyor',
+            "Hedef Gün": t.targetDay,
+            "Öğretmen Değerlendirme Notu": rec.feedbackNote || '-'
+          });
+        });
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Ödev_Gelişim_Raporu");
+
+      const colWidths = [
+        { wch: 20 }, { wch: 18 }, { wch: 14 }, { wch: 14 }, { wch: 14 },
+        { wch: 12 }, { wch: 14 }, { wch: 10 }, { wch: 18 }, { wch: 30 },
+        { wch: 16 }, { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 35 }
+      ];
+      worksheet['!cols'] = colWidths;
+
+      XLSX.writeFile(workbook, `ODEV_VER_GELISIM_RAPORU_${Date.now()}.xlsx`);
     }
 
     // ==========================================
