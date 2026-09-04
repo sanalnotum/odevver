@@ -11,6 +11,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
@@ -138,7 +142,7 @@
 
   <!-- ÜST BAR -->
   <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white shadow-md sticky top-0 z-50 no-print">
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-4">
       
       <div class="flex items-center space-x-3">
         <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center p-1 border border-white/20 shadow-inner overflow-hidden flex-shrink-0">
@@ -167,7 +171,7 @@
   </header>
 
   <!-- ANA İÇERİK -->
-  <main class="max-w-[1400px] mx-auto px-3 sm:px-6 py-6 w-full flex-1">
+  <main class="max-w-[1440px] mx-auto px-3 sm:px-6 py-6 w-full flex-1">
     
     <!-- BİLGİ KUTUSU -->
     <div class="mb-6 max-w-5xl mx-auto no-print">
@@ -186,71 +190,83 @@
       </div>
     </div>
 
-    <!-- 5 ANA MODÜL KARTI -->
+    <!-- 6 ANA MODÜL KARTI -->
     <div class="mb-8 no-print text-center">
       <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Ödevlendirme Türünü Seçin</h2>
-      <p class="text-xs sm:text-sm font-medium text-slate-600 mb-4">Müfredat ve kademeye uygun sistemi belirleyin</p>
+      <p class="text-xs sm:text-sm font-medium text-slate-600 mb-4">Müfredat, sınav hazırlık veya serbest metin formatını belirleyin</p>
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 text-left">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-left">
         
-        <!-- 1. İLKOKUL ÖDEVLENDİRME -->
-        <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
-          <div class="flex items-center justify-between mb-3">
-            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 text-white flex items-center justify-center text-xl shadow-lg shadow-cyan-200/60">
+        <!-- 1. İLKOKUL -->
+        <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 text-white flex items-center justify-center text-lg shadow-md shadow-cyan-200/60">
               <i class="fa-solid fa-shapes"></i>
             </div>
-            <span class="text-sm font-black text-teal-900 bg-teal-100 border-2 border-teal-300 px-2.5 py-1 rounded-lg tracking-wider">1, 2, 3, 4</span>
+            <span class="text-xs font-black text-teal-900 bg-teal-100 border border-teal-300 px-2 py-0.5 rounded-md">1–4. Sınıf</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">1. İLKOKUL ÖDEVLENDİRME</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">1–4. Sınıf tüm dersler ve Maarif/MEB kazanımları.</p>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">1. İLKOKUL</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">1–4. Sınıf MEB kazanımları.</p>
         </div>
 
-        <!-- 2. ORTAOKUL MAARİF ÖDEVLENDİRME -->
-        <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
-          <div class="flex items-center justify-between mb-3">
-            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-green-800 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-200/60">
+        <!-- 2. ORTAOKUL MAARİF -->
+        <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-green-800 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200/60">
               <i class="fa-solid fa-compass-drafting"></i>
             </div>
-            <span class="text-sm font-black text-emerald-950 bg-emerald-100 border-2 border-emerald-300 px-2.5 py-1 rounded-lg tracking-wider">5, 6, 7, 8</span>
+            <span class="text-xs font-black text-emerald-950 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md">5–8. Sınıf</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">2. ORTAOKUL MAARİF ÖDEVLENDİRME</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">Türkiye Yüzyılı Maarif Modeli tema ve kazanımları.</p>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">2. ORTAOKUL MAARİF</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Maarif Modeli kazanımları.</p>
         </div>
 
-        <!-- 3. LİSE MAARİF ÖDEVLENDİRME -->
-        <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
-          <div class="flex items-center justify-between mb-3">
-            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-xl shadow-lg shadow-amber-200/60">
+        <!-- 3. LİSE MAARİF -->
+        <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-lg shadow-md shadow-amber-200/60">
               <i class="fa-solid fa-atom"></i>
             </div>
-            <span class="text-sm font-black text-amber-950 bg-amber-100 border-2 border-amber-300 px-2.5 py-1 rounded-lg tracking-wider">9, 10, 11, 12</span>
+            <span class="text-xs font-black text-amber-950 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-md">9–12. Sınıf</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">3. LİSE MAARİF ÖDEVLENDİRME</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">9–12. Sınıf lise dersleri ve güncel tema kazanımları.</p>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">3. LİSE MAARİF</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Lise tema kazanımları.</p>
         </div>
 
-        <!-- 4. LGS ÖDEVLENDİRME -->
-        <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
-          <div class="flex items-center justify-between mb-3">
-            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-red-700 text-white flex items-center justify-center text-xl shadow-lg shadow-red-200/60">
+        <!-- 4. LGS -->
+        <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-700 text-white flex items-center justify-center text-lg shadow-md shadow-red-200/60">
               <i class="fa-solid fa-trophy"></i>
             </div>
-            <span class="text-xs font-black text-rose-950 bg-rose-100 border-2 border-rose-300 px-2.5 py-1 rounded-lg tracking-wider">8. SINIF</span>
+            <span class="text-xs font-black text-rose-950 bg-rose-100 border border-rose-300 px-2 py-0.5 rounded-md">8. Sınıf</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">4. LGS ÖDEVLENDİRME</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">8. Sınıf müfredatı ve 2024–2026 çıkmış soru analizleri.</p>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">4. LGS</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">3 yıllık soru frekansları.</p>
         </div>
 
-        <!-- 5. YKS ÖDEVLENDİRME -->
-        <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-4 rounded-2xl shadow-sm relative group">
-          <div class="flex items-center justify-between mb-3">
-            <div class="icon-box w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-xl shadow-lg shadow-purple-200/60">
+        <!-- 5. YKS -->
+        <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200/60">
               <i class="fa-solid fa-award"></i>
             </div>
-            <span class="text-xs font-black text-purple-950 bg-purple-100 border-2 border-purple-300 px-2.5 py-1 rounded-lg tracking-wider">TYT / AYT</span>
+            <span class="text-xs font-black text-purple-950 bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-md">TYT / AYT</span>
           </div>
-          <h3 class="font-extrabold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">5. YKS ÖDEVLENDİRME</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed font-medium">TYT-AYT dersleri ve 3 yıllık soru frekans dağılımları.</p>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">5. YKS</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">TYT-AYT soru dağılımları.</p>
+        </div>
+
+        <!-- 6. SERBEST / ÖZEL ÖDEVLENDİRME -->
+        <div onclick="setModule('serbest')" id="card-mod-serbest" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center text-lg shadow-md shadow-fuchsia-200/60">
+              <i class="fa-solid fa-feather-pointed"></i>
+            </div>
+            <span class="text-xs font-black text-fuchsia-950 bg-fuchsia-100 border border-fuchsia-300 px-2 py-0.5 rounded-md">Özgür</span>
+          </div>
+          <h3 class="font-extrabold text-xs text-slate-900 mb-1 leading-snug">6. SERBEST ÖDEV</h3>
+          <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Kendi ders & konunu yaz.</p>
         </div>
 
       </div>
@@ -262,16 +278,23 @@
       <!-- SOL PANEL: FORM GİRİŞLERİ (5 Sütun) -->
       <div class="xl:col-span-5 space-y-4 no-print">
         
-        <!-- 1. GENEL BİLGİLER FORMU -->
+        <!-- 1. GENEL BİLGİLER VE OTOMATİK HAFIZA (LOCALSTORAGE) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-          <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider mb-3.5 flex items-center">
-            <i class="fa-solid fa-sliders mr-2 text-blue-600"></i> 1. Genel Bilgiler
-          </h3>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-sliders mr-2 text-blue-600"></i> 1. Genel Bilgiler
+            </h3>
+            <button onclick="clearSavedProfile()" class="text-[11px] font-bold text-slate-400 hover:text-red-600 transition flex items-center space-x-1" title="Kayıtlı öğretmen adı, kurum ve logoyu hafızadan temizler">
+              <i class="fa-solid fa-rotate-left"></i>
+              <span>Profili Sıfırla</span>
+            </button>
+          </div>
+
           <div class="space-y-3.5">
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Öğretmen Adı Soyadı</label>
-                <input type="text" id="inp-teacher-name" placeholder="Örn: Mustafa Bey" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
+                <input type="text" id="inp-teacher-name" placeholder="Örn: Mustafa Bey" oninput="onProfileFieldChange()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenci Adı Soyadı</label>
@@ -281,11 +304,11 @@
 
             <div class="grid grid-cols-2 gap-3 pt-1 border-t border-slate-100">
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Kurum Adı (İsteğe Bağlı)</label>
-                <input type="text" id="inp-institution-name" placeholder="Boş ise 'Kişiye Özel' olur" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
+                <label class="block text-xs font-bold text-slate-700 mb-1">Kurum Adı (Otomatik Kayıt)</label>
+                <input type="text" id="inp-institution-name" placeholder="Boş ise 'Kişiye Özel' olur" oninput="onProfileFieldChange()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Kurum Logosu (İsteğe Bağlı)</label>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Kurum Logosu (Kalıcı)</label>
                 <div class="flex items-center space-x-1.5">
                   <label class="cursor-pointer flex-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 border border-dashed border-slate-300 rounded-lg px-2.5 py-2 text-center text-xs font-bold truncate transition">
                     <i class="fa-solid fa-cloud-arrow-up mr-1 text-blue-600"></i> <span id="lbl-inst-logo">Logo Yükle</span>
@@ -317,7 +340,7 @@
           </div>
         </div>
 
-        <!-- 2. ÖDEV SATIRI EKLEME FORMU -->
+        <!-- 2. ÖDEV SATIRI EKLEME FORMU (MÜFREDAT VEYA SERBEST) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3.5">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
@@ -330,27 +353,43 @@
             
             <div id="container-sub-filter" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- DERS VE TEMA -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-bold text-slate-800 mb-1">Ders</label>
-                <select id="sel-subject" onchange="onSubjectChange()" required class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+            <!-- DERS VE TEMA ALANI (STANDART VEYA SERBEST) -->
+            <div id="wrapper-standard-fields" class="space-y-3.5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-800 mb-1">Ders</label>
+                  <select id="sel-subject" onchange="onSubjectChange()" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+                </div>
+                <div id="wrapper-theme">
+                  <label id="lbl-theme" class="block text-xs font-bold text-slate-800 mb-1">Tema / Ünite</label>
+                  <select id="sel-theme" onchange="onThemeChange()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+                </div>
               </div>
-              <div id="wrapper-theme">
-                <label id="lbl-theme" class="block text-xs font-bold text-slate-800 mb-1">Tema / Ünite</label>
-                <select id="sel-theme" onchange="onThemeChange()" required class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+
+              <!-- KAZANIM -->
+              <div id="wrapper-kazanim">
+                <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
+                <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
               </div>
             </div>
 
-            <!-- KAZANIM -->
-            <div id="wrapper-kazanim">
-              <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
-              <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+            <!-- SERBEST ALAN GİRİŞİ (SADECE SERBEST MODÜLÜ SEÇİLİNCE GÖRÜNÜR) -->
+            <div id="wrapper-custom-fields" class="hidden space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-fuchsia-950 mb-1">Serbest Ders Adı</label>
+                  <input type="text" id="inp-custom-subject" placeholder="Örn: Geometri / Müzik / Kodlama" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-fuchsia-50/40 border border-fuchsia-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-fuchsia-950 mb-1">Konu / Ödev Başlığı</label>
+                  <input type="text" id="inp-custom-topic" placeholder="Örn: Üçgende Açı Fasikülü / Ritim Çalışması" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-fuchsia-50/40 border border-fuchsia-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:outline-none">
+                </div>
+              </div>
             </div>
 
             <!-- ÇALIŞMA TÜRÜ -->
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-              <label class="block text-xs font-bold text-slate-800 mb-1.5">Çalışma Türü (İkisi de Seçilebilir):</label>
+              <label class="block text-xs font-bold text-slate-800 mb-1.5">Çalışma Türü:</label>
               <div class="flex items-center space-x-6 text-xs font-bold text-slate-800">
                 <label class="flex items-center space-x-2 cursor-pointer">
                   <input type="checkbox" id="chk-type-study" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
@@ -384,7 +423,7 @@
               </div>
             </div>
 
-            <!-- HEDEF GÜN SEÇİMİ (HAP BUTONLAR) -->
+            <!-- HEDEF GÜN SEÇİMİ -->
             <div class="p-2.5 rounded-xl bg-blue-50/60 border border-blue-200">
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-black text-blue-950">
@@ -414,7 +453,7 @@
           </form>
         </div>
 
-        <!-- 3. EKLENEN ÖDEVLER LİSTESİ & HIZLI ŞABLON (JSON) KAYDET/YÜKLE -->
+        <!-- 3. EKLENEN ÖDEVLER LİSTESİ & HIZLI ŞABLON (JSON) -->
         <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-extrabold text-slate-800 uppercase">Eklenen Ödevler (<span id="task-count">0</span>)</span>
@@ -424,7 +463,6 @@
             <p class="text-slate-400 italic text-center py-2">Henüz ödev maddesi eklenmedi.</p>
           </div>
 
-          <!-- JSON ŞABLON YÖNETİMİ -->
           <div class="pt-2.5 border-t border-slate-200 grid grid-cols-2 gap-2">
             <button type="button" onclick="exportTemplateJSON()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold py-2 px-3 rounded-xl border border-slate-300 transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-download text-blue-600"></i>
@@ -476,7 +514,7 @@
           </div>
         </div>
 
-        <!-- 5. GÜNLÜK SABİT SINAV RUTİNLERİ (LGS, LİSE, YKS) -->
+        <!-- 5. GÜNLÜK SABİT SINAV RUTİNLERİ -->
         <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
@@ -484,8 +522,6 @@
             </h3>
             <span class="text-[10.5px] text-indigo-800 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-md font-black">Hergün</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium mb-3">Her gün çözülecek sabit soru sayılarını belirleyin.</p>
-          
           <div class="grid grid-cols-2 gap-3 mb-2.5">
             <div>
               <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-book-open text-blue-600 mr-1"></i> Günlük Paragraf</label>
@@ -497,7 +533,7 @@
             </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev (İsteğe Bağlı)</label>
+            <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev</label>
             <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
         </div>
@@ -530,19 +566,39 @@
 
       </div>
 
-      <!-- SAĞ PANEL: Havada Asılı Duran (Sticky) Canlı Çıktı Önizlemesi (7 Sütun) -->
+      <!-- SAĞ PANEL: Havada Asılı Duran (Sticky) Canlı Çıktı & Butonlar (7 Sütun) -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
+        <!-- ÜST BUTONLAR VE HIZLI PAYLAŞIM -->
+        <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
-            <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi (Yatay Form)
+            <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
-          <div class="flex items-center space-x-2">
-            <button onclick="downloadAsImage()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-4 py-2 rounded-xl transition shadow flex items-center">
-              <i class="fa-brands fa-whatsapp text-sm mr-1.5"></i> Resim İndir (WhatsApp)
+          
+          <div class="flex items-center flex-wrap gap-2">
+            <!-- TOPLU ÖDEV BUTONU -->
+            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
+              <i class="fa-solid fa-users mr-1.5"></i> Toplu Ödev Üret
             </button>
-            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2 rounded-xl transition shadow flex items-center">
-              <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF / Yazdır
+
+            <!-- WHATSAPP BUTONU -->
+            <button onclick="shareViaWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="WhatsApp ile Paylaş">
+              <i class="fa-brands fa-whatsapp text-sm mr-1.5"></i> WhatsApp
+            </button>
+
+            <!-- E-POSTA BUTONU -->
+            <button onclick="shareViaEmail()" class="bg-slate-700 hover:bg-slate-800 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="E-Posta ile Gönder">
+              <i class="fa-solid fa-envelope text-sm mr-1.5"></i> E-Posta
+            </button>
+
+            <!-- RESİM İNDİR -->
+            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center" title="Görsel Olarak Kaydet">
+              <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
+            </button>
+
+            <!-- PDF / YAZDIR -->
+            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
+              <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF
             </button>
           </div>
         </div>
@@ -737,8 +793,67 @@
 
   </main>
 
+  <!-- TOPLU ÖDEV ÜRETİM MODAL PENCERESİ -->
+  <div id="modal-bulk" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-slate-900 leading-tight">Toplu Ödev Oluştur & Dağıt</h3>
+            <p class="text-xs text-slate-500">Hazırlanan ödev şablonunu tüm sınıfa tek tıkla uygular</p>
+          </div>
+        </div>
+        <button onclick="closeBulkModal()" class="text-slate-400 hover:text-slate-600 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-black text-slate-800 mb-1">1. Öğrenci İsimleri (Her satıra bir isim veya virgülle ayırın):</label>
+          <textarea id="inp-bulk-names" rows="4" placeholder="Ahmet Yılmaz&#10;Ayşe Kaya&#10;Mehmet Demir" class="w-full text-xs font-semibold text-slate-900 p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none"></textarea>
+        </div>
+
+        <div class="bg-indigo-50/60 border border-indigo-200 p-3 rounded-xl flex items-center justify-between">
+          <div class="text-xs">
+            <span class="font-black text-indigo-950 block">Veya Excel / CSV Yükleyin:</span>
+            <span class="text-slate-500 text-[11px]">İlk sütundaki öğrenci isimleri otomatik okunur</span>
+          </div>
+          <label class="cursor-pointer bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-300 font-extrabold text-xs px-3 py-1.5 rounded-lg shadow-2xs transition">
+            <i class="fa-solid fa-file-excel mr-1 text-emerald-600"></i> Dosya Seç (.xlsx, .csv)
+            <input type="file" id="inp-bulk-file" accept=".xlsx, .xls, .csv" onchange="handleExcelUpload(event)" class="hidden">
+          </label>
+        </div>
+
+        <div id="bulk-progress-box" class="hidden space-y-1">
+          <div class="flex justify-between text-xs font-black text-indigo-900">
+            <span id="bulk-progress-text">Hazırlanıyor...</span>
+            <span id="bulk-progress-percent">0%</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+            <div id="bulk-progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-200" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+        <button type="button" onclick="startBulkGeneration('single_pdf')" id="btn-bulk-single" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow flex items-center justify-center space-x-1.5">
+          <i class="fa-solid fa-file-pdf text-sm"></i>
+          <span>Tek PDF (Ayrı Sayfalar)</span>
+        </button>
+        <button type="button" onclick="startBulkGeneration('zip_images')" id="btn-bulk-zip" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow flex items-center justify-center space-x-1.5">
+          <i class="fa-solid fa-file-zipper text-sm"></i>
+          <span>Ayrı PNG'ler (ZIP İndir)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer class="bg-white border-t border-slate-200 py-3.5 text-center text-xs text-slate-600 no-print font-medium mt-8">
-    <div class="max-w-[1400px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+    <div class="max-w-[1440px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="font-extrabold text-blue-700">ÖDEV-VER v1.0 • Tüm Hakları Saklıdır.</div>
       <div>Eğitimde Verimlilik ve Dijital Ödev Takip Portalı</div>
       <div class="font-black text-slate-800">HAZIRLAYAN: YILDIRAY HOCA</div>
@@ -748,7 +863,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('Çevrim dışı çalışma motoru devrede.'))
+        .then(() => console.log('Çevrim dışı motor devrede.'))
         .catch((err) => console.log('SW hatası:', err));
     }
   </script>
@@ -762,93 +877,85 @@
     let customInstLogoBase64 = null;
     let selectedDays = [];
 
-    function toggleDayBtn(btn, day) {
-      if (selectedDays.includes(day)) {
-        selectedDays = selectedDays.filter(d => d !== day);
-        btn.classList.remove('selected');
-      } else {
-        selectedDays.push(day);
-        btn.classList.add('selected');
+    // ==========================================
+    // 1. KALICI PROFİL HAFIZASI (LOCALSTORAGE)
+    // ==========================================
+    function loadSavedProfile() {
+      const savedTeacher = localStorage.getItem('odevver_teacher_name');
+      const savedInst = localStorage.getItem('odevver_inst_name');
+      const savedLogo = localStorage.getItem('odevver_inst_logo');
+
+      if (savedTeacher) document.getElementById('inp-teacher-name').value = savedTeacher;
+      if (savedInst) document.getElementById('inp-institution-name').value = savedInst;
+      if (savedLogo) {
+        customInstLogoBase64 = savedLogo;
+        document.getElementById('lbl-inst-logo').innerText = 'Kayıtlı Logo';
+        document.getElementById('btn-clear-logo').classList.remove('hidden');
       }
     }
 
-    function selectAllDays() {
-      const allDays = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-      const buttons = document.querySelectorAll('.day-btn');
-      
-      if (selectedDays.length === 7) {
-        selectedDays = [];
-        buttons.forEach(b => b.classList.remove('selected'));
-      } else {
-        selectedDays = [...allDays];
-        buttons.forEach(b => b.classList.add('selected'));
-      }
-    }
-
-    function resetDayButtons() {
-      selectedDays = [];
-      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('selected'));
-    }
-
-    function onExamTypeChange() {
-      const type = document.getElementById('sel-exam-type').value;
-      const branchWrapper = document.getElementById('wrapper-exam-branch');
-      if (type === 'Branş Denemesi') {
-        branchWrapper.classList.remove('hidden');
-      } else {
-        branchWrapper.classList.add('hidden');
-      }
+    function onProfileFieldChange() {
+      const teacher = document.getElementById('inp-teacher-name').value;
+      const inst = document.getElementById('inp-institution-name').value;
+      localStorage.setItem('odevver_teacher_name', teacher);
+      localStorage.setItem('odevver_inst_name', inst);
       updateSheet();
     }
 
-    function getDynamicFilename() {
-      const studentInput = document.getElementById('inp-student-name').value.trim();
-      const givenDateInput = document.getElementById('inp-given-date').value;
-      const safeStudent = (studentInput || 'Ogrenci').replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ_]/g, '_');
-      const safeDate = formatDateStr(givenDateInput).replace(/\./g, '-');
-      return `ODEV_VER_${safeStudent}_${safeDate}`;
+    function clearSavedProfile() {
+      if (confirm('Kaydedilen öğretmen adı, kurum adı ve logosu temizlensin mi?')) {
+        localStorage.removeItem('odevver_teacher_name');
+        localStorage.removeItem('odevver_inst_name');
+        localStorage.removeItem('odevver_inst_logo');
+        document.getElementById('inp-teacher-name').value = '';
+        document.getElementById('inp-institution-name').value = '';
+        clearInstLogo();
+        updateSheet();
+      }
     }
 
-    function adjustScale() {
-      const viewport = document.getElementById('preview-viewport');
-      const scaler = document.getElementById('preview-scaler');
-      const sheet = document.getElementById('preview-sheet');
-      if (!viewport || !scaler || !sheet) return;
-
-      const viewportWidth = viewport.clientWidth - 24;
-      const sheetWidth = 1000;
-      let scale = viewportWidth / sheetWidth;
-      if (scale > 1) scale = 1;
-
-      scaler.style.transform = `scale(${scale})`;
-      const scaledHeight = sheet.offsetHeight * scale;
-      viewport.style.height = `${scaledHeight + 24}px`;
+    function handleInstLogoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          customInstLogoBase64 = e.target.result;
+          try {
+            localStorage.setItem('odevver_inst_logo', customInstLogoBase64);
+          } catch (err) {
+            console.warn('Logo boyutu büyük olduğu için hafızaya kaydedilemedi');
+          }
+          document.getElementById('lbl-inst-logo').innerText = file.name.substring(0, 10) + '...';
+          document.getElementById('btn-clear-logo').classList.remove('hidden');
+          updateSheet();
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
-    window.addEventListener('resize', adjustScale);
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const today = new Date();
-      const due = new Date();
-      due.setDate(today.getDate() + 7);
-
-      document.getElementById('inp-given-date').value = today.toISOString().split('T')[0];
-      document.getElementById('inp-due-date').value = due.toISOString().split('T')[0];
-
-      setModule('ilkokul');
+    function clearInstLogo() {
+      customInstLogoBase64 = null;
+      localStorage.removeItem('odevver_inst_logo');
+      document.getElementById('inp-inst-logo').value = '';
+      document.getElementById('lbl-inst-logo').innerText = 'Logo Yükle';
+      document.getElementById('btn-clear-logo').classList.add('hidden');
       updateSheet();
-      setTimeout(adjustScale, 150);
-    });
+    }
 
+    // ==========================================
+    // 2. MODÜL VE DERS SEÇİM YÖNETİMİ (SERBEST MOD DESTEKLİ)
+    // ==========================================
     function setModule(mod) {
       currentModule = mod;
       
-      ['ilkokul', 'ortaokul_maarif', 'lise_maarif', 'lgs', 'yks'].forEach(m => {
+      ['ilkokul', 'ortaokul_maarif', 'lise_maarif', 'lgs', 'yks', 'serbest'].forEach(m => {
         const card = document.getElementById('card-mod-' + m);
-        if (m === mod) {
-          card.className = 'module-card cursor-pointer bg-blue-50/70 border-2 border-blue-600 ring-2 ring-blue-500/30 p-4 rounded-2xl shadow-md relative group';
-        } else {
-          card.className = 'module-card cursor-pointer bg-white border-2 border-transparent hover:border-slate-300 p-4 rounded-2xl shadow-sm relative group';
+        if (card) {
+          if (m === mod) {
+            card.className = 'module-card cursor-pointer bg-blue-50/70 border-2 border-blue-600 ring-2 ring-blue-500/30 p-3.5 rounded-2xl shadow-md relative group';
+          } else {
+            card.className = 'module-card cursor-pointer bg-white border-2 border-transparent hover:border-slate-300 p-3.5 rounded-2xl shadow-sm relative group';
+          }
         }
       });
 
@@ -857,7 +964,8 @@
         'ortaokul_maarif': 'ORTAOKUL MAARİF ÖDEV PLANI',
         'lise_maarif': 'LİSE MAARİF ÖDEV PLANI',
         'lgs': 'LGS ÖDEV PLANI',
-        'yks': 'YKS ÖDEV PLANI'
+        'yks': 'YKS ÖDEV PLANI',
+        'serbest': 'SERBEST / ÖZEL ÖDEV PLANI'
       };
       document.getElementById('active-mod-badge').innerText = badgeMap[mod];
       document.getElementById('out-sub-program-badge').innerText = badgeMap[mod];
@@ -869,12 +977,24 @@
         routinesBox.classList.add('hidden');
       }
 
-      if (mod === 'ilkokul') currentGrade = '1. Sınıf';
-      if (mod === 'ortaokul_maarif') currentGrade = '5. Sınıf';
-      if (mod === 'lise_maarif') currentGrade = '9. Sınıf';
+      const standardFields = document.getElementById('wrapper-standard-fields');
+      const customFields = document.getElementById('wrapper-custom-fields');
+      const subFilter = document.getElementById('container-sub-filter');
 
-      renderSubFilter();
-      populateSubjects();
+      if (mod === 'serbest') {
+        standardFields.classList.add('hidden');
+        customFields.classList.remove('hidden');
+        subFilter.innerHTML = '';
+      } else {
+        standardFields.classList.remove('hidden');
+        customFields.classList.add('hidden');
+        if (mod === 'ilkokul') currentGrade = '1. Sınıf';
+        if (mod === 'ortaokul_maarif') currentGrade = '5. Sınıf';
+        if (mod === 'lise_maarif') currentGrade = '9. Sınıf';
+        renderSubFilter();
+        populateSubjects();
+      }
+
       updateSheet();
     }
 
@@ -882,34 +1002,16 @@
       const container = document.getElementById('container-sub-filter');
       container.innerHTML = '';
 
-      if (currentModule === 'ilkokul') {
-        const grades = ['1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf'];
+      if (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif') {
+        let grades = [];
+        if (currentModule === 'ilkokul') grades = ['1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf'];
+        if (currentModule === 'ortaokul_maarif') grades = ['5. Sınıf', '6. Sınıf', '7. Sınıf', '8. Sınıf'];
+        if (currentModule === 'lise_maarif') grades = ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf'];
+
         let options = grades.map(g => `<option value="${g}" ${g === currentGrade ? 'selected' : ''}>${g}</option>`).join('');
         container.innerHTML = `
           <div class="col-span-2">
-            <label class="block text-xs font-bold text-slate-800 mb-1">İlkokul Sınıf Düzeyi</label>
-            <select id="sel-grade" onchange="onGradeChange(this.value)" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              ${options}
-            </select>
-          </div>
-        `;
-      } else if (currentModule === 'ortaokul_maarif') {
-        const grades = ['5. Sınıf', '6. Sınıf', '7. Sınıf', '8. Sınıf'];
-        let options = grades.map(g => `<option value="${g}" ${g === currentGrade ? 'selected' : ''}>${g}</option>`).join('');
-        container.innerHTML = `
-          <div class="col-span-2">
-            <label class="block text-xs font-bold text-slate-800 mb-1">Maarif Sınıf Düzeyi</label>
-            <select id="sel-grade" onchange="onGradeChange(this.value)" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              ${options}
-            </select>
-          </div>
-        `;
-      } else if (currentModule === 'lise_maarif') {
-        const grades = ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf'];
-        let options = grades.map(g => `<option value="${g}" ${g === currentGrade ? 'selected' : ''}>${g}</option>`).join('');
-        container.innerHTML = `
-          <div class="col-span-2">
-            <label class="block text-xs font-bold text-slate-800 mb-1">Maarif Sınıf Düzeyi</label>
+            <label class="block text-xs font-bold text-slate-800 mb-1">Sınıf Düzeyi</label>
             <select id="sel-grade" onchange="onGradeChange(this.value)" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
               ${options}
             </select>
@@ -1068,41 +1170,92 @@
       }
     }
 
+    // ==========================================
+    // 3. ÖDEV SATIRI EKLEME & YÖNETİM
+    // ==========================================
+    function toggleDayBtn(btn, day) {
+      if (selectedDays.includes(day)) {
+        selectedDays = selectedDays.filter(d => d !== day);
+        btn.classList.remove('selected');
+      } else {
+        selectedDays.push(day);
+        btn.classList.add('selected');
+      }
+    }
+
+    function selectAllDays() {
+      const allDays = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+      const buttons = document.querySelectorAll('.day-btn');
+      
+      if (selectedDays.length === 7) {
+        selectedDays = [];
+        buttons.forEach(b => b.classList.remove('selected'));
+      } else {
+        selectedDays = [...allDays];
+        buttons.forEach(b => b.classList.add('selected'));
+      }
+    }
+
+    function resetDayButtons() {
+      selectedDays = [];
+      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('selected'));
+    }
+
+    function onExamTypeChange() {
+      const type = document.getElementById('sel-exam-type').value;
+      const branchWrapper = document.getElementById('wrapper-exam-branch');
+      if (type === 'Branş Denemesi') {
+        branchWrapper.classList.remove('hidden');
+      } else {
+        branchWrapper.classList.add('hidden');
+      }
+      updateSheet();
+    }
+
     function addTask(e) {
       e.preventDefault();
-      const subject = document.getElementById('sel-subject').value;
-      const themeSelect = document.getElementById('sel-theme');
-      const kazanimSelect = document.getElementById('sel-kazanim');
-      const themeVal = themeSelect.value;
-      
-      if (!subject || themeVal === '') {
-        alert('Lütfen bir ders ve konu/tema seçiniz!');
-        return;
-      }
 
-      const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+      let displaySubject = '';
       let topicFullName = '';
       let freqData = '';
-      let displaySubject = subject;
 
-      if (isCurriculum) {
-        displaySubject = `[${currentGrade}] ${subject}`;
-        const selectedKazanimText = kazanimSelect.selectedIndex > 0 ? kazanimSelect.options[kazanimSelect.selectedIndex].text : '';
-        if (selectedKazanimText) {
-          topicFullName = `${themeVal} • ${selectedKazanimText}`;
-        } else {
-          topicFullName = themeVal;
+      if (currentModule === 'serbest') {
+        const cSub = document.getElementById('inp-custom-subject').value.trim();
+        const cTopic = document.getElementById('inp-custom-topic').value.trim();
+        if (!cSub || !cTopic) {
+          alert('Lütfen serbest ders ve konu adını doldurunuz!');
+          return;
         }
-      } else if (currentModule === 'lgs') {
-        const item = DB.lgs[subject][themeVal];
-        topicFullName = item.konu;
-        freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
-        displaySubject = `[LGS] ${subject}`;
-      } else if (currentModule === 'yks') {
-        const item = DB[currentYksSub][subject][themeVal];
-        topicFullName = item.konu;
-        freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
-        displaySubject = `[${currentYksSub.toUpperCase()}] ${subject}`;
+        displaySubject = cSub;
+        topicFullName = cTopic;
+        freqData = '-';
+      } else {
+        const subject = document.getElementById('sel-subject').value;
+        const themeSelect = document.getElementById('sel-theme');
+        const kazanimSelect = document.getElementById('sel-kazanim');
+        const themeVal = themeSelect.value;
+        
+        if (!subject || themeVal === '') {
+          alert('Lütfen bir ders ve konu/tema seçiniz!');
+          return;
+        }
+
+        const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+        if (isCurriculum) {
+          displaySubject = `[${currentGrade}] ${subject}`;
+          const selectedKazanimText = kazanimSelect.selectedIndex > 0 ? kazanimSelect.options[kazanimSelect.selectedIndex].text : '';
+          topicFullName = selectedKazanimText ? `${themeVal} • ${selectedKazanimText}` : themeVal;
+        } else if (currentModule === 'lgs') {
+          const item = DB.lgs[subject][themeVal];
+          topicFullName = item.konu;
+          freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
+          displaySubject = `[LGS] ${subject}`;
+        } else if (currentModule === 'yks') {
+          const item = DB[currentYksSub][subject][themeVal];
+          topicFullName = item.konu;
+          freqData = `'26: ${item.y26} | '25: ${item.y25} | '24: ${item.y24}`;
+          displaySubject = `[${currentYksSub.toUpperCase()}] ${subject}`;
+        }
       }
 
       const isStudy = document.getElementById('chk-type-study').checked;
@@ -1127,7 +1280,6 @@
 
       tasks.push({
         id: Date.now(),
-        rawSubject: subject,
         subject: displaySubject,
         topic: topicFullName,
         workType: workType,
@@ -1143,6 +1295,9 @@
       document.getElementById('inp-pages').value = '';
       document.getElementById('inp-questions').value = '';
       document.getElementById('inp-task-desc').value = '';
+      if (currentModule === 'serbest') {
+        document.getElementById('inp-custom-topic').value = '';
+      }
       resetDayButtons();
 
       updateSheet();
@@ -1190,6 +1345,9 @@
       `).join('');
     }
 
+    // ==========================================
+    // 4. ŞABLON KAYDET & YÜKLE (JSON)
+    // ==========================================
     function exportTemplateJSON() {
       if (tasks.length === 0) {
         alert('Kaydedilecek en az bir ödev maddesi ekleyiniz!');
@@ -1275,33 +1433,22 @@
       event.target.value = '';
     }
 
-    function handleInstLogoUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          customInstLogoBase64 = e.target.result;
-          document.getElementById('lbl-inst-logo').innerText = file.name.substring(0, 10) + '...';
-          document.getElementById('btn-clear-logo').classList.remove('hidden');
-          updateSheet();
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function clearInstLogo() {
-      customInstLogoBase64 = null;
-      document.getElementById('inp-inst-logo').value = '';
-      document.getElementById('lbl-inst-logo').innerText = 'Logo Yükle';
-      document.getElementById('btn-clear-logo').classList.add('hidden');
-      updateSheet();
-    }
-
+    // ==========================================
+    // 5. ÇIKTI ŞABLONUNU GÜNCELLEME
+    // ==========================================
     function formatDateStr(str) {
       if (!str) return '-';
       const parts = str.split('-');
       if (parts.length === 3) return `${parts[2]}.${parts[1]}.${parts[0]}`;
       return str;
+    }
+
+    function getDynamicFilename(customStudentName) {
+      const studentInput = customStudentName || document.getElementById('inp-student-name').value.trim();
+      const givenDateInput = document.getElementById('inp-given-date').value;
+      const safeStudent = (studentInput || 'Ogrenci').replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ_]/g, '_');
+      const safeDate = formatDateStr(givenDateInput).replace(/\./g, '-');
+      return `ODEV_VER_${safeStudent}_${safeDate}`;
     }
 
     function updateSheet() {
@@ -1353,7 +1500,6 @@
           document.getElementById('out-routine-paragraf-val').innerText = paragrafVal;
         } else {
           boxPara.classList.add('hidden');
-          boxPara.classList.remove('flex');
         }
 
         const boxProb = document.getElementById('out-routine-problem-box');
@@ -1363,7 +1509,6 @@
           document.getElementById('out-routine-problem-val').innerText = problemVal;
         } else {
           boxProb.classList.add('hidden');
-          boxProb.classList.remove('flex');
         }
 
         const boxCust = document.getElementById('out-routine-custom-box');
@@ -1373,11 +1518,9 @@
           document.getElementById('out-routine-custom-val').innerText = customVal;
         } else {
           boxCust.classList.add('hidden');
-          boxCust.classList.remove('flex');
         }
       } else {
         routinesCont.classList.add('hidden');
-        routinesCont.classList.remove('flex');
       }
 
       const bookTitle = document.getElementById('inp-book-title').value.trim();
@@ -1472,10 +1615,47 @@
       `).join('');
     }
 
-    function downloadAsImage() {
-      const sourceSheet = document.getElementById('preview-sheet');
-      const filename = getDynamicFilename();
+    function adjustScale() {
+      const viewport = document.getElementById('preview-viewport');
+      const scaler = document.getElementById('preview-scaler');
+      const sheet = document.getElementById('preview-sheet');
+      if (!viewport || !scaler || !sheet) return;
 
+      const viewportWidth = viewport.clientWidth - 24;
+      const sheetWidth = 1000;
+      let scale = viewportWidth / sheetWidth;
+      if (scale > 1) scale = 1;
+
+      scaler.style.transform = `scale(${scale})`;
+      const scaledHeight = sheet.offsetHeight * scale;
+      viewport.style.height = `${scaledHeight + 24}px`;
+    }
+
+    window.addEventListener('resize', adjustScale);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const today = new Date();
+      const due = new Date();
+      due.setDate(today.getDate() + 7);
+
+      document.getElementById('inp-given-date').value = today.toISOString().split('T')[0];
+      document.getElementById('inp-due-date').value = due.toISOString().split('T')[0];
+
+      loadSavedProfile();
+      setModule('ilkokul');
+      updateSheet();
+      setTimeout(adjustScale, 150);
+    });
+
+    // ==========================================
+    // 6. ÇIKTI & İNDİRME FONKSİYONLARI
+    // ==========================================
+    async function captureSheetCanvas(customStudentName) {
+      if (customStudentName) {
+        document.getElementById('out-student-name').innerText = customStudentName;
+      }
+
+      const sourceSheet = document.getElementById('preview-sheet');
       const clone = sourceSheet.cloneNode(true);
       clone.style.transform = 'none';
       clone.style.margin = '0';
@@ -1487,24 +1667,34 @@
 
       document.body.appendChild(clone);
 
-      html2canvas(clone, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        width: 1000,
-        logging: false
-      }).then(canvas => {
+      try {
+        const canvas = await html2canvas(clone, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          width: 1000,
+          logging: false
+        });
         document.body.removeChild(clone);
+        return canvas;
+      } catch (err) {
+        if (clone.parentNode) document.body.removeChild(clone);
+        throw err;
+      }
+    }
+
+    async function downloadAsImage() {
+      try {
+        const canvas = await captureSheetCanvas();
+        const filename = getDynamicFilename();
         const link = document.createElement('a');
         link.download = `${filename}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
-      }).catch(err => {
-        if (clone.parentNode) document.body.removeChild(clone);
-        console.error('Görsel oluşturma hatası:', err);
-        alert('Görsel oluşturulamadı. Lütfen "PDF / Yazdır" butonunu kullanarak doğrudan çıktı alınız.');
-      });
+      } catch (err) {
+        alert('Görsel oluşturulamadı. "PDF / Yazdır" butonunu kullanabilirsiniz.');
+      }
     }
 
     function printOrSavePDF() {
@@ -1514,6 +1704,213 @@
       setTimeout(() => {
         document.title = originalTitle;
       }, 1000);
+    }
+
+    // ==========================================
+    // 7. AKILLI PAYLAŞIM (WHATSAPP & E-POSTA)
+    // ==========================================
+    async function shareViaWhatsApp() {
+      const studentName = document.getElementById('inp-student-name').value.trim() || 'Öğrenci';
+      const defaultText = `Merhaba ${studentName}, haftalık ödev planın ekteki gibidir. Başarılar ve iyi çalışmalar dilerim!`;
+
+      try {
+        const canvas = await captureSheetCanvas();
+        canvas.toBlob(async (blob) => {
+          const file = new File([blob], `${getDynamicFilename()}.png`, { type: 'image/png' });
+
+          // Tablet veya Mobilde Doğrudan Web Share API
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                title: 'Ödev Takip Planı',
+                text: defaultText,
+                files: [file]
+              });
+              return;
+            } catch (shareErr) {
+              console.log('Share penceresi kapatıldı veya iptal edildi.');
+            }
+          }
+
+          // Bilgisayar / Masaüstü için: Panoya Kopyala ve WhatsApp Web Aç
+          try {
+            if (navigator.clipboard && navigator.clipboard.write) {
+              await navigator.clipboard.write([
+                new ClipboardItem({ 'image/png': blob })
+              ]);
+              alert('Ödev görseli panoya kopyalandı! Açılan WhatsApp Web penceresinde sohbete tıklayıp Ctrl + V (Yapıştır) yapmanız yeterlidir.');
+            } else {
+              // Pano desteklenmiyorsa görseli bilgisayara indir
+              const link = document.createElement('a');
+              link.download = `${getDynamicFilename()}.png`;
+              link.href = canvas.toDataURL('image/png');
+              link.click();
+              alert('Ödev görseli indirildi! Açılan WhatsApp Web penceresinden öğrencinize sürükleyip gönderebilirsiniz.');
+            }
+          } catch (clipErr) {
+            const link = document.createElement('a');
+            link.download = `${getDynamicFilename()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+          }
+
+          const waUrl = `https://web.whatsapp.com/send?text=${encodeURIComponent(defaultText)}`;
+          window.open(waUrl, '_blank');
+        }, 'image/png');
+
+      } catch (err) {
+        alert('Paylaşım görseli oluşturulurken hata oluştu.');
+      }
+    }
+
+    async function shareViaEmail() {
+      const studentName = document.getElementById('inp-student-name').value.trim() || 'Öğrenci';
+      const subject = encodeURIComponent(`Haftalık Ödev Takip Planı - ${studentName}`);
+      const body = encodeURIComponent(`Merhaba ${studentName},\n\nHaftalık ödev takip planın hazırlanmıştır. Ekteki yönergelere göre çalışmalarını zamanında tamamlamanı rica ederim.\n\nİyi çalışmalar!`);
+
+      // Görseli otomatik bilgisayara indir ve Mail uygulamasını aç
+      try {
+        const canvas = await captureSheetCanvas();
+        const link = document.createElement('a');
+        link.download = `${getDynamicFilename()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (e) {}
+
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    // ==========================================
+    // 8. TOPLU ÖDEV MODAL & EXCEL/ZIP SİSTEMİ
+    // ==========================================
+    function openBulkModal() {
+      if (tasks.length === 0) {
+        alert('Toplu üretim yapmadan önce lütfen en az bir ödev maddesi ekleyiniz!');
+        return;
+      }
+      document.getElementById('modal-bulk').classList.remove('hidden');
+    }
+
+    function closeBulkModal() {
+      document.getElementById('modal-bulk').classList.add('hidden');
+      document.getElementById('bulk-progress-box').classList.add('hidden');
+    }
+
+    function handleExcelUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+          let names = [];
+          rows.forEach(r => {
+            if (r && r[0] && typeof r[0] === 'string' && r[0].trim() !== '') {
+              names.push(r[0].trim());
+            }
+          });
+
+          if (names.length > 0) {
+            document.getElementById('inp-bulk-names').value = names.join('\n');
+            alert(`${names.length} öğrenci ismi Excel'den başarıyla aktarıldı!`);
+          } else {
+            alert('Dosyada öğrenci ismi bulunamadı.');
+          }
+        } catch (err) {
+          alert('Excel dosyası okunamadı!');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+      event.target.value = '';
+    }
+
+    function parseStudentNames() {
+      const text = document.getElementById('inp-bulk-names').value.trim();
+      if (!text) return [];
+      return text.split(/[\n,]+/).map(n => n.trim()).filter(n => n.length > 0);
+    }
+
+    async function startBulkGeneration(type) {
+      const names = parseStudentNames();
+      if (names.length === 0) {
+        alert('Lütfen en az bir öğrenci ismi giriniz veya Excel dosyası yükleyiniz!');
+        return;
+      }
+
+      const originalStudent = document.getElementById('inp-student-name').value;
+      const progressBox = document.getElementById('bulk-progress-box');
+      const progressBar = document.getElementById('bulk-progress-bar');
+      const progressText = document.getElementById('bulk-progress-text');
+      const progressPercent = document.getElementById('bulk-progress-percent');
+      
+      progressBox.classList.remove('hidden');
+      document.getElementById('btn-bulk-single').disabled = true;
+      document.getElementById('btn-bulk-zip').disabled = true;
+
+      try {
+        if (type === 'single_pdf') {
+          // jsPDF ile tek PDF ve çoklu sayfalar
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
+          for (let i = 0; i < names.length; i++) {
+            const student = names[i];
+            const percent = Math.round(((i + 1) / names.length) * 100);
+            progressText.innerText = `${student} hazırlanıyor (${i + 1}/${names.length})...`;
+            progressBar.style.width = `${percent}%`;
+            progressPercent.innerText = `${percent}%`;
+
+            const canvas = await captureSheetCanvas(student);
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+            if (i > 0) pdf.addPage('a4', 'landscape');
+            pdf.addImage(imgData, 'JPEG', 6, 6, 285, 198);
+          }
+
+          pdf.save(`TOPLU_ODEV_${formatDateStr(document.getElementById('inp-given-date').value).replace(/\./g, '-')}.pdf`);
+          alert('Tüm sınıfın ödevleri tek bir PDF dosyasında başarıyla oluşturuldu!');
+
+        } else if (type === 'zip_images') {
+          // JSZip ile ayrı ayrı PNG'ler
+          const zip = new JSZip();
+
+          for (let i = 0; i < names.length; i++) {
+            const student = names[i];
+            const percent = Math.round(((i + 1) / names.length) * 100);
+            progressText.innerText = `${student} görseli alınıyor (${i + 1}/${names.length})...`;
+            progressBar.style.width = `${percent}%`;
+            progressPercent.innerText = `${percent}%`;
+
+            const canvas = await captureSheetCanvas(student);
+            const dataUrl = canvas.toDataURL('image/png');
+            const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+            
+            const safeName = student.replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ_]/g, '_');
+            zip.file(`${safeName}_Odev.png`, base64Data, { base64: true });
+          }
+
+          progressText.innerText = 'ZIP paketi sıkıştırılıyor...';
+          const zipBlob = await zip.generateAsync({ type: 'blob' });
+          saveAs(zipBlob, `TOPLU_ODEV_GORSELLERI_${Date.now()}.zip`);
+          alert('Tüm öğrencilerin ödev görselleri ZIP arşivi olarak indirildi!');
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert('Toplu üretim esnasında bir hata oluştu.');
+      } finally {
+        // Asıl öğrenci adını geri yükle
+        document.getElementById('out-student-name').innerText = originalStudent || 'Belirtilmedi';
+        progressBox.classList.add('hidden');
+        document.getElementById('btn-bulk-single').disabled = false;
+        document.getElementById('btn-bulk-zip').disabled = false;
+        closeBulkModal();
+      }
     }
   </script>
 </body>
