@@ -190,33 +190,27 @@
       </div>
     </div>
 
-    <!-- YENİ VİTRİN KUTUSU: KATEGORİ SEÇİM BAŞLIĞI -->
-    <div class="mb-5 no-print">
-      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 p-4 sm:p-5 rounded-2xl shadow-md border border-indigo-900/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-        <div class="flex items-center space-x-3.5">
-          <div class="w-11 h-11 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 text-xl flex-shrink-0 shadow-inner">
-            <i class="fa-solid fa-layer-group"></i>
-          </div>
-          <div>
-            <div class="flex items-center justify-center sm:justify-start space-x-2 mb-0.5">
-              <span class="bg-blue-500/30 text-blue-200 text-[10px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider border border-blue-400/20">ADIM 1</span>
-              <h2 class="text-base sm:text-lg font-black text-white tracking-tight">Ödevlendirme Türünü Seçin</h2>
-            </div>
-            <p class="text-xs text-blue-200 font-medium">Müfredat, sınav hazırlık veya tamamen serbest metin formatını belirleyin</p>
-          </div>
+    <!-- MERKEZİ, FERAH VE AYDINLIK VİTRİN KUTUSU -->
+    <div class="mb-6 no-print flex justify-center">
+      <div class="max-w-2xl w-full bg-gradient-to-r from-blue-50 via-indigo-50/70 to-sky-50 p-4 rounded-2xl border border-blue-200 shadow-sm text-center">
+        <div class="inline-flex items-center space-x-2 bg-blue-600 text-white text-[10.5px] font-black uppercase px-3 py-0.5 rounded-full tracking-wider mb-2 shadow-xs">
+          <i class="fa-solid fa-layer-group text-[10px]"></i>
+          <span>ADIM 1</span>
         </div>
-        <div class="text-[11px] font-bold text-blue-200 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
-          <i class="fa-solid fa-circle-info text-amber-400"></i>
-          <span>Seçilen türe göre form dinamik güncellenir</span>
-        </div>
+        <h2 class="text-lg sm:text-xl font-black text-blue-950 tracking-tight uppercase leading-tight mb-1">
+          ÖDEVLENDİRME TÜRÜNÜ SEÇİN
+        </h2>
+        <p class="text-xs text-slate-600 font-semibold">
+          Müfredat, sınav hazırlık veya serbest formatı belirleyin
+        </p>
       </div>
     </div>
 
-    <!-- 6 ANA MODÜL KARTI (BİRBİRİNDEN TAMAMEN FARKLI CANLI RENKLER) -->
+    <!-- 6 ANA MODÜL KARTI -->
     <div class="mb-8 no-print">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-left">
         
-        <!-- 1. İLKOKUL (CANLI AÇIK MAVİ / SKY BLUE) -->
+        <!-- 1. İLKOKUL -->
         <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center text-lg shadow-md shadow-sky-200">
@@ -228,7 +222,7 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">1–4. Sınıf MEB kazanımları.</p>
         </div>
 
-        <!-- 2. ORTAOKUL MAARİF (ZÜMRÜT YEŞİLİ / EMERALD) -->
+        <!-- 2. ORTAOKUL MAARİF -->
         <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200">
@@ -240,7 +234,7 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Maarif Modeli kazanımları.</p>
         </div>
 
-        <!-- 3. LİSE MAARİF (SICAK TURUNCU / ORANGE) -->
+        <!-- 3. LİSE MAARİF -->
         <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-lg shadow-md shadow-orange-200">
@@ -252,7 +246,7 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Lise tema kazanımları.</p>
         </div>
 
-        <!-- 4. LGS (ATEŞ KIRMIZISI / RED) -->
+        <!-- 4. LGS -->
         <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 text-white flex items-center justify-center text-lg shadow-md shadow-red-200">
@@ -264,7 +258,7 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">3 yıllık soru frekansları.</p>
         </div>
 
-        <!-- 5. YKS (DERİN MENEKŞE / PURPLE) -->
+        <!-- 5. YKS -->
         <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200">
@@ -276,7 +270,7 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">TYT-AYT soru dağılımları.</p>
         </div>
 
-        <!-- 6. SERBEST ÖDEV (CANLI FUŞYA / FUCHSIA) -->
+        <!-- 6. SERBEST ÖDEV -->
         <div onclick="setModule('serbest')" id="card-mod-serbest" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center text-lg shadow-md shadow-fuchsia-200">
@@ -291,10 +285,10 @@
       </div>
     </div>
 
-    <!-- BÖLÜNMÜŞ EKRAN (SPLIT-SCREEN): SOL FORM - SAĞ YAPIŞKAN ÖNİZLEME -->
+    <!-- BÖLÜNMÜŞ EKRAN: SOL FORM - SAĞ YAPIŞKAN ÖNİZLEME -->
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
       
-      <!-- SOL PANEL: FORM GİRİŞLERİ (5 Sütun) -->
+      <!-- SOL PANEL: FORM GİRİŞLERİ -->
       <div class="xl:col-span-5 space-y-4 no-print">
         
         <!-- 1. GENEL BİLGİLER VE OTOMATİK HAFIZA -->
@@ -584,27 +578,22 @@
 
       </div>
 
-      <!-- SAĞ PANEL: Havada Asılı Duran (Sticky) Canlı Çıktı & Butonlar (7 Sütun) -->
+      <!-- SAĞ PANEL: Havada Asılı Duran Canlı Çıktı & Butonlar -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <!-- ÜST BUTONLAR (SADELEŞTİRİLMİŞ: SADECE TOPLU ÜRET, PNG VE PDF) -->
+        <!-- ÜST BUTONLAR -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
           
           <div class="flex items-center space-x-2">
-            <!-- TOPLU ÖDEV BUTONU -->
             <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-users mr-1.5"></i> Toplu Ödev Üret
             </button>
-
-            <!-- RESİM İNDİR (PNG) -->
             <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center" title="Görsel Olarak İndir">
               <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
             </button>
-
-            <!-- PDF / YAZDIR -->
             <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF
             </button>
@@ -622,7 +611,6 @@
               <div class="border-b-2 border-blue-600 pb-3 mb-3">
                 <div class="flex items-center justify-between">
                   
-                  <!-- SOL: ÖDEV-VER LOGO & İSİM -->
                   <div class="flex items-center space-x-3 w-1/4">
                     <div class="w-12 h-12 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center p-1 flex-shrink-0 overflow-hidden">
                       <img src="logo.png" alt="ÖDEV-VER" class="sheet-logo" onerror="this.onerror=null; this.src='https://api.iconify.design/lucide:book-check.svg?color=%231d4ed8';">
@@ -633,7 +621,6 @@
                     </div>
                   </div>
 
-                  <!-- ORTA: BAŞLIK, ROZET & TOPLAM SORU SAYACI -->
                   <div class="flex-1 text-center px-2 flex flex-col items-center justify-center">
                     <div id="out-institution-container" class="hidden items-center justify-center space-x-2">
                       <img id="out-inst-logo" src="" alt="Kurum Logosu" class="max-h-10 max-w-20 object-contain hidden">
@@ -652,7 +639,6 @@
                     </div>
                   </div>
 
-                  <!-- SAĞ: TARİHLER -->
                   <div class="w-1/4 flex justify-end">
                     <div class="bg-blue-50 border border-blue-300 rounded-lg p-2.5 text-right text-xs min-w-[170px]">
                       <div class="flex justify-between items-center text-slate-700 mb-1">
@@ -703,10 +689,9 @@
                 </table>
               </div>
 
-              <!-- ÇIKTI ALT BİLGİ: DENEME, RUTİNLER, KİTAP VE NOT -->
+              <!-- ÇIKTI ALT BİLGİ -->
               <div class="mt-2.5 pt-2 border-t-2 border-blue-200 space-y-2">
                 
-                <!-- DENEME SINAVI GÖREVİ ŞERİDİ -->
                 <div id="out-exam-container" class="hidden bg-amber-50/90 border border-amber-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
                   <div class="flex items-center space-x-2.5">
                     <div class="w-6 h-6 rounded-md bg-amber-600 text-white flex items-center justify-center text-xs flex-shrink-0">
@@ -728,7 +713,6 @@
                   </div>
                 </div>
 
-                <!-- ÇIKTI GÜNLÜK RUTİNLER BANTI -->
                 <div id="out-routines-container" class="hidden bg-gradient-to-r from-indigo-50 via-purple-50 to-blue-50 border border-indigo-200 p-2 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
                   <div class="flex items-center space-x-2">
                     <span class="w-6 h-6 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0">
@@ -757,7 +741,6 @@
                   </div>
                 </div>
 
-                <!-- KİTAP OKUMA -->
                 <div id="out-book-container" class="hidden bg-emerald-50 border border-emerald-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
                   <div class="flex items-center space-x-2.5">
                     <div class="w-6 h-6 rounded-md bg-emerald-600 text-white flex items-center justify-center text-xs">
@@ -776,7 +759,6 @@
                   </div>
                 </div>
 
-                <!-- ÖĞRETMEN NOTU -->
                 <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-start justify-between gap-4 text-xs">
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
