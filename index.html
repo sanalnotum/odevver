@@ -15,7 +15,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <!-- Dinamik Karekod Kütüphanesi -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -52,7 +51,6 @@
       display: block;
     }
 
-    /* AKILLI YAPIŞKAN ÖNİZLEME ALANI (STICKY) */
     .sticky-preview-container {
       position: sticky;
       top: 84px;
@@ -103,7 +101,6 @@
       box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
     }
 
-    /* QR KOD İÇ KUTU */
     .qr-card-box {
       display: flex;
       flex-direction: column;
@@ -179,6 +176,12 @@
       </div>
       
       <div class="flex items-center flex-wrap gap-2.5">
+        <!-- ARŞİV BUTONU -->
+        <button onclick="openArchiveModal()" class="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 px-3.5 py-1.5 rounded-xl text-xs font-black text-white shadow-md transition">
+          <i class="fa-solid fa-box-archive text-sm"></i>
+          <span>Öğrenci Takip & Arşiv (<span id="btn-archive-count">0</span>)</span>
+        </button>
+
         <div class="flex items-center space-x-2 bg-black/30 px-3.5 py-1.5 rounded-xl text-xs font-bold text-blue-100 border border-white/15 shadow-sm">
           <i class="fa-solid fa-graduation-cap text-amber-400 text-sm"></i>
           <span>HAZIRLAYAN: YILDIRAY HOCA</span>
@@ -211,7 +214,7 @@
       </div>
     </div>
 
-    <!-- MERKEZİ, FERAH VE AYDINLIK VİTRİN KUTUSU -->
+    <!-- VİTRİN KUTUSU -->
     <div class="mb-6 no-print flex justify-center">
       <div class="max-w-2xl w-full bg-gradient-to-r from-blue-50 via-indigo-50/70 to-sky-50 p-4 rounded-2xl border border-blue-200 shadow-sm text-center">
         <div class="inline-flex items-center space-x-2 bg-blue-600 text-white text-[10.5px] font-black uppercase px-3 py-0.5 rounded-full tracking-wider mb-2 shadow-xs">
@@ -231,7 +234,6 @@
     <div class="mb-8 no-print">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-left">
         
-        <!-- 1. İLKOKUL -->
         <div onclick="setModule('ilkokul')" id="card-mod-ilkokul" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center text-lg shadow-md shadow-sky-200">
@@ -243,7 +245,6 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">1–4. Sınıf MEB kazanımları.</p>
         </div>
 
-        <!-- 2. ORTAOKUL MAARİF -->
         <div onclick="setModule('ortaokul_maarif')" id="card-mod-ortaokul_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-200">
@@ -255,7 +256,6 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Maarif Modeli kazanımları.</p>
         </div>
 
-        <!-- 3. LİSE MAARİF -->
         <div onclick="setModule('lise_maarif')" id="card-mod-lise_maarif" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-lg shadow-md shadow-orange-200">
@@ -267,7 +267,6 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">Lise tema kazanımları.</p>
         </div>
 
-        <!-- 4. LGS -->
         <div onclick="setModule('lgs')" id="card-mod-lgs" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 text-white flex items-center justify-center text-lg shadow-md shadow-red-200">
@@ -279,7 +278,6 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">3 yıllık soru frekansları.</p>
         </div>
 
-        <!-- 5. YKS -->
         <div onclick="setModule('yks')" id="card-mod-yks" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-700 text-white flex items-center justify-center text-lg shadow-md shadow-purple-200">
@@ -291,7 +289,6 @@
           <p class="text-[10.5px] text-slate-600 leading-tight font-medium">TYT-AYT soru dağılımları.</p>
         </div>
 
-        <!-- 6. SERBEST ÖDEV -->
         <div onclick="setModule('serbest')" id="card-mod-serbest" class="module-card cursor-pointer bg-white border-2 border-transparent p-3.5 rounded-2xl shadow-sm relative group">
           <div class="flex items-center justify-between mb-2.5">
             <div class="icon-box w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center text-lg shadow-md shadow-fuchsia-200">
@@ -306,19 +303,19 @@
       </div>
     </div>
 
-    <!-- BÖLÜNMÜŞ EKRAN: SOL FORM - SAĞ YAPIŞKAN ÖNİZLEME -->
+    <!-- BÖLÜNMÜŞ EKRAN -->
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
       
       <!-- SOL PANEL: FORM GİRİŞLERİ -->
       <div class="xl:col-span-5 space-y-4 no-print">
         
-        <!-- 1. GENEL BİLGİLER VE OTOMATİK HAFIZA -->
+        <!-- 1. GENEL BİLGİLER -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
               <i class="fa-solid fa-sliders mr-2 text-blue-600"></i> 1. Genel Bilgiler
             </h3>
-            <button onclick="clearSavedProfile()" class="text-[11px] font-bold text-slate-400 hover:text-red-600 transition flex items-center space-x-1" title="Kayıtlı öğretmen adı, kurum ve logoyu hafızadan temizler">
+            <button onclick="clearSavedProfile()" class="text-[11px] font-bold text-slate-400 hover:text-red-600 transition flex items-center space-x-1">
               <i class="fa-solid fa-rotate-left"></i>
               <span>Profili Sıfırla</span>
             </button>
@@ -355,7 +352,6 @@
               </div>
             </div>
 
-            <!-- TARİHLER -->
             <div class="bg-blue-50/80 p-3 rounded-xl border border-blue-200 grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-blue-950 mb-1"><i class="fa-regular fa-calendar-check mr-1 text-blue-700"></i> Veriliş Tarihi</label>
@@ -387,7 +383,6 @@
             
             <div id="container-sub-filter" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- STANDART MÜFREDAT ALANLARI -->
             <div id="wrapper-standard-fields" class="space-y-3.5">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -406,7 +401,6 @@
               </div>
             </div>
 
-            <!-- SERBEST ÖDEV ALANLARI -->
             <div id="wrapper-custom-fields" class="hidden space-y-3">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -420,7 +414,6 @@
               </div>
             </div>
 
-            <!-- ÇALIŞMA TÜRÜ -->
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
               <label class="block text-xs font-bold text-slate-800 mb-1.5">Çalışma Türü:</label>
               <div class="flex items-center space-x-6 text-xs font-bold text-slate-800">
@@ -440,7 +433,6 @@
               <span id="txt-freq-info" class="font-extrabold text-indigo-800"></span>
             </div>
 
-            <!-- KAYNAK, SAYFA, SORU -->
             <div class="grid grid-cols-3 gap-2.5 pt-1">
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Kaynak Kitap</label>
@@ -456,7 +448,6 @@
               </div>
             </div>
 
-            <!-- HEDEF GÜN SEÇİMİ -->
             <div class="p-2.5 rounded-xl bg-blue-50/60 border border-blue-200">
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-black text-blue-950">
@@ -486,7 +477,7 @@
           </form>
         </div>
 
-        <!-- 3. EKLENEN ÖDEVLER LİSTESİ & HIZLI ŞABLON (JSON) -->
+        <!-- 3. EKLENEN ÖDEVLER LİSTESİ -->
         <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-extrabold text-slate-800 uppercase">Eklenen Ödevler (<span id="task-count">0</span>)</span>
@@ -509,7 +500,7 @@
           </div>
         </div>
 
-        <!-- YENİ BÖLÜM: DİJİTAL MEB KAYNAKLARI (İSTEĞE BAĞLI KAREKODLAR) -->
+        <!-- MEB KAREKODLARI -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-sky-950 uppercase tracking-wider flex items-center">
@@ -549,7 +540,7 @@
           </div>
         </div>
 
-        <!-- 4. HAFTALIK DENEME SINAVI GÖREVİ -->
+        <!-- 4. HAFTALIK DENEME -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-amber-950 uppercase tracking-wider flex items-center">
@@ -587,7 +578,7 @@
           </div>
         </div>
 
-        <!-- 5. GÜNLÜK SABİT SINAV RUTİNLERİ -->
+        <!-- 5. GÜNLÜK SABİT RUTİNLER -->
         <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
@@ -611,7 +602,7 @@
           </div>
         </div>
 
-        <!-- 6. KİTAP OKUMA GÖREVİ -->
+        <!-- 6. KİTAP OKUMA -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center">
@@ -639,28 +630,33 @@
 
       </div>
 
-      <!-- SAĞ PANEL: Havada Asılı Duran Canlı Çıktı & Butonlar -->
+      <!-- SAĞ PANEL -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <!-- ÜST BUTONLAR VE VELİ BİLGİLENDİRME KOPYALAYICI -->
+        <!-- ÜST BUTONLAR: YENİ "ÖDEVİ KAYDET / ARŞİVE EKLE" BUTONU -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
           
           <div class="flex items-center flex-wrap gap-2">
-            <!-- YENİ: VELİ METNİNİ KOPYALA -->
-            <button onclick="copyParentNote()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Veliler için hazır WhatsApp metnini panoya kopyalar">
-              <i class="fa-regular fa-copy mr-1.5"></i> Veli Metnini Kopyala
+            <!-- YENİ: ARŞİVE KAYDET -->
+            <button onclick="saveCurrentAssignmentToArchive()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Bu ödevi öğrencinin takip arşivine kaydeder">
+              <i class="fa-solid fa-bookmark mr-1.5"></i> Ödevi Kaydet
+            </button>
+
+            <!-- VELİ METNİNİ KOPYALA -->
+            <button onclick="copyParentNote()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
+              <i class="fa-regular fa-copy mr-1.5"></i> Veli Metni
             </button>
 
             <!-- TOPLU ÖDEV BUTONU -->
-            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
+            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-users mr-1.5"></i> Toplu Üret
             </button>
 
             <!-- RESİM İNDİR (PNG) -->
-            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Görsel Olarak İndir">
+            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
             </button>
 
@@ -671,11 +667,10 @@
           </div>
         </div>
 
-        <!-- VIEWPORT ALANI -->
+        <!-- VIEWPORT -->
         <div id="preview-viewport">
           <div id="preview-scaler">
             
-            <!-- A4 YATAY ÇIKTI KAĞIDI -->
             <div id="preview-sheet" class="bg-white rounded-lg shadow-xl text-slate-900 p-6 relative flex flex-col justify-between" style="width: 1000px; min-height: 640px; box-sizing: border-box; border: 2.5px solid #1d4ed8;">
               
               <!-- ÇIKTI ÜST ALANI -->
@@ -725,7 +720,6 @@
 
                 </div>
 
-                <!-- ÖĞRETMEN & ÖĞRENCİ ŞERİDİ -->
                 <div class="mt-2.5 pt-2 border-t border-blue-100 grid grid-cols-2 gap-4 bg-slate-100/70 px-3.5 py-1.5 rounded-lg text-xs">
                   <div class="flex items-center">
                     <span class="font-black text-blue-900 mr-1.5"><i class="fa-solid fa-chalkboard-user mr-1 text-blue-700"></i>Öğretmen:</span>
@@ -830,7 +824,7 @@
                   </div>
                 </div>
 
-                <!-- ÖĞRETMEN NOTU & ENTEGRE KAREKODLAR BANT ALANI -->
+                <!-- ÖĞRETMEN NOTU & KAREKODLAR -->
                 <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-center justify-between gap-3 text-xs">
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
@@ -840,10 +834,7 @@
                     </div>
                   </div>
 
-                  <!-- ÇIKTIDAKİ DİNAMİK KAREKOD PANELİ (SEÇİLİNCE GÖRÜNÜR) -->
-                  <div id="out-qr-container" class="hidden flex items-center space-x-2 border-l border-blue-200 pl-3">
-                    <!-- Dinamik olarak JS tarafından doldurulur -->
-                  </div>
+                  <div id="out-qr-container" class="hidden flex items-center space-x-2 border-l border-blue-200 pl-3"></div>
                 </div>
 
               </div>
@@ -859,7 +850,59 @@
 
   </main>
 
-  <!-- TOPLU ÖDEV ÜRETİM MODAL PENCERESİ -->
+  <!-- YENİ MODAL: ÖĞRENCİ TAKİP & GELİŞİM ARŞİVİ -->
+  <div id="modal-archive" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      
+      <!-- BAŞLIK -->
+      <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-purple-700 to-indigo-800 text-white">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-folder-tree"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black leading-tight">Öğrenci Takip & Gelişim Arşivi</h3>
+            <p class="text-xs text-purple-200 font-medium">Yerel hafızadaki ödev kayıtları, teslim kontrolü ve veli gelişim analizleri</p>
+          </div>
+        </div>
+        <button onclick="closeArchiveModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- İÇERİK BÖLÜMÜ (SOL LİSTE - SAĞ DETAY & RAPOR) -->
+      <div class="flex-1 overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        
+        <!-- SOL LİSTE: ÖĞRENCİLER VE ÖDEVLERİ -->
+        <div class="md:col-span-4 border-r border-slate-200 p-4 bg-slate-50 flex flex-col h-full overflow-y-auto">
+          <div class="mb-3">
+            <label class="block text-xs font-black text-slate-800 mb-1">Öğrenciye Göre Filtrele</label>
+            <input type="text" id="inp-search-archive" placeholder="Öğrenci adı ara..." oninput="renderArchiveList()" class="w-full text-xs font-semibold px-3 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+          </div>
+
+          <div class="flex items-center justify-between text-xs font-black text-slate-600 mb-2 border-b border-slate-200 pb-1">
+            <span>KAYITLI ÖDEVLER</span>
+            <button onclick="clearAllArchive()" class="text-red-500 hover:text-red-700 text-[11px]">Tümünü Sil</button>
+          </div>
+
+          <div id="archive-items-list" class="space-y-2 flex-1 overflow-y-auto pr-1 text-xs"></div>
+        </div>
+
+        <!-- SAĞ PANEL: ÖDEV KONTROL PANELİ VEYA VELİ GELİŞİM RAPORU -->
+        <div class="md:col-span-8 p-6 flex flex-col h-full overflow-y-auto bg-white" id="archive-detail-panel">
+          <div class="flex-1 flex flex-col items-center justify-center text-slate-400 p-8 text-center">
+            <i class="fa-solid fa-clipboard-check text-5xl mb-3 text-slate-300"></i>
+            <h4 class="font-bold text-sm text-slate-600 mb-1">Bir Ödev veya Öğrenci Seçin</h4>
+            <p class="text-xs max-w-sm">Öğrencinin getirdiği ödevi teslim alıp tiklemek ya da veli gelişim raporunu incelemek için sol taraftan bir kayıt seçin.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOPLU ÖDEV MODAL PENCERESİ -->
   <div id="modal-bulk" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -942,8 +985,8 @@
     let tasks = [];
     let customInstLogoBase64 = null;
     let selectedDays = [];
+    let activeArchiveId = null;
 
-    // SABİT MEB BAĞLANTILARI
     const QR_LINKS = {
       konu: 'https://ogmmateryal.eba.gov.tr/mebi-konu-ozeti-kitaplari',
       tarama: 'https://ogmmateryal.eba.gov.tr/mebi-tarama-testi-kitaplari',
@@ -965,6 +1008,7 @@
         document.getElementById('lbl-inst-logo').innerText = 'Kayıtlı Logo';
         document.getElementById('btn-clear-logo').classList.remove('hidden');
       }
+      updateArchiveButtonCount();
     }
 
     function onProfileFieldChange() {
@@ -1370,7 +1414,9 @@
         pages: pages,
         questions: questions,
         targetDay: targetDayStr,
-        desc: desc
+        desc: desc,
+        status: 'pending', // pending, done, partial, missing
+        solvedQuestions: ''
       });
 
       document.getElementById('inp-source').value = '';
@@ -1531,7 +1577,340 @@
     }
 
     // ==========================================
-    // 5. ÇIKTI ŞABLONU OLUŞTURMA & QR KOD YÖNETİMİ
+    // 5. YEREL ARŞİV VE GELİŞİM MOTORU (INDEXEDDB / LOCALSTORAGE)
+    // ==========================================
+    function getArchive() {
+      try {
+        const raw = localStorage.getItem('odevver_assignment_archive');
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveArchive(list) {
+      try {
+        localStorage.setItem('odevver_assignment_archive', JSON.stringify(list));
+        updateArchiveButtonCount();
+      } catch (e) {
+        alert('Tarayıcı depolama alanı dolu!');
+      }
+    }
+
+    function updateArchiveButtonCount() {
+      const list = getArchive();
+      const countEl = document.getElementById('btn-archive-count');
+      if (countEl) countEl.innerText = list.length;
+    }
+
+    function saveCurrentAssignmentToArchive() {
+      const studentName = document.getElementById('inp-student-name').value.trim();
+      if (!studentName) {
+        alert('Lütfen arşive kaydetmeden önce Öğrenci Adı Soyadı giriniz!');
+        return;
+      }
+      if (tasks.length === 0) {
+        alert('Lütfen arşive kaydetmek için en az bir ödev maddesi ekleyiniz!');
+        return;
+      }
+
+      const totalQ = getTotalQuestions();
+      const newRecord = {
+        id: 'rec_' + Date.now(),
+        createdAt: new Date().toISOString(),
+        studentName: studentName,
+        teacherName: document.getElementById('inp-teacher-name').value.trim() || 'Öğretmen',
+        module: currentModule,
+        givenDate: document.getElementById('inp-given-date').value,
+        dueDate: document.getElementById('inp-due-date').value,
+        totalQuestions: totalQ,
+        solvedQuestions: 0,
+        status: 'pending', // pending = beklemede, completed = teslim alındı
+        completionRate: 0,
+        tasks: JSON.parse(JSON.stringify(tasks)),
+        exam: {
+          type: document.getElementById('sel-exam-type').value,
+          branch: document.getElementById('inp-exam-branch').value,
+          source: document.getElementById('inp-exam-source').value,
+          day: document.getElementById('inp-exam-day').value
+        },
+        book: {
+          title: document.getElementById('inp-book-title').value,
+          target: document.getElementById('inp-book-target').value,
+          note: document.getElementById('inp-book-note').value
+        },
+        feedbackNote: ''
+      };
+
+      const archive = getArchive();
+      archive.unshift(newRecord);
+      saveArchive(archive);
+
+      alert(`✅ "${studentName}" öğrencisinin ödevi başarıyla arşive kaydedildi!\nÖğrenci ödevi getirdiğinde üstteki "Öğrenci Takip & Arşiv" butonundan teslim alıp tikleyebilirsiniz.`);
+    }
+
+    function openArchiveModal() {
+      document.getElementById('modal-archive').classList.remove('hidden');
+      renderArchiveList();
+    }
+
+    function closeArchiveModal() {
+      document.getElementById('modal-archive').classList.add('hidden');
+    }
+
+    function renderArchiveList() {
+      const archive = getArchive();
+      const listEl = document.getElementById('archive-items-list');
+      const search = document.getElementById('inp-search-archive').value.toLowerCase().trim();
+
+      const filtered = archive.filter(item => 
+        item.studentName.toLowerCase().includes(search)
+      );
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = '<p class="text-slate-400 italic text-center py-4">Kayıtlı ödev bulunamadı.</p>';
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(item => `
+        <div onclick="selectArchiveItem('${item.id}')" class="cursor-pointer p-3 rounded-xl border transition ${activeArchiveId === item.id ? 'bg-purple-100 border-purple-500 shadow-sm' : 'bg-white border-slate-200 hover:border-purple-300'}">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-extrabold text-slate-900 text-xs">${item.studentName}</span>
+            <span class="text-[10px] font-black px-1.5 py-0.2 rounded ${item.status === 'completed' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+              ${item.status === 'completed' ? 'Teslim Alındı (%' + item.completionRate + ')' : 'Beklemede'}
+            </span>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-500">
+            <span>Veriliş: ${formatDateStr(item.givenDate)}</span>
+            <span class="font-bold text-slate-700">${item.totalQuestions} Soru</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectArchiveItem(id) {
+      activeArchiveId = id;
+      renderArchiveList();
+
+      const archive = getArchive();
+      const record = archive.find(r => r.id === id);
+      if (!record) return;
+
+      const panel = document.getElementById('archive-detail-panel');
+
+      // ÖĞRENCİNİN TÜM GEÇMİŞİNİ AL VE RAPOR ÇIKAR
+      const studentAllRecords = archive.filter(r => r.studentName.toLowerCase() === record.studentName.toLowerCase());
+      const completedRecords = studentAllRecords.filter(r => r.status === 'completed');
+      
+      let avgRate = 0;
+      let totalSolvedAll = 0;
+      let totalTargetAll = 0;
+
+      if (completedRecords.length > 0) {
+        let sumRate = 0;
+        completedRecords.forEach(c => {
+          sumRate += (c.completionRate || 0);
+          totalSolvedAll += (c.solvedQuestions || 0);
+          totalTargetAll += (c.totalQuestions || 0);
+        });
+        avgRate = Math.round(sumRate / completedRecords.length);
+      }
+
+      panel.innerHTML = `
+        <div class="space-y-4">
+          
+          <!-- ÜST KART: ÖĞRENCİ VE ÖDEV ÖZETİ -->
+          <div class="bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 p-4 rounded-2xl border border-purple-200 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-base font-black text-purple-950">${record.studentName}</h3>
+                <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded-full font-extrabold">${record.module.toUpperCase()}</span>
+              </div>
+              <p class="text-xs text-slate-600 font-medium mt-0.5">
+                Veriliş: <b>${formatDateStr(record.givenDate)}</b> | Teslim: <b>${formatDateStr(record.dueDate)}</b>
+              </p>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <button onclick="copyParentReport('${record.id}')" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm flex items-center">
+                <i class="fa-regular fa-copy mr-1"></i> Rapor Metnini Kopyala
+              </button>
+              <button onclick="deleteArchiveItem('${record.id}')" class="text-slate-400 hover:text-red-600 text-sm p-1.5">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- VELİ BİLGİLENDİRME & GELİŞİM ÇUBUKLARI -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-2xs">
+              <span class="block text-[11px] text-slate-500 font-bold uppercase">Toplam Kayıtlı Ödev</span>
+              <span class="text-base font-black text-slate-800">${studentAllRecords.length} Hafta</span>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-2xs">
+              <span class="block text-[11px] text-slate-500 font-bold uppercase">Genel Başarı Oranı</span>
+              <span class="text-base font-black text-emerald-600">%${avgRate}</span>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center shadow-2xs">
+              <span class="block text-[11px] text-slate-500 font-bold uppercase">Çözülen Soru</span>
+              <span class="text-base font-black text-indigo-700">${totalSolvedAll} / ${totalTargetAll}</span>
+            </div>
+          </div>
+
+          <!-- HAFTALIK ÖDEV SATIRLARI TESLİM KONTROLÜ -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-xs font-black text-slate-800 uppercase flex items-center">
+                <i class="fa-solid fa-list-check mr-1.5 text-purple-600"></i> Bu Haftanın Ödev Maddelerini İşaretle
+              </h4>
+              <span class="text-[11px] text-slate-500 font-semibold">Öğrencinin getirdiği kağıttaki sonuçları tıklayın</span>
+            </div>
+
+            <div class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+              ${record.tasks.map((t, idx) => `
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between gap-3 text-xs">
+                  <div class="flex-1">
+                    <span class="font-black text-blue-900">${idx + 1}. ${t.subject}</span>: <span class="font-semibold text-slate-800">${t.topic}</span>
+                    <div class="text-[11px] text-slate-500 mt-0.5">Hedef: ${t.questions} Soru • ${t.source}</div>
+                  </div>
+
+                  <!-- DURUM SEÇİCİLER -->
+                  <div class="flex items-center space-x-1.5">
+                    <button type="button" onclick="setTaskStatus('${record.id}', ${idx}, 'done')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${t.status === 'done' ? 'bg-emerald-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700 hover:bg-emerald-50'}">
+                      ✓ Yapıldı
+                    </button>
+                    <button type="button" onclick="setTaskStatus('${record.id}', ${idx}, 'partial')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${t.status === 'partial' ? 'bg-amber-500 text-white shadow' : 'bg-white border border-slate-300 text-slate-700 hover:bg-amber-50'}">
+                      ⚠️ Eksik
+                    </button>
+                    <button type="button" onclick="setTaskStatus('${record.id}', ${idx}, 'missing')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${t.status === 'missing' ? 'bg-red-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700 hover:bg-red-50'}">
+                      ✕ Boş
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- ÖĞRETMEN DEĞERLENDİRME & GERİ BİLDİRİM NOTU -->
+            <div class="mt-4 pt-3 border-t border-slate-200">
+              <label class="block text-xs font-bold text-slate-800 mb-1">Bu Hafta İçin Öğretmen Değerlendirmesi / Veli Notu</label>
+              <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması çok iyiydi ancak 15 soru eksik kaldı. Hafta içi telafi edilecek." class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
+            </div>
+
+            <button onclick="commitAssignmentCheck('${record.id}')" class="w-full mt-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-black py-2.5 rounded-xl transition shadow flex items-center justify-center space-x-2">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>Kontrolü Kaydet & Başarıyı Güncelle</span>
+            </button>
+          </div>
+
+          <!-- HAFTALIK GELİŞİM GRAFİĞİ -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4">
+            <h4 class="text-xs font-black text-slate-800 uppercase mb-3 flex items-center">
+              <i class="fa-solid fa-chart-line mr-1.5 text-indigo-600"></i> Öğrencinin Haftalık Başarı Çizelgesi
+            </h4>
+            <div class="space-y-2">
+              ${studentAllRecords.map((r, i) => `
+                <div>
+                  <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                    <span>${formatDateStr(r.givenDate)} Haftası (${r.totalQuestions} Soru)</span>
+                    <span class="font-black ${r.status === 'completed' ? 'text-purple-700' : 'text-slate-400'}">
+                      ${r.status === 'completed' ? '%' + r.completionRate : 'Bekliyor'}
+                    </span>
+                  </div>
+                  <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: ${r.completionRate || 0}%"></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    function setTaskStatus(recId, taskIdx, status) {
+      const archive = getArchive();
+      const record = archive.find(r => r.id === recId);
+      if (!record) return;
+
+      record.tasks[taskIdx].status = status;
+      saveArchive(archive);
+      selectArchiveItem(recId);
+    }
+
+    function commitAssignmentCheck(recId) {
+      const archive = getArchive();
+      const record = archive.find(r => r.id === recId);
+      if (!record) return;
+
+      const feedback = document.getElementById('inp-archive-feedback').value.trim();
+      record.feedbackNote = feedback;
+
+      let doneCount = 0;
+      let totalTasks = record.tasks.length;
+
+      record.tasks.forEach(t => {
+        if (t.status === 'done') doneCount += 1;
+        else if (t.status === 'partial') doneCount += 0.5;
+      });
+
+      const rate = totalTasks > 0 ? Math.round((doneCount / totalTasks) * 100) : 0;
+      record.completionRate = rate;
+      record.status = 'completed';
+      record.solvedQuestions = Math.round((record.totalQuestions * rate) / 100);
+
+      saveArchive(archive);
+      selectArchiveItem(recId);
+      renderArchiveList();
+      alert('✅ Ödev teslimi ve başarı oranı başarıyla güncellendi!');
+    }
+
+    function copyParentReport(recId) {
+      const archive = getArchive();
+      const record = archive.find(r => r.id === recId);
+      if (!record) return;
+
+      let msg = `Sayın Velimiz, öğrencimiz ${record.studentName}'in ${formatDateStr(record.givenDate)} tarihli ödev kontrolü yapılmıştır.\n\n`;
+      msg += `📊 Ödev Tamamlanma Başarısı: %${record.completionRate || 0}\n`;
+      msg += `🎯 Hedef Soru: ${record.totalQuestions} | Tahmini Çözülen: ~${record.solvedQuestions || 0}\n`;
+      if (record.feedbackNote) {
+        msg += `📌 Öğretmen Görüşü: ${record.feedbackNote}\n`;
+      }
+      msg += `\nÖğrencimizin gayretini tebrik eder, desteğiniz için teşekkür ederiz.\n— ${record.teacherName}`;
+
+      navigator.clipboard.writeText(msg).then(() => {
+        alert('Veli gelişim raporu panoya kopyalandı! WhatsApp üzerinden veliye gönderebilirsiniz.');
+      });
+    }
+
+    function deleteArchiveItem(recId) {
+      if (confirm('Bu ödev kaydını silmek istediğinize emin misiniz?')) {
+        let archive = getArchive();
+        archive = archive.filter(r => r.id !== recId);
+        saveArchive(archive);
+        activeArchiveId = null;
+        renderArchiveList();
+        document.getElementById('archive-detail-panel').innerHTML = `
+          <div class="flex-1 flex flex-col items-center justify-center text-slate-400 p-8 text-center">
+            <i class="fa-solid fa-clipboard-check text-5xl mb-3 text-slate-300"></i>
+            <h4 class="font-bold text-sm text-slate-600 mb-1">Kayıt Silindi</h4>
+            <p class="text-xs max-w-sm">Sol taraftan başka bir öğrenci kaydı seçebilirsiniz.</p>
+          </div>
+        `;
+      }
+    }
+
+    function clearAllArchive() {
+      if (confirm('DİKKAT: Kayıtlı TÜM öğrenci ödevleri ve geçmişi silinecektir. Emin misiniz?')) {
+        saveArchive([]);
+        activeArchiveId = null;
+        renderArchiveList();
+        document.getElementById('archive-detail-panel').innerHTML = '';
+      }
+    }
+
+    // ==========================================
+    // 6. ÇIKTI ŞABLONU OLUŞTURMA & QR KOD YÖNETİMİ
     // ==========================================
     function formatDateStr(str) {
       if (!str) return '-';
@@ -1631,7 +2010,7 @@
       navigator.clipboard.writeText(note).then(() => {
         alert('Veli bilgilendirme metni panoya kopyalandı! WhatsApp veya SMS üzerinden velinize doğrudan yapıştırabilirsiniz.');
       }).catch(() => {
-        alert('Panoya kopyalama başarısız oldu, lütfen manuel kopyalayınız.');
+        alert('Panoya kopyalama başarısız oldu.');
       });
     }
 
@@ -1790,7 +2169,6 @@
         `).join('');
       }
 
-      // KAREKODLARI GÜNCELLE
       renderQRCodes();
     }
 
@@ -1827,7 +2205,7 @@
     });
 
     // ==========================================
-    // 6. ÇIKTI ALMA (PNG & PDF)
+    // 7. ÇIKTI ALMA (PNG & PDF)
     // ==========================================
     async function captureSheetCanvas(customStudentName) {
       if (customStudentName) {
@@ -1886,7 +2264,7 @@
     }
 
     // ==========================================
-    // 7. TOPLU ÜRETİM (MODAL & EXCEL)
+    // 8. TOPLU ÜRETİM (MODAL & EXCEL)
     // ==========================================
     function openBulkModal() {
       if (tasks.length === 0) {
