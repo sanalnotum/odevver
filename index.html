@@ -15,6 +15,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <!-- Dinamik Karekod Kütüphanesi -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
@@ -99,6 +101,25 @@
       color: #ffffff !important;
       border-color: #1d4ed8 !important;
       box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
+    /* QR KOD İÇ KUTU */
+    .qr-card-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      padding: 4px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      width: 76px;
+      box-sizing: border-box;
+    }
+    .qr-card-box img, .qr-card-box canvas {
+      width: 64px !important;
+      height: 64px !important;
+      display: block;
     }
 
     @media print {
@@ -488,6 +509,46 @@
           </div>
         </div>
 
+        <!-- YENİ BÖLÜM: DİJİTAL MEB KAYNAKLARI (İSTEĞE BAĞLI KAREKODLAR) -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs sm:text-sm font-bold text-sky-950 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-qrcode mr-2 text-sky-600 text-base"></i> Dijital MEB Kaynakları (Karekod)
+            </h3>
+            <span class="text-[10px] text-sky-900 bg-sky-100 border border-sky-300 px-2 py-0.5 rounded-md font-black">İsteğe Bağlı</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium mb-3">
+            Öğrencinin ihtiyacına göre seçeceğiniz dijital kaynaklar çıktının altına taranabilir karekod olarak eklenir.
+          </p>
+
+          <div class="space-y-2.5 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
+            <label class="flex items-center space-x-2.5 cursor-pointer text-xs font-bold text-slate-800">
+              <input type="checkbox" id="chk-qr-konu" onchange="updateSheet()" class="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500">
+              <span class="flex items-center"><i class="fa-solid fa-book text-sky-600 mr-1.5"></i> MEB Konu Özetleri</span>
+            </label>
+
+            <label class="flex items-center space-x-2.5 cursor-pointer text-xs font-bold text-slate-800">
+              <input type="checkbox" id="chk-qr-tarama" onchange="updateSheet()" class="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500">
+              <span class="flex items-center"><i class="fa-solid fa-list-check text-emerald-600 mr-1.5"></i> MEB Tarama Testleri</span>
+            </label>
+
+            <label class="flex items-center space-x-2.5 cursor-pointer text-xs font-bold text-slate-800">
+              <input type="checkbox" id="chk-qr-deneme" onchange="updateSheet()" class="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500">
+              <span class="flex items-center"><i class="fa-solid fa-stopwatch text-amber-600 mr-1.5"></i> MEB 3 Adım Denemeleri</span>
+            </label>
+
+            <div class="pt-2 border-t border-sky-200/80">
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">
+                <i class="fa-solid fa-link text-indigo-600 mr-1"></i> Özel Link / Drive / Video Çözüm (İsteğe Bağlı):
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="inp-custom-qr-label" placeholder="Etiket (Örn: Video Çözüm)" oninput="updateSheet()" class="text-xs font-semibold text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                <input type="url" id="inp-custom-qr-url" placeholder="https://..." oninput="updateSheet()" class="text-xs font-medium text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- 4. HAFTALIK DENEME SINAVI GÖREVİ -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200">
           <div class="flex items-center justify-between mb-2.5">
@@ -581,20 +642,30 @@
       <!-- SAĞ PANEL: Havada Asılı Duran Canlı Çıktı & Butonlar -->
       <div class="xl:col-span-7 space-y-4 sticky-preview-container">
         
-        <!-- ÜST BUTONLAR -->
+        <!-- ÜST BUTONLAR VE VELİ BİLGİLENDİRME KOPYALAYICI -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm no-print">
           <div class="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center">
             <i class="fa-solid fa-file-invoice mr-2 text-blue-600 text-base"></i> Canlı Çıktı Önizlemesi
           </div>
           
-          <div class="flex items-center space-x-2">
-            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
-              <i class="fa-solid fa-users mr-1.5"></i> Toplu Ödev Üret
+          <div class="flex items-center flex-wrap gap-2">
+            <!-- YENİ: VELİ METNİNİ KOPYALA -->
+            <button onclick="copyParentNote()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Veliler için hazır WhatsApp metnini panoya kopyalar">
+              <i class="fa-regular fa-copy mr-1.5"></i> Veli Metnini Kopyala
             </button>
-            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center" title="Görsel Olarak İndir">
+
+            <!-- TOPLU ÖDEV BUTONU -->
+            <button onclick="openBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
+              <i class="fa-solid fa-users mr-1.5"></i> Toplu Üret
+            </button>
+
+            <!-- RESİM İNDİR (PNG) -->
+            <button onclick="downloadAsImage()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center" title="Görsel Olarak İndir">
               <i class="fa-solid fa-image text-sm mr-1.5"></i> PNG
             </button>
-            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2.5 rounded-xl transition shadow flex items-center">
+
+            <!-- PDF / YAZDIR -->
+            <button onclick="printOrSavePDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow flex items-center">
               <i class="fa-solid fa-file-pdf text-sm mr-1.5"></i> PDF
             </button>
           </div>
@@ -759,13 +830,19 @@
                   </div>
                 </div>
 
-                <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-start justify-between gap-4 text-xs">
+                <!-- ÖĞRETMEN NOTU & ENTEGRE KAREKODLAR BANT ALANI -->
+                <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200 flex items-center justify-between gap-3 text-xs">
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
                     <p id="out-general-note" class="text-slate-800 font-semibold italic">Ödevlerinizi zamanında ve eksiksiz tamamlayınız.</p>
+                    <div class="mt-1 text-slate-500 font-bold text-[10px]">
+                      Tamamlanan her ödevin kutucuğunu <span class="border border-blue-600 px-1 py-0.2 rounded bg-white font-black text-blue-700">✓</span> işaretleyiniz.
+                    </div>
                   </div>
-                  <div class="text-right text-slate-600 font-bold whitespace-nowrap self-center text-[11px]">
-                    Tamamlanan her ödevin kutucuğunu <span class="border-2 border-blue-600 px-1.5 py-0.5 rounded bg-white font-black text-blue-700">✓</span> işaretleyiniz.
+
+                  <!-- ÇIKTIDAKİ DİNAMİK KAREKOD PANELİ (SEÇİLİNCE GÖRÜNÜR) -->
+                  <div id="out-qr-container" class="hidden flex items-center space-x-2 border-l border-blue-200 pl-3">
+                    <!-- Dinamik olarak JS tarafından doldurulur -->
                   </div>
                 </div>
 
@@ -865,6 +942,13 @@
     let tasks = [];
     let customInstLogoBase64 = null;
     let selectedDays = [];
+
+    // SABİT MEB BAĞLANTILARI
+    const QR_LINKS = {
+      konu: 'https://ogmmateryal.eba.gov.tr/mebi-konu-ozeti-kitaplari',
+      tarama: 'https://ogmmateryal.eba.gov.tr/mebi-tarama-testi-kitaplari',
+      deneme: 'https://ogmmateryal.eba.gov.tr/3-adim-deneme-sinavlari'
+    };
 
     // ==========================================
     // 1. KALICI PROFİL HAFIZASI
@@ -1358,6 +1442,13 @@
         grade: currentGrade,
         yksSub: currentYksSub,
         tasks: tasks,
+        qr: {
+          konu: document.getElementById('chk-qr-konu').checked,
+          tarama: document.getElementById('chk-qr-tarama').checked,
+          deneme: document.getElementById('chk-qr-deneme').checked,
+          customLabel: document.getElementById('inp-custom-qr-label').value,
+          customUrl: document.getElementById('inp-custom-qr-url').value
+        },
         exam: {
           type: document.getElementById('sel-exam-type').value,
           branch: document.getElementById('inp-exam-branch').value,
@@ -1399,6 +1490,14 @@
           
           tasks = data.tasks || [];
 
+          if (data.qr) {
+            document.getElementById('chk-qr-konu').checked = !!data.qr.konu;
+            document.getElementById('chk-qr-tarama').checked = !!data.qr.tarama;
+            document.getElementById('chk-qr-deneme').checked = !!data.qr.deneme;
+            document.getElementById('inp-custom-qr-label').value = data.qr.customLabel || '';
+            document.getElementById('inp-custom-qr-url').value = data.qr.customUrl || '';
+          }
+
           if (data.exam) {
             document.getElementById('sel-exam-type').value = data.exam.type || '';
             document.getElementById('inp-exam-branch').value = data.exam.branch || '';
@@ -1432,7 +1531,7 @@
     }
 
     // ==========================================
-    // 5. ÇIKTI ŞABLONU OLUŞTURMA
+    // 5. ÇIKTI ŞABLONU OLUŞTURMA & QR KOD YÖNETİMİ
     // ==========================================
     function formatDateStr(str) {
       if (!str) return '-';
@@ -1447,6 +1546,93 @@
       const safeStudent = (studentInput || 'Ogrenci').replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ_]/g, '_');
       const safeDate = formatDateStr(givenDateInput).replace(/\./g, '-');
       return `ODEV_VER_${safeStudent}_${safeDate}`;
+    }
+
+    function renderQRCodes() {
+      const qrContainer = document.getElementById('out-qr-container');
+      qrContainer.innerHTML = '';
+
+      const items = [];
+      if (document.getElementById('chk-qr-konu').checked) {
+        items.push({ label: 'MEB KONU ÖZETİ', url: QR_LINKS.konu });
+      }
+      if (document.getElementById('chk-qr-tarama').checked) {
+        items.push({ label: 'MEB TARAMA TESTİ', url: QR_LINKS.tarama });
+      }
+      if (document.getElementById('chk-qr-deneme').checked) {
+        items.push({ label: 'MEB 3 ADIM DENEME', url: QR_LINKS.deneme });
+      }
+
+      const customLabel = document.getElementById('inp-custom-qr-label').value.trim();
+      const customUrl = document.getElementById('inp-custom-qr-url').value.trim();
+      if (customUrl) {
+        items.push({ label: (customLabel || 'ÖZEL KAYNAK').toUpperCase(), url: customUrl });
+      }
+
+      if (items.length === 0) {
+        qrContainer.classList.add('hidden');
+        return;
+      }
+
+      qrContainer.classList.remove('hidden');
+
+      items.forEach((it, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'qr-card-box';
+
+        const qrBox = document.createElement('div');
+        qrBox.id = `qr-target-${idx}`;
+        wrap.appendChild(qrBox);
+
+        const lbl = document.createElement('span');
+        lbl.className = 'text-[7.5px] font-black text-slate-800 text-center uppercase tracking-tight mt-1 leading-tight line-clamp-1';
+        lbl.innerText = it.label;
+        wrap.appendChild(lbl);
+
+        qrContainer.appendChild(wrap);
+
+        new QRCode(qrBox, {
+          text: it.url,
+          width: 64,
+          height: 64,
+          colorDark: "#0f172a",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      });
+    }
+
+    function getTotalQuestions() {
+      let total = 0;
+      tasks.forEach(t => {
+        const matches = t.questions.match(/\d+/g);
+        if (matches) {
+          matches.forEach(num => total += parseInt(num, 10));
+        }
+      });
+      return total;
+    }
+
+    function copyParentNote() {
+      const student = document.getElementById('inp-student-name').value.trim() || 'Öğrencimiz';
+      const teacher = document.getElementById('inp-teacher-name').value.trim() || 'Öğretmeni';
+      const dueDate = formatDateStr(document.getElementById('inp-due-date').value);
+      const totalQ = getTotalQuestions();
+
+      let note = `Sayın Velimiz, öğrencimiz ${student}'in haftalık ödev takip planı hazırlanmış ve teslim edilmiştir.\n`;
+      if (totalQ > 0) {
+        note += `📊 Bu haftaki toplam hedef: ${totalQ} Soru.\n`;
+      }
+      if (dueDate !== '-') {
+        note += `📅 Son Teslim Tarihi: ${dueDate}\n`;
+      }
+      note += `Öğrencimizin çalışmalarını zamanında tamamlaması için takibinizi rica eder, başarılar dileriz.\n— ${teacher}`;
+
+      navigator.clipboard.writeText(note).then(() => {
+        alert('Veli bilgilendirme metni panoya kopyalandı! WhatsApp veya SMS üzerinden velinize doğrudan yapıştırabilirsiniz.');
+      }).catch(() => {
+        alert('Panoya kopyalama başarısız oldu, lütfen manuel kopyalayınız.');
+      });
     }
 
     function updateSheet() {
@@ -1558,14 +1744,7 @@
         defaultTitle.classList.remove('hidden');
       }
 
-      let totalQuestions = 0;
-      tasks.forEach(t => {
-        const matches = t.questions.match(/\d+/g);
-        if (matches) {
-          matches.forEach(num => totalQuestions += parseInt(num, 10));
-        }
-      });
-
+      const totalQuestions = getTotalQuestions();
       const totalBadge = document.getElementById('out-total-question-badge');
       if (totalQuestions > 0) {
         totalBadge.classList.remove('hidden');
@@ -1583,34 +1762,36 @@
             </td>
           </tr>
         `;
-        return;
+      } else {
+        tbody.innerHTML = tasks.map((t, idx) => `
+          <tr class="${idx % 2 === 1 ? 'bg-blue-50/30' : 'bg-white'} hover:bg-blue-50/60 transition">
+            <td class="p-2 border border-slate-300 text-center">
+              <div class="w-4 h-4 rounded border-2 border-blue-700 inline-block align-middle bg-white"></div>
+            </td>
+            <td class="p-2 border border-slate-300 text-center font-black text-slate-600">${idx + 1}</td>
+            <td class="p-2 border border-slate-300 font-extrabold text-blue-950 whitespace-nowrap">${t.subject}</td>
+            <td class="p-2 border border-slate-300 font-bold text-slate-900">${t.topic}</td>
+            <td class="p-2 border border-slate-300 text-center whitespace-nowrap">
+              <span class="inline-block text-[10px] font-black px-2 py-0.5 rounded border ${
+                t.workType === 'Konu + Soru' ? 'bg-indigo-100 text-indigo-900 border-indigo-300' :
+                t.workType === 'Konu Çalış' ? 'bg-amber-100 text-amber-900 border-amber-300' :
+                'bg-blue-100 text-blue-900 border-blue-300'
+              }">${t.workType}</span>
+            </td>
+            <td class="p-2 border border-slate-300 text-center text-[10px] font-black text-blue-900 bg-blue-50/50 whitespace-nowrap">${t.freq || '-'}</td>
+            <td class="p-2 border border-slate-300 text-slate-800 font-semibold">${t.source}</td>
+            <td class="p-2 border border-slate-300 text-center font-bold text-slate-900">${t.pages}</td>
+            <td class="p-2 border border-slate-300 text-center font-black text-blue-800">${t.questions}</td>
+            <td class="p-2 border border-slate-300 text-center whitespace-nowrap">
+              ${t.targetDay !== '-' ? `<span class="inline-block text-[10px] font-black px-2 py-0.5 rounded bg-indigo-50 text-indigo-900 border border-indigo-300">${t.targetDay}</span>` : '<span class="text-slate-400 font-bold">-</span>'}
+            </td>
+            <td class="p-2 border border-slate-300 text-[10.5px] text-slate-700 font-medium">${t.desc}</td>
+          </tr>
+        `).join('');
       }
 
-      tbody.innerHTML = tasks.map((t, idx) => `
-        <tr class="${idx % 2 === 1 ? 'bg-blue-50/30' : 'bg-white'} hover:bg-blue-50/60 transition">
-          <td class="p-2 border border-slate-300 text-center">
-            <div class="w-4 h-4 rounded border-2 border-blue-700 inline-block align-middle bg-white"></div>
-          </td>
-          <td class="p-2 border border-slate-300 text-center font-black text-slate-600">${idx + 1}</td>
-          <td class="p-2 border border-slate-300 font-extrabold text-blue-950 whitespace-nowrap">${t.subject}</td>
-          <td class="p-2 border border-slate-300 font-bold text-slate-900">${t.topic}</td>
-          <td class="p-2 border border-slate-300 text-center whitespace-nowrap">
-            <span class="inline-block text-[10px] font-black px-2 py-0.5 rounded border ${
-              t.workType === 'Konu + Soru' ? 'bg-indigo-100 text-indigo-900 border-indigo-300' :
-              t.workType === 'Konu Çalış' ? 'bg-amber-100 text-amber-900 border-amber-300' :
-              'bg-blue-100 text-blue-900 border-blue-300'
-            }">${t.workType}</span>
-          </td>
-          <td class="p-2 border border-slate-300 text-center text-[10px] font-black text-blue-900 bg-blue-50/50 whitespace-nowrap">${t.freq || '-'}</td>
-          <td class="p-2 border border-slate-300 text-slate-800 font-semibold">${t.source}</td>
-          <td class="p-2 border border-slate-300 text-center font-bold text-slate-900">${t.pages}</td>
-          <td class="p-2 border border-slate-300 text-center font-black text-blue-800">${t.questions}</td>
-          <td class="p-2 border border-slate-300 text-center whitespace-nowrap">
-            ${t.targetDay !== '-' ? `<span class="inline-block text-[10px] font-black px-2 py-0.5 rounded bg-indigo-50 text-indigo-900 border border-indigo-300">${t.targetDay}</span>` : '<span class="text-slate-400 font-bold">-</span>'}
-          </td>
-          <td class="p-2 border border-slate-300 text-[10.5px] text-slate-700 font-medium">${t.desc}</td>
-        </tr>
-      `).join('');
+      // KAREKODLARI GÜNCELLE
+      renderQRCodes();
     }
 
     function adjustScale() {
