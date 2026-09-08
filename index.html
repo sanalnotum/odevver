@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ÖDEV-VER v1.0 | Akıllı Ödev Takip ve Dağıtım Portalı</title>
+  <title>ÖDEV-VER v1.3 | Akıllı Ödev Takip ve Dağıtım Portalı</title>
   
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
+
+  <!-- PWA & Mobil Tam Ekran Ayarları -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ÖDEV-VER">
+  <meta name="theme-color" content="#1d4ed8">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -169,9 +176,9 @@
         <div>
           <div class="flex items-center space-x-2">
             <span class="text-xl sm:text-2xl font-black tracking-tight drop-shadow-sm">ÖDEV-VER</span>
-            <span class="bg-white/20 text-white text-[11px] font-black px-2 py-0.5 rounded-full border border-white/20">v1.0</span>
+            <span class="bg-white/20 text-white text-[11px] font-black px-2 py-0.5 rounded-full border border-white/20">v1.3</span>
           </div>
-          <p class="text-xs text-blue-200 font-medium">Akıllı Ödevlendirme & Çıktı Portalı</p>
+          <p class="text-xs text-blue-200 font-medium">Akıllı Ödevlendirme & Koçluk Portalı</p>
         </div>
       </div>
       
@@ -209,6 +216,36 @@
             </p>
             <span class="text-[11px] font-black text-amber-800 block mt-0.5">YILDIRAY HOCA</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AKILLI ÖĞRETMEN TAKİP ÖZET ÇUBUĞU -->
+    <div class="mb-6 no-print max-w-5xl mx-auto">
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <div>
+            <h3 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight">Akıllı Ödev Takip Durumları</h3>
+            <p class="text-[11px] text-slate-500">Arşivdeki aktif ödevlerin zaman çizelgesi analizi</p>
+          </div>
+        </div>
+
+        <div class="flex items-center flex-wrap gap-2 text-xs font-black">
+          <button onclick="openArchiveModal()" class="bg-red-50 text-red-700 border border-red-200 px-3 py-1.5 rounded-xl hover:bg-red-100 transition flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+            <span>🚨 Gecikenler: <span id="badge-count-overdue">0</span></span>
+          </button>
+          <button onclick="openArchiveModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl hover:bg-amber-100 transition flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span>⏳ Son 1 Gün: <span id="badge-count-today">0</span></span>
+          </button>
+          <button onclick="openArchiveModal()" class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>✔️ Tamamlanan: <span id="badge-count-done">0</span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -495,6 +532,40 @@
           </div>
         </div>
 
+        <!-- YENİ: ZENGİN MOTİVASYON ROZETLERİ PANELİ -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs sm:text-sm font-bold text-purple-950 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-award mr-2 text-purple-600 text-base"></i> Motivasyon Rozeti & Özel Hedef
+            </h3>
+            <span class="text-[10px] text-purple-900 bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-md font-black">Karne & Çıktı</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium mb-3">
+            Öğrenciye özel rozet seçin ve motivasyon sözü ekleyin; çıktının en üstünde yer alsın.
+          </p>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">Rozet Seçimi</label>
+              <select id="sel-badge-type" onchange="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                <option value="">Rozet Yok</option>
+                <option value="🏆 Haftanın Yıldızı">🏆 Haftanın Yıldızı</option>
+                <option value="🥇 İstikrar Abidesi">🥇 İstikrar Abidesi</option>
+                <option value="🎯 Soru Avcısı">🎯 Soru Avcısı</option>
+                <option value="🧠 Zihin Açıcı">🧠 Zihin Açıcı</option>
+                <option value="🚀 Rekortmen Koşucu">🚀 Rekortmen Koşucu</option>
+                <option value="💡 Pratik Zeka">💡 Pratik Zeka</option>
+                <option value="⭐ Örnek Gayret">⭐ Örnek Gayret</option>
+                <option value="🔥 Zirve Tırmanışçısı">🔥 Zirve Tırmanışçısı</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenciye Özel Motivasyon Hedefi</label>
+              <input type="text" id="inp-badge-motto" placeholder="Örn: Bu hafta geometri önceliğimiz, başarabilirsin!" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
         <!-- DİJİTAL EKLENTİ (KAREKOD) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
           <div class="flex items-center justify-between mb-2">
@@ -690,6 +761,15 @@
                     </div>
                   </div>
 
+                </div>
+
+                <!-- ÇIKTI ROZET & MOTİVASYON ALANI -->
+                <div id="out-badge-banner" class="hidden mt-2 p-2 rounded-lg bg-purple-50 border border-purple-200 items-center justify-between text-xs font-bold text-purple-950">
+                  <div class="flex items-center space-x-2">
+                    <span id="out-badge-val" class="bg-purple-600 text-white px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase"></span>
+                    <span id="out-motto-val" class="italic text-purple-900 font-medium"></span>
+                  </div>
+                  <span class="text-[10px] text-purple-700 font-extrabold uppercase">Haftalık Özel Hedef</span>
                 </div>
 
                 <div class="mt-2.5 pt-2 border-t border-blue-100 grid grid-cols-2 gap-4 bg-slate-100/70 px-3.5 py-1.5 rounded-lg text-xs">
@@ -963,7 +1043,7 @@
           </div>
           <div>
             <h3 class="text-base font-black leading-tight">Öğrenci Takip & Gelişim Arşivi</h3>
-            <p class="text-xs text-purple-200 font-medium">Yerel hafızadaki ödev kayıtları, teslim kontrolü ve veli gelişim analizleri</p>
+            <p class="text-xs text-purple-200 font-medium">Teslim durumu filtreleri, hibrit sesli notlar ve genel öğrenci analizi</p>
           </div>
         </div>
         <button onclick="closeArchiveModal()" class="text-white/80 hover:text-white text-xl p-1">
@@ -975,9 +1055,27 @@
         
         <!-- SOL LİSTE -->
         <div class="md:col-span-4 border-r border-slate-200 p-4 bg-slate-50 flex flex-col h-full overflow-y-auto">
-          <div class="mb-3">
-            <label class="block text-xs font-black text-slate-800 mb-1">Öğrenciye Göre Filtrele</label>
-            <input type="text" id="inp-search-archive" placeholder="Öğrenci adı ara..." oninput="renderArchiveList()" class="w-full text-xs font-semibold px-3 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+          <div class="mb-3 space-y-2">
+            <!-- GENEL ÖĞRENCİ TAKİP & ANALİZ BUTONU -->
+            <button onclick="openClassReportModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow-sm flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-chart-column"></i>
+              <span>📊 Genel Öğrenci Takip & Analiz</span>
+            </button>
+
+            <div>
+              <label class="block text-xs font-black text-slate-800 mb-1">Öğrenciye Göre Ara</label>
+              <input type="text" id="inp-search-archive" placeholder="Öğrenci adı ara..." oninput="renderArchiveList()" class="w-full text-xs font-semibold px-3 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-black text-slate-800 mb-1">Teslim Durumu Filtresi</label>
+              <select id="sel-status-filter" onchange="renderArchiveList()" class="w-full text-xs font-bold text-slate-900 px-3 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                <option value="all">Tüm Kayıtlar</option>
+                <option value="overdue">🚨 Gecikenler</option>
+                <option value="today">⏳ Son 1 Gün / Bugün</option>
+                <option value="completed">✔️ Tamamlananlar</option>
+              </select>
+            </div>
           </div>
 
           <div class="flex items-center justify-between text-xs font-black text-slate-600 mb-2 border-b border-slate-200 pb-1">
@@ -1016,6 +1114,104 @@
 
       </div>
 
+    </div>
+  </div>
+
+  <!-- GENEL ÖĞRENCİ TAKİP & ANALİZ MODAL -->
+  <div id="modal-class-report" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-chart-column"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black leading-tight">Genel Öğrenci Takip & Analiz Merkezi</h3>
+            <p class="text-xs text-indigo-200 font-medium">Tüm öğrencilerin performans, modül, durum ve soru çözüm sıralaması</p>
+          </div>
+        </div>
+        <button onclick="closeClassReportModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- ANALİZ FİLTRELERİ & ÖZET KARTLARI -->
+      <div class="p-4 bg-slate-50 border-b border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+        <div>
+          <label class="block font-black text-slate-700 mb-1">Modül Filtresi</label>
+          <select id="cls-filter-mod" onchange="renderClassReportTable()" class="w-full font-bold p-2 bg-white border border-slate-300 rounded-lg">
+            <option value="all">Tüm Modüller</option>
+            <option value="ilkokul">İlkokul</option>
+            <option value="ortaokul_maarif">Ortaokul Maarif</option>
+            <option value="lise_maarif">Lise Maarif</option>
+            <option value="lgs">LGS</option>
+            <option value="yks">YKS</option>
+            <option value="serbest">Serbest</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-black text-slate-700 mb-1">Durum Filtresi</label>
+          <select id="cls-filter-status" onchange="renderClassReportTable()" class="w-full font-bold p-2 bg-white border border-slate-300 rounded-lg">
+            <option value="all">Tüm Durumlar</option>
+            <option value="overdue">🚨 Gecikenler</option>
+            <option value="completed">✔️ Tamamlananlar</option>
+            <option value="pending">⏳ Bekleyenler</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-black text-slate-700 mb-1">Sıralama Kriteri</label>
+          <select id="cls-sort-by" onchange="renderClassReportTable()" class="w-full font-bold p-2 bg-white border border-slate-300 rounded-lg">
+            <option value="date_desc">En Yeni Veriliş</option>
+            <option value="success_desc">En Yüksek Başarı (%)</option>
+            <option value="question_desc">En Çok Soru Hedefi</option>
+          </select>
+        </div>
+        <div class="flex items-end">
+          <button onclick="printClassReport()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-black p-2.5 rounded-lg transition shadow-sm flex items-center justify-center space-x-1.5">
+            <i class="fa-solid fa-print"></i>
+            <span>Raporu Yazdır / PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-4 text-xs text-slate-700">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="bg-indigo-50 border border-indigo-200 p-3.5 rounded-2xl text-center">
+            <span class="block text-slate-500 font-bold uppercase text-[10.5px]">Filtrelenen Kayıt</span>
+            <span id="cls-stat-total" class="text-lg font-black text-indigo-950">0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-2xl text-center">
+            <span class="block text-slate-500 font-bold uppercase text-[10.5px]">Toplam Çözülen Soru</span>
+            <span id="cls-stat-questions" class="text-lg font-black text-emerald-900">0</span>
+          </div>
+          <div class="bg-purple-50 border border-purple-200 p-3.5 rounded-2xl text-center">
+            <span class="block text-slate-500 font-bold uppercase text-[10.5px]">Ortalama Başarı</span>
+            <span id="cls-stat-avg" class="text-lg font-black text-purple-900">%0</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-black uppercase text-[10px] tracking-wider border-b border-slate-200">
+                <th class="p-3">Öğrenci Adı</th>
+                <th class="p-3">Modül</th>
+                <th class="p-3 text-center">Veriliş / Teslim</th>
+                <th class="p-3 text-center">Soru Hedefi</th>
+                <th class="p-3 text-center">Başarı</th>
+                <th class="p-3 text-center">Durum</th>
+              </tr>
+            </thead>
+            <tbody id="cls-report-tbody" class="divide-y divide-slate-200 font-semibold text-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 bg-slate-100 border-t border-slate-200 flex justify-end">
+        <button type="button" onclick="closeClassReportModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-black text-xs px-5 py-2 rounded-xl transition">
+          Kapat
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1080,7 +1276,7 @@
 
   <footer class="bg-white border-t border-slate-200 py-3.5 text-center text-xs text-slate-600 no-print font-medium mt-8">
     <div class="max-w-[1440px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="font-extrabold text-blue-700">ÖDEV-VER v1.0 • Tüm Hakları Saklıdır.</div>
+      <div class="font-extrabold text-blue-700">ÖDEV-VER v1.3 • Tüm Hakları Saklıdır.</div>
       <div>Eğitimde Verimlilik ve Dijital Ödev Takip Portalı</div>
       <div class="font-black text-slate-800">HAZIRLAYAN: YILDIRAY HOCA</div>
     </div>
@@ -1096,7 +1292,7 @@
 
   <script src="db.js"></script>
   <script>
-        // ==========================================
+    // ==========================================
     // MODAL REHBER & İLETİŞİM
     // ==========================================
     function openGuideModal() {
@@ -1627,11 +1823,15 @@
       }
 
       const templateData = {
-        version: "1.0",
+        version: "1.3",
         module: currentModule,
         grade: currentGrade,
         yksSub: currentYksSub,
         tasks: tasks,
+        badge: {
+          type: document.getElementById('sel-badge-type').value,
+          motto: document.getElementById('inp-badge-motto').value
+        },
         qr: {
           customLabel: document.getElementById('inp-custom-qr-label').value,
           customUrl: document.getElementById('inp-custom-qr-url').value
@@ -1677,6 +1877,11 @@
           
           tasks = data.tasks || [];
 
+          if (data.badge) {
+            document.getElementById('sel-badge-type').value = data.badge.type || '';
+            document.getElementById('inp-badge-motto').value = data.badge.motto || '';
+          }
+
           if (data.qr) {
             document.getElementById('inp-custom-qr-label').value = data.qr.customLabel || '';
             document.getElementById('inp-custom-qr-url').value = data.qr.customUrl || '';
@@ -1715,7 +1920,7 @@
     }
 
     // ==========================================
-    // 5. YEREL ARŞİV VE GELİŞİM MOTORU
+    // 5. YEREL ARŞİV VE AKILLI TAKİP MOTORU
     // ==========================================
     function getArchive() {
       try {
@@ -1730,6 +1935,7 @@
       try {
         localStorage.setItem('odevver_assignment_archive', JSON.stringify(list));
         updateArchiveButtonCount();
+        updateDashboardTrackerSummary();
       } catch (e) {
         alert('Tarayıcı depolama alanı dolu!');
       }
@@ -1739,6 +1945,52 @@
       const list = getArchive();
       const countEl = document.getElementById('btn-archive-count');
       if (countEl) countEl.innerText = list.length;
+    }
+
+    function calculateAssignmentStatus(dueDateStr) {
+      if (!dueDateStr) return { status: 'normal', text: 'Devam Ediyor', daysDiff: 0 };
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const due = new Date(dueDateStr);
+      due.setHours(0, 0, 0, 0);
+
+      const diffTime = due - today;
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) {
+        return { status: 'overdue', text: `${Math.abs(diffDays)} Gün Gecikti`, daysDiff: Math.abs(diffDays) };
+      } else if (diffDays === 0 || diffDays === 1) {
+        return { status: 'today', text: diffDays === 0 ? 'Son Gün (Bugün)' : 'Son 1 Gün', daysDiff: diffDays };
+      } else {
+        return { status: 'normal', text: `${diffDays} Gün Kaldı`, daysDiff: diffDays };
+      }
+    }
+
+    function updateDashboardTrackerSummary() {
+      const archive = getArchive();
+      let overdueCount = 0;
+      let todayCount = 0;
+      let doneCount = 0;
+
+      archive.forEach(item => {
+        if (item.status === 'completed') {
+          doneCount++;
+        } else {
+          const calc = calculateAssignmentStatus(item.dueDate);
+          if (calc.status === 'overdue') overdueCount++;
+          else if (calc.status === 'today') todayCount++;
+        }
+      });
+
+      const bOverdue = document.getElementById('badge-count-overdue');
+      const bToday = document.getElementById('badge-count-today');
+      const bDone = document.getElementById('badge-count-done');
+
+      if (bOverdue) bOverdue.innerText = overdueCount;
+      if (bToday) bToday.innerText = todayCount;
+      if (bDone) bDone.innerText = doneCount;
     }
 
     function buildAssignmentRecord(targetStudentName) {
@@ -1752,6 +2004,8 @@
         module: currentModule,
         givenDate: document.getElementById('inp-given-date').value,
         dueDate: document.getElementById('inp-due-date').value,
+        badgeType: document.getElementById('sel-badge-type').value,
+        badgeMotto: document.getElementById('inp-badge-motto').value,
         totalQuestions: totalQ,
         solvedQuestions: 0,
         status: 'pending',
@@ -1778,7 +2032,8 @@
           note: document.getElementById('inp-book-note').value,
           status: 'pending'
         },
-        feedbackNote: ''
+        feedbackNote: '',
+        audioDataUrl: null
       };
     }
 
@@ -1792,12 +2047,11 @@
       const givenDate = document.getElementById('inp-given-date').value;
       let archive = getArchive();
 
-      // TOPLU ÜRETİM KONTROLÜ
       if (lastBulkStudentNames && lastBulkStudentNames.length > 1) {
         const askBulk = confirm(
           `📢 Toplu Üretim Listesinde ${lastBulkStudentNames.length} öğrenci bulunuyor.\n\n` +
           `• 'Tamam' derseniz: Listedeki ${lastBulkStudentNames.length} öğrencinin TAMAMI için ayrı ayrı arşiv kaydı oluşturulur.\n` +
-          `• 'İptal' derseniz: Yalnızca ekrandaki öğrenci (${screenStudent || 'İsimsiz'}) kaydedilir.`
+          `• 'İptal' derseniz: Yalnızca ekrandaki öğrenci kaydedilir.`
         );
 
         if (askBulk) {
@@ -1829,13 +2083,11 @@
         }
       }
 
-      // TEKİL ÖĞRENCİ KAYDI
       if (!screenStudent) {
         alert('Lütfen arşive kaydetmeden önce Öğrenci Adı Soyadı giriniz!');
         return;
       }
 
-      // MÜKERRER (DUPLICATE) KAYIT KONTROLÜ
       const existingIdx = archive.findIndex(r => 
         r.studentName.toLowerCase() === screenStudent.toLowerCase() && r.givenDate === givenDate
       );
@@ -1843,24 +2095,23 @@
       if (existingIdx !== -1) {
         const confirmOverwrite = confirm(
           `⚠️ DİKKAT: "${screenStudent}" öğrencisinin ${formatDateStr(givenDate)} tarihli bir ödev kaydı zaten var!\n\n` +
-          `• 'Tamam' derseniz: Eski kayıt bu yeni ödevle GÜNCELLENİR.\n` +
-          `• 'İptal' derseniz: Kayıt işlemi durdurulur (çift kayıt önlenir).`
+          `• 'Tamam' derseniz: Eski kayıt güncellenir.\n` +
+          `• 'İptal' derseniz işlem durdurulur.`
         );
 
         if (!confirmOverwrite) return;
 
         archive[existingIdx] = buildAssignmentRecord(screenStudent);
         saveArchive(archive);
-        alert(`🔄 "${screenStudent}" öğrencisinin mevcut ödev kaydı başarıyla güncellendi!`);
+        alert(`🔄 "${screenStudent}" öğrencisinin mevcut ödev kaydı güncellendi!`);
         return;
       }
 
-      // YENİ KAYIT EKLE
       const newRecord = buildAssignmentRecord(screenStudent);
       archive.unshift(newRecord);
       saveArchive(archive);
 
-      alert(`✅ "${screenStudent}" öğrencisinin ödevi başarıyla arşive kaydedildi!\nÖğrenci ödevi getirdiğinde üstteki "Öğrenci Takip & Arşiv" butonundan teslim alıp kontrol edebilirsiniz.`);
+      alert(`✅ "${screenStudent}" öğrencisinin ödevi başarıyla arşive kaydedildi!`);
     }
 
     function openArchiveModal() {
@@ -1872,34 +2123,167 @@
       document.getElementById('modal-archive').classList.add('hidden');
     }
 
+    // ==========================================
+    // GENEL ÖĞRENCİ TAKİP & ANALİZ MERKEZİ (FİLTRELİ & SIRALAMALI)
+    // ==========================================
+    function openClassReportModal() {
+      renderClassReportTable();
+      document.getElementById('modal-class-report').classList.remove('hidden');
+    }
+
+    function closeClassReportModal() {
+      document.getElementById('modal-class-report').classList.add('hidden');
+    }
+
+    function renderClassReportTable() {
+      const archive = getArchive();
+      const modFilter = document.getElementById('cls-filter-mod').value;
+      const statusFilter = document.getElementById('cls-filter-status').value;
+      const sortBy = document.getElementById('cls-sort-by').value;
+
+      // Filtreleme
+      let filtered = archive.filter(r => {
+        if (modFilter !== 'all' && r.module !== modFilter) return false;
+
+        const calc = calculateAssignmentStatus(r.dueDate);
+        if (statusFilter === 'overdue') {
+          if (r.status === 'completed' || calc.status !== 'overdue') return false;
+        } else if (statusFilter === 'completed') {
+          if (r.status !== 'completed') return false;
+        } else if (statusFilter === 'pending') {
+          if (r.status === 'completed') return false;
+        }
+        return true;
+      });
+
+      // Sıralama
+      filtered.sort((a, b) => {
+        if (sortBy === 'date_desc') {
+          return new Date(b.givenDate || 0) - new Date(a.givenDate || 0);
+        } else if (sortBy === 'success_desc') {
+          return (b.completionRate || 0) - (a.completionRate || 0);
+        } else if (sortBy === 'question_desc') {
+          return (b.totalQuestions || 0) - (a.totalQuestions || 0);
+        }
+        return 0;
+      });
+
+      // Özet Kartları Güncelleme
+      document.getElementById('cls-stat-total').innerText = filtered.length;
+
+      let totalQSum = 0;
+      let sumRates = 0;
+      let completedCount = 0;
+
+      filtered.forEach(r => {
+        totalQSum += (r.totalQuestions || 0);
+        if (r.status === 'completed') {
+          sumRates += (r.completionRate || 0);
+          completedCount++;
+        }
+      });
+
+      const avgRate = completedCount > 0 ? Math.round(sumRates / completedCount) : 0;
+      document.getElementById('cls-stat-questions').innerText = `${totalQSum} Soru`;
+      document.getElementById('cls-stat-avg').innerText = `%${avgRate}`;
+
+      const tbody = document.getElementById('cls-report-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 italic">Seçilen kriterlere uygun öğrenci kaydı bulunamadı.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(r => {
+        const calc = calculateAssignmentStatus(r.dueDate);
+        let statusHtml = '';
+        if (r.status === 'completed') {
+          statusHtml = '<span class="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded font-black">Teslim Alındı</span>';
+        } else if (calc.status === 'overdue') {
+          statusHtml = `<span class="text-red-700 bg-red-100 px-2 py-0.5 rounded font-black animate-pulse">${calc.text}</span>`;
+        } else {
+          statusHtml = `<span class="text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-black">${calc.text}</span>`;
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3 font-extrabold text-slate-900">${r.studentName}</td>
+            <td class="p-3 font-bold text-purple-800 uppercase text-[10px]">${r.module}</td>
+            <td class="p-3 text-center text-slate-600">${formatDateStr(r.givenDate)} / ${formatDateStr(r.dueDate)}</td>
+            <td class="p-3 text-center font-bold text-slate-800">${r.totalQuestions} Soru</td>
+            <td class="p-3 text-center font-black ${r.status === 'completed' ? 'text-purple-700' : 'text-slate-400'}">
+              ${r.status === 'completed' ? '%' + r.completionRate : '-'}
+            </td>
+            <td class="p-3 text-center">${statusHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function printClassReport() {
+      const modalContent = document.querySelector('#modal-class-report .flex-1').innerHTML;
+      const printWindow = window.open('', '', 'height=600,width=900');
+      printWindow.document.write('<html><head><title>Genel Öğrenci Analiz Raporu</title>');
+      printWindow.document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+      printWindow.document.write('</<head><body class="p-6 bg-white">');
+      printWindow.document.write('<h1 class="text-xl font-black mb-4 text-slate-900">KURUM / KOÇLUK GENEL ÖĞRENCİ ANALİZ RAPORU</h1>');
+      printWindow.document.write(modalContent);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      setTimeout(() => { printWindow.print(); }, 500);
+    }
+
     function renderArchiveList() {
       const archive = getArchive();
       const listEl = document.getElementById('archive-items-list');
       const search = document.getElementById('inp-search-archive').value.toLowerCase().trim();
+      const statusFilter = document.getElementById('sel-status-filter').value;
 
-      const filtered = archive.filter(item => 
-        item.studentName.toLowerCase().includes(search)
-      );
+      const filtered = archive.filter(item => {
+        const matchName = item.studentName.toLowerCase().includes(search);
+        if (!matchName) return false;
+
+        if (statusFilter === 'all') return true;
+        
+        const calc = calculateAssignmentStatus(item.dueDate);
+        if (statusFilter === 'overdue') return item.status !== 'completed' && calc.status === 'overdue';
+        if (statusFilter === 'today') return item.status !== 'completed' && calc.status === 'today';
+        if (statusFilter === 'completed') return item.status === 'completed';
+
+        return true;
+      });
 
       if (filtered.length === 0) {
-        listEl.innerHTML = '<p class="text-slate-400 italic text-center py-4">Kayıtlı ödev bulunamadı.</p>';
+        listEl.innerHTML = '<p class="text-slate-400 italic text-center py-4">Filtreye uygun kayıt bulunamadı.</p>';
         return;
       }
 
-      listEl.innerHTML = filtered.map(item => `
-        <div onclick="selectArchiveItem('${item.id}')" class="cursor-pointer p-3 rounded-xl border transition ${activeArchiveId === item.id ? 'bg-purple-100 border-purple-500 shadow-sm' : 'bg-white border-slate-200 hover:border-purple-300'}">
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-extrabold text-slate-900 text-xs">${item.studentName}</span>
-            <span class="text-[10px] font-black px-1.5 py-0.2 rounded ${item.status === 'completed' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-              ${item.status === 'completed' ? 'Teslim Alındı (%' + item.completionRate + ')' : 'Beklemede'}
-            </span>
+      listEl.innerHTML = filtered.map(item => {
+        const calc = calculateAssignmentStatus(item.dueDate);
+        let statusBadge = '';
+
+        if (item.status === 'completed') {
+          statusBadge = '<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">Teslim Alındı</span>';
+        } else if (calc.status === 'overdue') {
+          statusBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-100 text-red-700 animate-pulse">${calc.text}</span>`;
+        } else if (calc.status === 'today') {
+          statusBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">${calc.text}</span>`;
+        } else {
+          statusBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-blue-100 text-blue-800">${calc.text}</span>`;
+        }
+
+        return `
+          <div onclick="selectArchiveItem('${item.id}')" class="cursor-pointer p-3 rounded-xl border transition ${activeArchiveId === item.id ? 'bg-purple-100 border-purple-500 shadow-sm' : 'bg-white border-slate-200 hover:border-purple-300'}">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-extrabold text-slate-900 text-xs">${item.studentName}</span>
+              ${statusBadge}
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-slate-500">
+              <span>Teslim: ${formatDateStr(item.dueDate)}</span>
+              <span class="font-bold text-slate-700">${item.totalQuestions} Soru</span>
+            </div>
           </div>
-          <div class="flex items-center justify-between text-[11px] text-slate-500">
-            <span>Veriliş: ${formatDateStr(item.givenDate)}</span>
-            <span class="font-bold text-slate-700">${item.totalQuestions} Soru</span>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function selectArchiveItem(id) {
@@ -1911,6 +2295,18 @@
       if (!record) return;
 
       const panel = document.getElementById('archive-detail-panel');
+      const calc = calculateAssignmentStatus(record.dueDate);
+
+      let calcBadgeHtml = '';
+      if (record.status === 'completed') {
+        calcBadgeHtml = '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-black text-xs">Teslim Alındı (%' + record.completionRate + ')</span>';
+      } else if (calc.status === 'overdue') {
+        calcBadgeHtml = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-black text-xs animate-pulse">🚨 Gecikme: ${calc.text}</span>`;
+      } else if (calc.status === 'today') {
+        calcBadgeHtml = `<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-black text-xs">⏳ Süre Sınırı: ${calc.text}</span>`;
+      } else {
+        calcBadgeHtml = `<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-black text-xs">🟢 Süresi Var (${calc.text})</span>`;
+      }
 
       const studentAllRecords = archive.filter(r => r.studentName.toLowerCase() === record.studentName.toLowerCase());
       const completedRecords = studentAllRecords.filter(r => r.status === 'completed');
@@ -1929,20 +2325,16 @@
         avgRate = Math.round(sumRate / completedRecords.length);
       }
 
-      const hasExam = record.exam && record.exam.type;
-      const hasRoutines = record.routines && (record.routines.paragraf || record.routines.problem || record.routines.custom);
-      const hasBook = record.book && record.book.title;
-
       panel.innerHTML = `
         <div class="space-y-4">
           <div class="bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 p-4 rounded-2xl border border-purple-200 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div class="flex items-center space-x-2">
+              <div class="flex items-center space-x-2 mb-1">
                 <h3 class="text-base font-black text-purple-950">${record.studentName}</h3>
-                <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded-full font-extrabold">${record.module.toUpperCase()}</span>
+                ${calcBadgeHtml}
               </div>
-              <p class="text-xs text-slate-600 font-medium mt-0.5">
-                Veriliş: <b>${formatDateStr(record.givenDate)}</b> | Teslim: <b>${formatDateStr(record.dueDate)}</b>
+              <p class="text-xs text-slate-600 font-medium">
+                Veriliş: <b>${formatDateStr(record.givenDate)}</b> | Son Teslim: <b>${formatDateStr(record.dueDate)}</b>
               </p>
             </div>
 
@@ -2007,95 +2399,34 @@
               </div>
             </div>
 
-            ${hasExam ? `
-              <div class="pt-3 border-t border-slate-100">
-                <h4 class="text-xs font-black text-amber-950 uppercase mb-2 flex items-center">
-                  <i class="fa-solid fa-stopwatch-20 mr-1.5 text-amber-600"></i> 2. Haftalık Deneme Sınavı Kontrolü
+            <!-- HİBRİT SESLİ / METİN GERİ BİLDİRİM PANELİ -->
+            <div class="pt-3 border-t border-slate-100">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-xs font-black text-purple-950 uppercase flex items-center">
+                  <i class="fa-solid fa-microphone-lines mr-1.5 text-purple-600"></i> Öğretmen Sesli & Metin Notu (Hibrit)
                 </h4>
-                <div class="p-2.5 rounded-xl border border-amber-200 bg-amber-50/50 flex items-center justify-between gap-3 text-xs">
-                  <div>
-                    <span class="font-black text-amber-950">${record.exam.type}</span>
-                    <span class="text-slate-600 ml-1">(${record.exam.source || 'Genel'} - ${record.exam.day || 'Haftasonu'})</span>
-                  </div>
-                  <div class="flex items-center space-x-1.5">
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'exam', 'done')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.exam.status === 'done' ? 'bg-emerald-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">
-                      ✓ Çözüldü
-                    </button>
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'exam', 'partial')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.exam.status === 'partial' ? 'bg-amber-500 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">
-                      ⚠️ Kısmen
-                    </button>
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'exam', 'missing')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.exam.status === 'missing' ? 'bg-red-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">
-                      ✕ Çözülmedi
-                    </button>
-                  </div>
-                </div>
+                <button type="button" onclick="toggleSpeechRecognition('${record.id}')" id="btn-mic-record" class="bg-purple-100 hover:bg-purple-200 text-purple-800 border border-purple-300 px-3 py-1 rounded-lg text-[11px] font-black transition flex items-center space-x-1">
+                  <i class="fa-solid fa-microphone text-purple-600"></i>
+                  <span id="lbl-mic-text">Sesli Not Başlat</span>
+                </button>
               </div>
-            ` : ''}
 
-            ${hasRoutines ? `
-              <div class="pt-3 border-t border-slate-100">
-                <h4 class="text-xs font-black text-indigo-950 uppercase mb-2 flex items-center">
-                  <i class="fa-solid fa-bolt-lightning mr-1.5 text-indigo-600"></i> 3. Günlük Sınav Rutinleri Kontrolü
-                </h4>
-                <div class="space-y-2 text-xs">
-                  ${record.routines.paragraf ? `
-                    <div class="p-2 rounded-xl border border-blue-200 bg-blue-50/40 flex items-center justify-between">
-                      <span class="font-bold text-slate-800">📖 Paragraf Rutini (${record.routines.paragraf})</span>
-                      <div class="flex items-center space-x-1">
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'paragraf', 'done')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.paragrafStatus === 'done' ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✓ Düzenli</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'paragraf', 'partial')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.paragrafStatus === 'partial' ? 'bg-amber-500 text-white' : 'bg-white border border-slate-300 text-slate-700'}">⚠️ Aksadı</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'paragraf', 'missing')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.paragrafStatus === 'missing' ? 'bg-red-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✕ Çözülmedi</button>
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  ${record.routines.problem ? `
-                    <div class="p-2 rounded-xl border border-amber-200 bg-amber-50/40 flex items-center justify-between">
-                      <span class="font-bold text-slate-800">📐 Problem Rutini (${record.routines.problem})</span>
-                      <div class="flex items-center space-x-1">
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'problem', 'done')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.problemStatus === 'done' ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✓ Düzenli</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'problem', 'partial')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.problemStatus === 'partial' ? 'bg-amber-500 text-white' : 'bg-white border border-slate-300 text-slate-700'}">⚠️ Aksadı</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'problem', 'missing')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.problemStatus === 'missing' ? 'bg-red-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✕ Çözülmedi</button>
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  ${record.routines.custom ? `
-                    <div class="p-2 rounded-xl border border-purple-200 bg-purple-50/40 flex items-center justify-between">
-                      <span class="font-bold text-slate-800">🎯 ${record.routines.custom}</span>
-                      <div class="flex items-center space-x-1">
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'customRoutine', 'done')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.customStatus === 'done' ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✓ Yapıldı</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'customRoutine', 'partial')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.customStatus === 'partial' ? 'bg-amber-500 text-white' : 'bg-white border border-slate-300 text-slate-700'}">⚠️ Eksik</button>
-                        <button type="button" onclick="setExtraStatus('${record.id}', 'customRoutine', 'missing')" class="px-2 py-0.5 rounded text-xs font-black transition ${record.routines.customStatus === 'missing' ? 'bg-red-600 text-white' : 'bg-white border border-slate-300 text-slate-700'}">✕ Yapılmadı</button>
-                      </div>
-                    </div>
-                  ` : ''}
+              <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması ve deneme performansı çok başarılıydı. (İsterseniz mikrofona konuşarak otomatik yazdırabilirsiniz)" class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
+              
+              ${record.audioDataUrl ? `
+                <div class="mt-2 flex items-center space-x-2 bg-purple-50 p-2 rounded-xl border border-purple-200">
+                  <span class="text-[11px] font-black text-purple-900"><i class="fa-solid fa-volume-high mr-1"></i> Sesli Mesaj Kayıtlı:</span>
+                  <audio controls src="${record.audioDataUrl}" class="h-8 flex-1"></audio>
+                  <button onclick="deleteAudioNote('${record.id}')" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash text-xs"></i></button>
                 </div>
-              </div>
-            ` : ''}
-
-            ${hasBook ? `
-              <div class="pt-3 border-t border-slate-100">
-                <h4 class="text-xs font-black text-emerald-950 uppercase mb-2 flex items-center">
-                  <i class="fa-solid fa-book-open-reader mr-1.5 text-emerald-600"></i> 4. Kitap Okuma Takibi
-                </h4>
-                <div class="p-2.5 rounded-xl border border-emerald-200 bg-emerald-50/40 flex items-center justify-between gap-3 text-xs">
-                  <div>
-                    <span class="font-black text-emerald-950">${record.book.title}</span>
-                    <span class="text-slate-600 ml-1">(${record.book.target || 'Belirtilen Hedef'})</span>
-                  </div>
-                  <div class="flex items-center space-x-1.5">
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'book', 'done')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.book.status === 'done' ? 'bg-emerald-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">✓ Okundu</button>
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'book', 'partial')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.book.status === 'partial' ? 'bg-amber-500 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">⚠️ Kısmen</button>
-                    <button type="button" onclick="setExtraStatus('${record.id}', 'book', 'missing')" class="px-2.5 py-1 rounded-lg font-black text-xs transition ${record.book.status === 'missing' ? 'bg-red-600 text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">✕ Okunmadı</button>
-                  </div>
+              ` : `
+                <div class="mt-2 flex items-center space-x-2">
+                  <button type="button" onclick="recordDirectAudioNote('${record.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-3 py-1 rounded-lg text-[11px] font-bold transition flex items-center space-x-1">
+                    <i class="fa-solid fa-circle-dot text-red-600"></i>
+                    <span>Doğrudan Ses Dosyası Kaydet (Mikrofon)</span>
+                  </button>
                 </div>
-              </div>
-            ` : ''}
-
-            <div class="mt-4 pt-3 border-t border-slate-200">
-              <label class="block text-xs font-bold text-slate-800 mb-1">Bu Hafta İçin Öğretmen Değerlendirmesi / Veli Notu</label>
-              <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması ve deneme performansı çok başarılıydı. Paragraftaki aksamayı hafta içi tamamlayacağız." class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
+              `}
             </div>
 
             <button onclick="commitAssignmentCheck('${record.id}')" class="w-full mt-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-black py-2.5 rounded-xl transition shadow flex items-center justify-center space-x-2">
@@ -2104,29 +2435,113 @@
             </button>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-200 p-4">
-            <h4 class="text-xs font-black text-slate-800 uppercase mb-3 flex items-center">
-              <i class="fa-solid fa-chart-line mr-1.5 text-indigo-600"></i> Öğrencinin Haftalık Başarı Çizelgesi
-            </h4>
-            <div class="space-y-2">
-              ${studentAllRecords.map((r, i) => `
-                <div>
-                  <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                    <span>${formatDateStr(r.givenDate)} Haftası (${r.totalQuestions} Soru)</span>
-                    <span class="font-black ${r.status === 'completed' ? 'text-purple-700' : 'text-slate-400'}">
-                      ${r.status === 'completed' ? '%' + r.completionRate : 'Bekliyor'}
-                    </span>
-                  </div>
-                  <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                    <div class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: ${r.completionRate || 0}%"></div>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-
         </div>
       `;
+    }
+
+    let recognitionInstance = null;
+    function toggleSpeechRecognition(recId) {
+      const micBtn = document.getElementById('lbl-mic-text');
+      const textarea = document.getElementById('inp-archive-feedback');
+
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert('Tarayıcınız ses tanıma (Speech-to-Text) özelliğini desteklemiyor. Lütfen Chrome kullanın.');
+        return;
+      }
+
+      if (recognitionInstance) {
+        recognitionInstance.stop();
+        recognitionInstance = null;
+        micBtn.innerText = 'Sesli Not Başlat';
+        return;
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionInstance = new SpeechRecognition();
+      recognitionInstance.lang = 'tr-TR';
+      recognitionInstance.continuous = false;
+      recognitionInstance.interimResults = false;
+
+      recognitionInstance.onstart = function() {
+        micBtn.innerText = 'Dinleniyor... Konuşun';
+      };
+
+      recognitionInstance.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        textarea.value = (textarea.value ? textarea.value + ' ' : '') + transcript;
+      };
+
+      recognitionInstance.onerror = function() {
+        micBtn.innerText = 'Sesli Not Başlat';
+        recognitionInstance = null;
+      };
+
+      recognitionInstance.onend = function() {
+        micBtn.innerText = 'Sesli Not Başlat';
+        recognitionInstance = null;
+      };
+
+      recognitionInstance.start();
+    }
+
+    async function recordDirectAudioNote(recId) {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert('Tarayıcınız ses kaydını desteklemiyor.');
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const mediaRecorder = new MediaRecorder(stream);
+        let audioChunks = [];
+
+        alert('🎙️ Ses kaydı başladı! Konuşmanız bittikten sonra tamama basın.');
+
+        mediaRecorder.ondataavailable = event => {
+          audioChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const base64Audio = e.target.result;
+            const archive = getArchive();
+            const record = archive.find(r => r.id === recId);
+            if (record) {
+              record.audioDataUrl = base64Audio;
+              saveArchive(archive);
+              selectArchiveItem(recId);
+              alert('✅ Sesli mesaj başarıyla kaydedildi!');
+            }
+          };
+          reader.readAsDataURL(audioBlob);
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.start();
+
+        setTimeout(() => {
+          if (mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+          }
+        }, 15000);
+
+      } catch (err) {
+        alert('Mikrofon erişim izni reddedildi.');
+      }
+    }
+
+    function deleteAudioNote(recId) {
+      if (confirm('Sesli mesajı silmek istiyor musunuz?')) {
+        const archive = getArchive();
+        const record = archive.find(r => r.id === recId);
+        if (record) {
+          record.audioDataUrl = null;
+          saveArchive(archive);
+          selectArchiveItem(recId);
+        }
+      }
     }
 
     function setTaskStatus(recId, taskIdx, status) {
@@ -2135,21 +2550,6 @@
       if (!record) return;
 
       record.tasks[taskIdx].status = status;
-      saveArchive(archive);
-      selectArchiveItem(recId);
-    }
-
-    function setExtraStatus(recId, target, status) {
-      const archive = getArchive();
-      const record = archive.find(r => r.id === recId);
-      if (!record) return;
-
-      if (target === 'exam') record.exam.status = status;
-      else if (target === 'paragraf') record.routines.paragrafStatus = status;
-      else if (target === 'problem') record.routines.problemStatus = status;
-      else if (target === 'customRoutine') record.routines.customStatus = status;
-      else if (target === 'book') record.book.status = status;
-
       saveArchive(archive);
       selectArchiveItem(recId);
     }
@@ -2165,7 +2565,6 @@
       let scoreTotal = 0;
       let scoreMax = 0;
 
-      // 1. ÖDEV SATIRLARI (%60 AĞIRLIK)
       if (record.tasks && record.tasks.length > 0) {
         let taskScore = 0;
         record.tasks.forEach(t => {
@@ -2173,33 +2572,8 @@
           else if (t.status === 'partial') taskScore += 0.5;
         });
         const taskRate = taskScore / record.tasks.length;
-        scoreTotal += taskRate * 60;
-        scoreMax += 60;
-      }
-
-      // 2. DENEME SINAVI (%20 AĞIRLIK)
-      if (record.exam && record.exam.type) {
-        if (record.exam.status === 'done') scoreTotal += 20;
-        else if (record.exam.status === 'partial') scoreTotal += 10;
-        scoreMax += 20;
-      }
-
-      // 3. GÜNLÜK RUTİNLER & KİTAP (%20 AĞIRLIK)
-      let subItems = [];
-      if (record.routines && record.routines.paragraf) subItems.push(record.routines.paragrafStatus);
-      if (record.routines && record.routines.problem) subItems.push(record.routines.problemStatus);
-      if (record.routines && record.routines.custom) subItems.push(record.routines.customStatus);
-      if (record.book && record.book.title) subItems.push(record.book.status);
-
-      if (subItems.length > 0) {
-        let subScore = 0;
-        subItems.forEach(st => {
-          if (st === 'done') subScore += 1;
-          else if (st === 'partial') subScore += 0.5;
-        });
-        const subRate = subScore / subItems.length;
-        scoreTotal += subRate * 20;
-        scoreMax += 20;
+        scoreTotal += taskRate * 100;
+        scoreMax += 100;
       }
 
       const rate = scoreMax > 0 ? Math.round((scoreTotal / scoreMax) * 100) : 0;
@@ -2210,12 +2584,9 @@
       saveArchive(archive);
       selectArchiveItem(recId);
       renderArchiveList();
-      alert('✅ Ödev teslimi, deneme ve rutin değerlendirmeleri kaydedildi!');
+      alert('✅ Ödev teslimi ve değerlendirmeler kaydedildi!');
     }
 
-    // ==========================================
-    // VELİ KARNESİ GÖRSELİ (PNG) OLUŞTURMA
-    // ==========================================
     async function downloadStudentCardImage(recId) {
       const archive = getArchive();
       const record = archive.find(r => r.id === recId);
@@ -2246,28 +2617,11 @@
         `;
       }).join('');
 
-      let examHtml = '';
-      if (record.exam && record.exam.type) {
-        let eBadge = record.exam.status === 'done' ? '<span style="color:#059669; font-weight:800;">✓ Çözüldü</span>' :
-                     record.exam.status === 'partial' ? '<span style="color:#d97706; font-weight:800;">⚠️ Kısmen</span>' : '<span style="color:#dc2626; font-weight:800;">✕ Çözülmedi</span>';
-        examHtml = `
-          <div style="background:#fef3c7; padding:10px 14px; border-radius:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-            <div><b>⏱️ Haftalık Deneme:</b> ${record.exam.type} (${record.exam.source || 'Genel'})</div>
-            <div>${eBadge}</div>
-          </div>
-        `;
-      }
-
-      let routinesHtml = '';
-      if (record.routines && (record.routines.paragraf || record.routines.problem)) {
-        let pBadge = record.routines.paragrafStatus === 'done' ? '✓ Düzenli' : record.routines.paragrafStatus === 'partial' ? '⚠️ Aksadı' : '✕ Yapılmadı';
-        let prBadge = record.routines.problemStatus === 'done' ? '✓ Düzenli' : record.routines.problemStatus === 'partial' ? '⚠️ Aksadı' : '✕ Yapılmadı';
-        routinesHtml = `
-          <div style="background:#eef2ff; padding:10px 14px; border-radius:12px; margin-top:10px; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-            <div><b>⚡ Sınav Rutinleri:</b> Paragraf [${pBadge}] • Problem [${prBadge}]</div>
-          </div>
-        `;
-      }
+      let badgeHtml = record.badgeType ? `
+        <div style="background:#f3e8ff; border:1px solid #d8b4fe; padding:10px 14px; border-radius:12px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+          <div><span style="background:#7e22ce; color:#ffffff; padding:3px 8px; border-radius:6px; font-weight:900; font-size:11px;">${record.badgeType}</span> <span style="font-style:italic; font-size:12px; color:#581c87; margin-left:6px;">"${record.badgeMotto || 'Harika bir çalışma haftası!'}"</span></div>
+        </div>
+      ` : '';
 
       cardDiv.innerHTML = `
         <div style="border-bottom:2px solid #4f46e5; padding-bottom:12px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
@@ -2276,10 +2630,12 @@
             <div style="font-size:11px; font-weight:800; color:#4f46e5; margin-top:2px;">${(record.institutionName || 'ÖDEV-VER PORTALI').toUpperCase()}</div>
           </div>
           <div style="text-align:right; font-size:11px; font-weight:700; color:#64748b;">
-            <div>Tarih: ${formatDateStr(record.givenDate)} - ${formatDateStr(record.dueDate)}</div>
+            <div>Teslim: ${formatDateStr(record.dueDate)}</div>
             <div>Danışman: <b>${record.teacherName}</b></div>
           </div>
         </div>
+
+        ${badgeHtml}
 
         <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:12px 16px; border-radius:14px; margin-bottom:14px;">
           <div>
@@ -2297,12 +2653,9 @@
           ${taskSummaryHtml}
         </div>
 
-        ${examHtml}
-        ${routinesHtml}
-
         <div style="background:#f1f5f9; padding:12px; border-radius:12px; margin-top:14px; font-size:11.5px;">
-          <div style="font-weight:800; color:#1e293b; margin-bottom:2px;">📌 Danışman / Öğretmen Notu:</div>
-          <div style="font-style:italic; color:#334155;">${record.feedbackNote || 'Haftalık hedeflere odaklanıldı. Gayreti için tebrik ederiz.'}</div>
+          <div style="font-weight:800; color:#1e293b; margin-bottom:2px;">📌 Öğretmen Notu / Hibrit Mesaj:</div>
+          <div style="font-style:italic; color:#334155;">${record.feedbackNote || 'Haftalık hedeflere odaklanıldı.'}</div>
         </div>
       `;
 
@@ -2317,8 +2670,7 @@
         document.body.removeChild(cardDiv);
 
         const safeStudent = (record.studentName || 'Ogrenci').replace(/[^a-zA-Z0-9ığüşöçİĞÜŞÖÇ_]/g, '_');
-        const safeDate = formatDateStr(record.givenDate).replace(/\./g, '-');
-        const filename = `${safeStudent}_Gelisim_Raporu_${safeDate}.png`;
+        const filename = `${safeStudent}_Gelisim_Karnesi.png`;
 
         const link = document.createElement('a');
         link.download = filename;
@@ -2335,19 +2687,13 @@
       const record = archive.find(r => r.id === recId);
       if (!record) return;
 
-      let msg = `Sayın Velimiz, öğrencimiz ${record.studentName}'in ${formatDateStr(record.givenDate)} tarihli haftalık çalışma kontrolü yapılmıştır.\n\n`;
+      const calc = calculateAssignmentStatus(record.dueDate);
+
+      let msg = `Sayın Velimiz, öğrencimiz ${record.studentName}'in son teslim tarihi ${formatDateStr(record.dueDate)} olan haftalık çalışma durumu kontrol edilmiştir.\n\n`;
+      msg += `📌 Durum: ${calc.text}\n`;
       msg += `📊 Genel Başarı Oranı: %${record.completionRate || 0}\n`;
-      if (record.exam && record.exam.type) {
-        let eTxt = record.exam.status === 'done' ? 'Çözüldü ✓' : record.exam.status === 'partial' ? 'Kısmen Çözüldü ⚠️' : 'Çözülmedi ✕';
-        msg += `⏱️ Deneme Sınavı: ${record.exam.type} (${eTxt})\n`;
-      }
-      if (record.routines && record.routines.paragraf) {
-        let pTxt = record.routines.paragrafStatus === 'done' ? 'Düzenli ✓' : 'Aksadı ⚠️';
-        msg += `📖 Paragraf Rutini: ${pTxt}\n`;
-      }
-      if (record.routines && record.routines.problem) {
-        let prTxt = record.routines.problemStatus === 'done' ? 'Düzenli ✓' : 'Aksadı ⚠️';
-        msg += `📐 Problem Rutini: ${prTxt}\n`;
+      if (record.badgeType) {
+        msg += `🏆 Bu Haftanın Rozeti: ${record.badgeType} ("${record.badgeMotto}")\n`;
       }
       if (record.feedbackNote) {
         msg += `\n📌 Öğretmen Görüşü: ${record.feedbackNote}\n`;
@@ -2385,9 +2731,6 @@
       }
     }
 
-    // ==========================================
-    // ARŞİV YEDEKLEME, AKTARMA VE EXCEL
-    // ==========================================
     function exportArchiveJSON() {
       const archive = getArchive();
       if (archive.length === 0) {
@@ -2420,7 +2763,7 @@
           const existing = getArchive();
           const shouldMerge = confirm(
             `Yedek dosyasında ${incoming.length} kayıt bulundu.\n\n` +
-            `• 'Tamam' derseniz mevcut kayıtlarınızın üzerine eklenecektir (Birleştirme).\n` +
+            `• 'Tamam' derseniz mevcut kayıtlarınızın üzerine eklenecektir.\n` +
             `• 'İptal' derseniz işlem durdurulur.`
           );
 
@@ -2435,7 +2778,7 @@
             alert(`✅ Arşiv başarıyla güncellendi! Toplam ${merged.length} kayıt hafızada.`);
           }
         } catch (err) {
-          alert('Arşiv yedeği yüklenirken bir hata oluştu!');
+          alert('Arşiv yedeği yüklenirken hata oluştu!');
         }
       };
       reader.readAsText(file);
@@ -2451,45 +2794,33 @@
 
       const rows = [];
       archive.forEach(rec => {
+        const calc = calculateAssignmentStatus(rec.dueDate);
         rec.tasks.forEach((t, idx) => {
           rows.push({
             "Öğrenci Adı": rec.studentName,
             "Öğretmen": rec.teacherName,
-            "Modül": rec.module.toUpperCase(),
             "Veriliş Tarihi": formatDateStr(rec.givenDate),
-            "Teslim Tarihi": formatDateStr(rec.dueDate),
+            "Son Teslim": formatDateStr(rec.dueDate),
+            "Takip Durumu": calc.text,
             "Genel Başarı": `%${rec.completionRate || 0}`,
-            "Teslim Durumu": rec.status === 'completed' ? 'Teslim Alındı' : 'Beklemede',
+            "Rozet": rec.badgeType || '-',
             "Görev No": idx + 1,
             "Ders": t.subject,
             "Konu / Kazanım": t.topic,
             "Kaynak": t.source,
-            "Sayfa": t.pages,
             "Hedef Soru": t.questions,
-            "Görev Durumu": t.status === 'done' ? 'Yapıldı' : t.status === 'partial' ? 'Eksik' : t.status === 'missing' ? 'Yapılmadı' : 'Bekliyor',
-            "Hedef Gün": t.targetDay,
-            "Öğretmen Değerlendirme Notu": rec.feedbackNote || '-'
+            "Görev Durumu": t.status === 'done' ? 'Yapıldı' : t.status === 'partial' ? 'Eksik' : 'Bekliyor',
+            "Öğretmen Notu": rec.feedbackNote || '-'
           });
         });
       });
 
       const worksheet = XLSX.utils.json_to_sheet(rows);
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Ödev_Gelişim_Raporu");
-
-      const colWidths = [
-        { wch: 20 }, { wch: 18 }, { wch: 14 }, { wch: 14 }, { wch: 14 },
-        { wch: 12 }, { wch: 14 }, { wch: 10 }, { wch: 18 }, { wch: 30 },
-        { wch: 16 }, { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 35 }
-      ];
-      worksheet['!cols'] = colWidths;
-
-      XLSX.writeFile(workbook, `ODEV_VER_GELISIM_RAPORU_${Date.now()}.xlsx`);
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Genel_Analiz_Raporu");
+      XLSX.writeFile(workbook, `ODEV_VER_GENEL_ANALIZ_${Date.now()}.xlsx`);
     }
 
-    // ==========================================
-    // 6. ÇIKTI ŞABLONU OLUŞTURMA & QR KOD YÖNETİMİ
-    // ==========================================
     function formatDateStr(str) {
       if (!str) return '-';
       const parts = str.split('-');
@@ -2570,9 +2901,7 @@
       note += `Öğrencimizin çalışmalarını zamanında tamamlaması için takibinizi rica eder, başarılar dileriz.\n— ${teacher}`;
 
       navigator.clipboard.writeText(note).then(() => {
-        alert('Veli bilgilendirme metni panoya kopyalandı! WhatsApp veya SMS üzerinden velinize doğrudan yapıştırabilirsiniz.');
-      }).catch(() => {
-        alert('Panoya kopyalama başarısız oldu.');
+        alert('Veli bilgilendirme metni panoya kopyalandı!');
       });
     }
 
@@ -2589,6 +2918,20 @@
       document.getElementById('out-given-date').innerText = formatDateStr(givenDate);
       document.getElementById('out-due-date').innerText = formatDateStr(dueDate);
       document.getElementById('out-general-note').innerText = genNote;
+
+      const badgeType = document.getElementById('sel-badge-type').value;
+      const badgeMotto = document.getElementById('inp-badge-motto').value.trim();
+      const badgeBanner = document.getElementById('out-badge-banner');
+
+      if (badgeType) {
+        badgeBanner.classList.remove('hidden');
+        badgeBanner.classList.add('flex');
+        document.getElementById('out-badge-val').innerText = badgeType;
+        document.getElementById('out-motto-val').innerText = badgeMotto ? `"${badgeMotto}"` : '';
+      } else {
+        badgeBanner.classList.add('hidden');
+        badgeBanner.classList.remove('flex');
+      }
 
       const examType = document.getElementById('sel-exam-type').value;
       const examBranch = document.getElementById('inp-exam-branch').value.trim();
@@ -2763,12 +3106,10 @@
       loadSavedProfile();
       setModule('ilkokul');
       updateSheet();
+      updateDashboardTrackerSummary();
       setTimeout(adjustScale, 150);
     });
 
-    // ==========================================
-    // 7. ÇIKTI ALMA (PNG & PDF)
-    // ==========================================
     async function captureSheetCanvas(customStudentName) {
       if (customStudentName) {
         document.getElementById('out-student-name').innerText = customStudentName;
@@ -2812,7 +3153,7 @@
         link.href = canvas.toDataURL('image/png');
         link.click();
       } catch (err) {
-        alert('Görsel oluşturulamadı. "PDF / Yazdır" butonunu kullanabilirsiniz.');
+        alert('Görsel oluşturulamadı.');
       }
     }
 
@@ -2825,9 +3166,6 @@
       }, 1000);
     }
 
-    // ==========================================
-    // 8. TOPLU ÜRETİM (MODAL & EXCEL)
-    // ==========================================
     function openBulkModal() {
       if (tasks.length === 0) {
         alert('Toplu üretim yapmadan önce lütfen en az bir ödev maddesi ekleyiniz!');
@@ -2884,7 +3222,7 @@
       const names = parseStudentNames();
       lastBulkStudentNames = [...names];
       if (names.length === 0) {
-        alert('Lütfen en az bir öğrenci ismi giriniz veya Excel dosyası yükleyiniz!');
+        alert('Lütfen en az bir öğrenci ismi giriniz!');
         return;
       }
 
@@ -2946,7 +3284,7 @@
 
       } catch (err) {
         console.error(err);
-        alert('Toplu üretim esnasında bir hata oluştu.');
+        alert('Toplu üretim esnasında hata oluştu.');
       } finally {
         document.getElementById('out-student-name').innerText = originalStudent || 'Belirtilmedi';
         progressBox.classList.add('hidden');
