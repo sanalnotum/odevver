@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ÖDEV-VER v1.3 | Akıllı Ödev Takip ve Dağıtım Portalı</title>
+  <title>ÖDEV-VER v1.7 | Akıllı Ödev Takip ve Müfredat Haritası</title>
   
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
@@ -14,6 +14,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ÖDEV-VER">
   <meta name="theme-color" content="#1d4ed8">
+
+  <!-- Google Analytics (Ziyaret & Tıklanma Takibi) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -165,6 +174,42 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
+  <!-- v1.7 GÜNCELLEME BİLDİRİM MODALI -->
+  <div id="modal-update-notice" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-center relative">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-2xl mx-auto shadow-lg shadow-blue-200">
+        <i class="fa-solid fa-map-location-dot"></i>
+      </div>
+
+      <div>
+        <span class="inline-block bg-blue-100 text-blue-900 text-[11px] font-black uppercase px-3 py-0.5 rounded-full border border-blue-200 tracking-wider mb-2">
+          v1.7 Güncellemesi Yayında!
+        </span>
+        <h3 class="text-lg font-black text-slate-900 leading-tight">Konu Haritası Raporlama Aktif</h3>
+        <p class="text-xs text-slate-600 mt-1">Hatalar giderildi, arayüz pırıl pırıl hale getirildi.</p>
+      </div>
+
+      <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs text-slate-700 text-left space-y-1.5 font-medium">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-check text-emerald-600"></i>
+          <span>Öğrenci konu haritalarından yazdırılabilir PDF raporu alma eklendi.</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-check text-emerald-600"></i>
+          <span>Arşiv panelindeki gereksiz tekrar butonları temizlendi.</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-check text-emerald-600"></i>
+          <span>Tüm metinler kusursuz hale getirildi.</span>
+        </div>
+      </div>
+
+      <button type="button" onclick="closeUpdateNoticeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-black py-3 rounded-xl transition shadow-md shadow-blue-200">
+        Harika, Sistemi Başlat
+      </button>
+    </div>
+  </div>
+
   <!-- ÜST BAR -->
   <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white shadow-md sticky top-0 z-50 no-print">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-4">
@@ -176,9 +221,9 @@
         <div>
           <div class="flex items-center space-x-2">
             <span class="text-xl sm:text-2xl font-black tracking-tight drop-shadow-sm">ÖDEV-VER</span>
-            <span class="bg-white/20 text-white text-[11px] font-black px-2 py-0.5 rounded-full border border-white/20">v1.3</span>
+            <span class="bg-white/20 text-white text-[11px] font-black px-2 py-0.5 rounded-full border border-white/20">v1.7</span>
           </div>
-          <p class="text-xs text-blue-200 font-medium">Akıllı Ödevlendirme & Koçluk Portalı</p>
+          <p class="text-xs text-blue-200 font-medium">odevver.com • Akıllı Ödevlendirme & Koçluk Portalı</p>
         </div>
       </div>
       
@@ -186,6 +231,11 @@
         <button type="button" onclick="openGuideModal()" class="flex items-center space-x-1.5 bg-amber-500 hover:bg-amber-600 px-3 py-1.5 rounded-xl text-xs font-black text-slate-950 shadow-md transition" title="Kullanım Kılavuzu & İpuçları">
           <i class="fa-solid fa-circle-question text-sm text-slate-950"></i>
           <span>Kullanım Kılavuzu</span>
+        </button>
+
+        <button type="button" onclick="openTopicMapModalList()" class="flex items-center space-x-1.5 bg-sky-600 hover:bg-sky-700 px-3.5 py-1.5 rounded-xl text-xs font-black text-white shadow-md transition" title="Öğrenci Müfredat & Konu Haritaları">
+          <i class="fa-solid fa-map-location-dot text-sm"></i>
+          <span>Konu Haritaları</span>
         </button>
 
         <button type="button" onclick="openArchiveModal()" class="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 px-3.5 py-1.5 rounded-xl text-xs font-black text-white shadow-md transition">
@@ -233,18 +283,18 @@
           </div>
         </div>
 
-        <div class="flex items-center flex-wrap gap-2 text-xs font-black">
-          <button onclick="openArchiveModal()" class="bg-red-50 text-red-700 border border-red-200 px-3 py-1.5 rounded-xl hover:bg-red-100 transition flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-            <span>🚨 Gecikenler: <span id="badge-count-overdue">0</span></span>
+        <div class="flex items-center flex-wrap gap-2.5 text-xs font-black">
+          <button onclick="openArchiveModal()" class="bg-red-50 text-red-700 border-2 border-red-300 px-3.5 py-2 rounded-xl hover:bg-red-100 transition flex items-center space-x-2 shadow-xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
+            <span>🚨 Gecikenler: <span id="badge-count-overdue" class="text-sm font-black">0</span></span>
           </button>
-          <button onclick="openArchiveModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl hover:bg-amber-100 transition flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-            <span>⏳ Son 1 Gün: <span id="badge-count-today">0</span></span>
+          <button onclick="openArchiveModal()" class="bg-amber-50 text-amber-800 border-2 border-amber-300 px-3.5 py-2 rounded-xl hover:bg-amber-100 transition flex items-center space-x-2 shadow-xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <span>⏳ Son 1 Gün: <span id="badge-count-today" class="text-sm font-black">0</span></span>
           </button>
-          <button onclick="openArchiveModal()" class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl hover:bg-emerald-100 transition flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>✔️ Tamamlanan: <span id="badge-count-done">0</span></span>
+          <button onclick="openArchiveModal()" class="bg-emerald-50 text-emerald-800 border-2 border-emerald-300 px-3.5 py-2 rounded-xl hover:bg-emerald-100 transition flex items-center space-x-2 shadow-xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span>✔️ Tamamlanan: <span id="badge-count-done" class="text-sm font-black">0</span></span>
           </button>
         </div>
       </div>
@@ -346,7 +396,7 @@
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-sliders mr-2 text-blue-600"></i> 1. Genel Bilgiler
+              <i class="fa-solid fa-sliders mr-2 text-blue-600"></i> Genel Bilgiler
             </h3>
             <button onclick="clearSavedProfile()" class="text-[11px] font-bold text-slate-400 hover:text-red-600 transition flex items-center space-x-1">
               <i class="fa-solid fa-rotate-left"></i>
@@ -362,7 +412,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenci Adı Soyadı</label>
-                <input type="text" id="inp-student-name" placeholder="Örn: Kemal" oninput="updateSheet()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
+                <input type="text" id="inp-student-name" placeholder="Örn: Kemal" oninput="updateSheet(); checkAlreadyCompletedWarning();" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-slate-50/50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none">
               </div>
             </div>
 
@@ -407,7 +457,7 @@
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-3.5">
             <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-square-plus mr-2 text-blue-600"></i> 2. Ödev Satırı Ekle
+              <i class="fa-solid fa-square-plus mr-2 text-blue-600"></i> Ödev Satırı Ekle
             </h3>
             <span id="active-mod-badge" class="bg-blue-100 text-blue-900 text-xs font-black px-2.5 py-0.5 rounded-full">İLKOKUL ÖDEV PLANI</span>
           </div>
@@ -429,8 +479,14 @@
 
               <div id="wrapper-kazanim">
                 <label class="block text-xs font-bold text-slate-800 mb-1">Alt Kazanım / Öğrenme Çıktısı</label>
-                <select id="sel-kazanim" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+                <select id="sel-kazanim" onchange="checkAlreadyCompletedWarning()" class="w-full text-xs font-semibold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
               </div>
+            </div>
+
+            <!-- AKILLI MÜKERRER UYARI -->
+            <div id="box-completion-warning" class="hidden p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold flex items-center space-x-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base"></i>
+              <span id="txt-completion-warning">Bu konu öğrenci tarafından daha önce tamamlanmış!</span>
             </div>
 
             <div id="wrapper-custom-fields" class="hidden space-y-3">
@@ -532,64 +588,31 @@
           </div>
         </div>
 
-        <!-- YENİ: ZENGİN MOTİVASYON ROZETLERİ PANELİ -->
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-200">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xs sm:text-sm font-bold text-purple-950 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-award mr-2 text-purple-600 text-base"></i> Motivasyon Rozeti & Özel Hedef
+        <!-- GÜNLÜK SABİT SINAV RUTİNLERİ (NUMARASIZ) -->
+        <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-bolt-lightning mr-2 text-indigo-600 text-base"></i> Günlük Sabit Sınav Rutinleri
             </h3>
-            <span class="text-[10px] text-purple-900 bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-md font-black">Karne & Çıktı</span>
+            <span class="text-[10.5px] text-indigo-800 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-md font-black">Hergün</span>
           </div>
-          <p class="text-[11px] text-slate-600 font-medium mb-3">
-            Öğrenciye özel rozet seçin ve motivasyon sözü ekleyin; çıktının en üstünde yer alsın.
-          </p>
-
-          <div class="space-y-3">
+          <div class="grid grid-cols-2 gap-3 mb-2.5">
             <div>
-              <label class="block text-xs font-bold text-slate-800 mb-1">Rozet Seçimi</label>
-              <select id="sel-badge-type" onchange="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
-                <option value="">Rozet Yok</option>
-                <option value="🏆 Haftanın Yıldızı">🏆 Haftanın Yıldızı</option>
-                <option value="🥇 İstikrar Abidesi">🥇 İstikrar Abidesi</option>
-                <option value="🎯 Soru Avcısı">🎯 Soru Avcısı</option>
-                <option value="🧠 Zihin Açıcı">🧠 Zihin Açıcı</option>
-                <option value="🚀 Rekortmen Koşucu">🚀 Rekortmen Koşucu</option>
-                <option value="💡 Pratik Zeka">💡 Pratik Zeka</option>
-                <option value="⭐ Örnek Gayret">⭐ Örnek Gayret</option>
-                <option value="🔥 Zirve Tırmanışçısı">🔥 Zirve Tırmanışçısı</option>
-              </select>
+              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-book-open text-blue-600 mr-1"></i> Günlük Paragraf</label>
+              <input type="text" id="inp-routine-paragraf" placeholder="Örn: 20 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenciye Özel Motivasyon Hedefi</label>
-              <input type="text" id="inp-badge-motto" placeholder="Örn: Bu hafta geometri önceliğimiz, başarabilirsin!" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-brain text-amber-600 mr-1"></i> Günlük Problem</label>
+              <input type="text" id="inp-routine-problem" placeholder="Örn: 15 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev</label>
+            <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
         </div>
 
-        <!-- DİJİTAL EKLENTİ (KAREKOD) -->
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xs sm:text-sm font-bold text-sky-950 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-qrcode mr-2 text-sky-600 text-base"></i> Dijital Eklenti
-            </h3>
-            <span class="text-[10px] text-sky-900 bg-sky-100 border border-sky-300 px-2 py-0.5 rounded-md font-black">İsteğe Bağlı</span>
-          </div>
-          <p class="text-[11px] text-slate-600 font-medium mb-3">
-            Ödeve eklemek istediğiniz video çözüm, Drive belgesi veya harici linki çıktının altına taranabilir karekod olarak ekler.
-          </p>
-
-          <div class="space-y-2 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
-            <label class="block text-[11px] font-bold text-slate-700 mb-1">
-              <i class="fa-solid fa-link text-indigo-600 mr-1"></i> Özel Link / Drive / Video Çözüm:
-            </label>
-            <div class="grid grid-cols-2 gap-2">
-              <input type="text" id="inp-custom-qr-label" placeholder="Etiket (Örn: Video Çözüm)" oninput="updateSheet()" class="text-xs font-semibold text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
-              <input type="url" id="inp-custom-qr-url" placeholder="https://..." oninput="updateSheet()" class="text-xs font-medium text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. HAFTALIK DENEME -->
+        <!-- HAFTALIK DENEME SINAVI GÖREVİ (NUMARASIZ) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-amber-950 uppercase tracking-wider flex items-center">
@@ -627,35 +650,11 @@
           </div>
         </div>
 
-        <!-- 5. GÜNLÜK SABİT RUTİNLER -->
-        <div id="box-daily-routines-input" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-indigo-200">
-          <div class="flex items-center justify-between mb-2.5">
-            <h3 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-bolt-lightning mr-2 text-indigo-600 text-base"></i> Günlük Sabit Sınav Rutinleri
-            </h3>
-            <span class="text-[10.5px] text-indigo-800 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-md font-black">Hergün</span>
-          </div>
-          <div class="grid grid-cols-2 gap-3 mb-2.5">
-            <div>
-              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-book-open text-blue-600 mr-1"></i> Günlük Paragraf</label>
-              <input type="text" id="inp-routine-paragraf" placeholder="Örn: 20 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-brain text-amber-600 mr-1"></i> Günlük Problem</label>
-              <input type="text" id="inp-routine-problem" placeholder="Örn: 15 Soru" oninput="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-800 mb-1"><i class="fa-solid fa-star text-purple-600 mr-1"></i> Özel Günlük Görev</label>
-            <input type="text" id="inp-routine-custom" placeholder="Örn: Günlük Kelime Ezberi" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          </div>
-        </div>
-
-        <!-- 6. KİTAP OKUMA -->
+        <!-- KİTAP OKUMA ÖDEVİ (NUMARASIZ) -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-xs sm:text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-book-open-reader mr-2 text-emerald-600 text-base"></i> Kitap Okuma Ödevi (İsteğe Bağlı)
+              <i class="fa-solid fa-book-open-reader mr-2 text-emerald-600 text-base"></i> Kitap Okuma Ödevi
             </h3>
             <span class="text-xs text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md font-extrabold">Okuma Takibi</span>
           </div>
@@ -673,6 +672,63 @@
             <div>
               <label class="block text-xs font-bold text-slate-800 mb-1">Okuma Notu / Görevi</label>
               <input type="text" id="inp-book-note" placeholder="Örn: Okunan bölümün özeti çıkarılacak" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <!-- MOTİVASYON ROZETİ & ÖZEL HEDEF (NUMARASIZ) -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs sm:text-sm font-bold text-purple-950 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-award mr-2 text-purple-600 text-base"></i> Motivasyon Rozeti & Özel Hedef
+            </h3>
+            <span class="text-[10px] text-purple-900 bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-md font-black">Karne & Çıktı</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium mb-3">
+            Öğrenciye özel rozet seçin ve motivasyon sözü ekleyin; çıktının en üstünde yer alsın.
+          </p>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">Rozet Seçimi</label>
+              <select id="sel-badge-type" onchange="updateSheet()" class="w-full text-xs font-bold text-slate-900 px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                <option value="">Rozet Yok</option>
+                <option value="🏆 Haftanın Yıldızı">🏆 Haftanın Yıldızı</option>
+                <option value="🥇 İstikrar Abidesi">🥇 İstikrar Abidesi</option>
+                <option value="🎯 Soru Avcısı">🎯 Soru Avcısı</option>
+                <option value="🧠 Zihin Açıcı">🧠 Zihin Açıcı</option>
+                <option value="🚀 Rekortmen Koşucu">🚀 Rekortmen Koşucu</option>
+                <option value="💡 Pratik Zeka">💡 Pratik Zeka</option>
+                <option value="⭐ Örnek Gayret">⭐ Örnek Gayret</option>
+                <option value="🔥 Zirve Tırmanışçısı">🔥 Zirve Tırmanışçısı</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">Öğrenciye Özel Motivasyon Hedefi</label>
+              <input type="text" id="inp-badge-motto" placeholder="Örn: Bu hafta geometri önceliğimiz, başarabilirsin!" oninput="updateSheet()" class="w-full text-xs font-medium text-slate-900 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <!-- DİJİTAL EKLENTİ (KAREKOD) (NUMARASIZ) -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-sky-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs sm:text-sm font-bold text-sky-950 uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-qrcode mr-2 text-sky-600 text-base"></i> Dijital Eklenti (Karekod)
+            </h3>
+            <span class="text-[10px] text-sky-900 bg-sky-100 border border-sky-300 px-2 py-0.5 rounded-md font-black">İsteğe Bağlı</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium mb-3">
+            Ödeve eklemek istediğiniz video çözüm, Drive belgesi veya harici linki çıktının altına taranabilir karekod olarak ekler.
+          </p>
+
+          <div class="space-y-2 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">
+              <i class="fa-solid fa-link text-indigo-600 mr-1"></i> Özel Link / Drive / Video Çözüm:
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="inp-custom-qr-label" placeholder="Etiket (Örn: Video Çözüm)" oninput="updateSheet()" class="text-xs font-semibold text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
+              <input type="url" id="inp-custom-qr-url" placeholder="https://..." oninput="updateSheet()" class="text-xs font-medium text-slate-900 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:outline-none">
             </div>
           </div>
         </div>
@@ -806,7 +862,7 @@
                 </table>
               </div>
 
-              <!-- ÇIKTI ALT BİLGİ -->
+              <!-- ÇIKTI ALT BİLGİ & odevver.com İMZASI -->
               <div class="mt-2.5 pt-2 border-t-2 border-blue-200 space-y-2">
                 
                 <div id="out-exam-container" class="hidden bg-amber-50/90 border border-amber-300 p-2 rounded-lg flex items-center justify-between gap-3 text-xs">
@@ -880,8 +936,9 @@
                   <div class="flex-1">
                     <span class="font-black text-blue-950 block mb-0.5"><i class="fa-solid fa-comment-dots mr-1 text-blue-700"></i>Öğretmen / Danışman Notu:</span>
                     <p id="out-general-note" class="text-slate-800 font-semibold italic">Ödevlerinizi zamanında ve eksiksiz tamamlayınız.</p>
-                    <div class="mt-1 text-slate-500 font-bold text-[10px]">
-                      Tamamlanan her ödevin kutucuğunu <span class="border border-blue-600 px-1 py-0.2 rounded bg-white font-black text-blue-700">✓</span> işaretleyiniz.
+                    <div class="mt-1 flex items-center justify-between text-slate-500 font-bold text-[10px]">
+                      <span>Tamamlanan her ödevin kutucuğunu <span class="border border-blue-600 px-1 py-0.2 rounded bg-white font-black text-blue-700">✓</span> işaretleyiniz.</span>
+                      <span class="text-blue-700 font-black tracking-wider">🔗 odevver.com</span>
                     </div>
                   </div>
 
@@ -910,7 +967,7 @@
           </div>
           <div>
             <h3 class="text-base font-black leading-tight text-slate-950">ÖDEV-VER Kullanım Kılavuzu & Rehber</h3>
-            <p class="text-xs text-amber-950 font-semibold">Adım adım pratik ödevlendirme, arşivleme ve karne rehberi</p>
+            <p class="text-xs text-amber-950 font-semibold">Adım adım pratik ödevlendirme, konu haritası ve veli karnesi rehberi</p>
           </div>
         </div>
         <button onclick="closeGuideModal()" class="text-slate-950/80 hover:text-slate-950 text-2xl p-1 transition">
@@ -924,7 +981,7 @@
             <i class="fa-solid fa-sliders text-blue-600 mr-2"></i> 1. Kurum Kimliği ve Öğretmen Bilgisi
           </h4>
           <p>
-            Öğretmen adınızı, kurum adınızı ve kurum logonuzu bir kez girmeniz yeterlidir. Kalıcı depolama zırhı sayesinde bilgileriniz hafızaya kaydedilir ve her girişte hazır gelir.
+            Öğretmen adınızı, kurum adınızı ve kurum logonuzu bir kez girmeniz yeterlidir. Kalıcı depolama zırhı sayesinde bilgileriniz hafızaya kaydedilir ve her girişte hazır gelir. Tüm ödev, karne ve rapor çıktıların alt kısmında otomatik olarak <b>odevver.com</b> imzanız yer alır.
           </p>
         </div>
 
@@ -944,9 +1001,18 @@
           </ul>
         </div>
 
+        <div class="bg-indigo-50/70 p-4 rounded-2xl border border-indigo-200">
+          <h4 class="font-extrabold text-indigo-950 text-sm mb-1.5 flex items-center">
+            <i class="fa-solid fa-map-location-dot text-indigo-600 mr-2"></i> 3. Bağımsız Konu İlerleme Haritaları & Raporlama
+          </h4>
+          <p>
+            Üst menüde yer alan <b>"Konu Haritaları"</b> butonuna tıklayarak kurumunuzdaki tüm öğrencileri tekilleştirilmiş olarak görebilirsiniz. Bir öğrenci seçtiğinizde şimdiye kadar bitirdiği tüm konular listelenir; ayrıca üst kısımdan bu listeyi **Yazdırabilir veya PDF raporu** olarak alabilirsiniz. <i>"+ Dış Kaynaklı Konu Ekle"</i> diyerek veritabanından seçimli (dropdown) şekilde okulda veya kursta bitirdiği konuları tarih ve kaynak notuyla ekleyebilirsiniz.
+          </p>
+        </div>
+
         <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-200">
           <h4 class="font-extrabold text-sky-950 text-sm mb-1.5 flex items-center">
-            <i class="fa-solid fa-qrcode text-sky-600 mr-2"></i> 3. Dijital Eklenti (Karekod)
+            <i class="fa-solid fa-qrcode text-sky-600 mr-2"></i> 4. Dijital Eklenti (Karekod)
           </h4>
           <p>
             Ödev kağıdının sağ altına video çözüm, Drive PDF'i veya web bağlantısı eklemek isterseniz link ve etiket girmeniz yeterlidir; anında taranabilir karekod oluşur.
@@ -955,20 +1021,16 @@
 
         <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200">
           <h4 class="font-extrabold text-emerald-950 text-sm mb-1.5 flex items-center">
-            <i class="fa-solid fa-box-archive text-emerald-700 mr-2"></i> 4. Arşivleme, Kontrol & Veli Karnesi
+            <i class="fa-solid fa-box-archive text-emerald-700 mr-2"></i> 5. Arşivleme, Kontrol & Veli Karnesi
           </h4>
           <p class="mb-1">
-            <b>"Ödevi Kaydet"</b> dediğinizde ödev öğrencinin gelişim dosyasına eklenir. Öğrenci ödevi getirdiğinde:
+            <b>"Ödevi Kaydet"</b> dediğinizde ödev öğrencinin gelişim dosyasına ve konu haritasına işlenir. Arşivden veli karnesi (PNG) indirdiğinizde kurum logonuz, ödev-ver başlığınız ve odevver.com imzanız işlenmiş olur.
           </p>
-          <ul class="list-disc list-inside space-y-1 pl-2 font-medium text-slate-800">
-            <li><b>Öğrenci Takip & Arşiv</b> penceresinden öğrenciyi seçip <i>Yapıldı / Eksik / Boş</i> kontrollerini yapın.</li>
-            <li><b>"Veli Karnesi İndir (PNG)"</b> butonuna basarak veliye tek tıkla gönderebileceğiniz şık karne görseli alın.</li>
-          </ul>
         </div>
 
         <div class="bg-purple-50/70 p-4 rounded-2xl border border-purple-200">
           <h4 class="font-extrabold text-purple-950 text-sm mb-1.5 flex items-center">
-            <i class="fa-solid fa-users text-purple-700 mr-2"></i> 5. Toplu Ödev Üretimi & Çoklu Kayıt
+            <i class="fa-solid fa-users text-purple-700 mr-2"></i> 6. Toplu Ödev Üretimi & Çoklu Kayıt
           </h4>
           <p>
             Tüm sınıfa aynı ödevi verecekseniz <b>"Toplu Üret"</b> butonuna basıp isimleri yapıştırın. Tek PDF veya ZIP alabilir, ardından <b>"Ödevi Kaydet"</b> dediğinizde sistem tüm öğrenciler için ayrı ayrı arşiv kaydı açar.
@@ -977,7 +1039,7 @@
 
         <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-300">
           <h4 class="font-extrabold text-amber-950 text-sm mb-1.5 flex items-center">
-            <i class="fa-solid fa-shield-halved text-amber-700 mr-2"></i> 6. Veri Güvenliği ve Yedekleme
+            <i class="fa-solid fa-shield-halved text-amber-700 mr-2"></i> 7. Veri Güvenliği ve Yedekleme
           </h4>
           <p>
             Verileriniz tarayıcınızın kalıcı depolama alanında saklanır. Başka bir bilgisayara veya telefona geçmek istediğinizde Arşiv içindeki <b>"Yedek İndir (JSON)"</b> ile dosyanızı alıp diğer cihazda <b>"Yedeği Yükle"</b> diyerek sıfır kayıpla devam edebilirsiniz.
@@ -1056,7 +1118,6 @@
         <!-- SOL LİSTE -->
         <div class="md:col-span-4 border-r border-slate-200 p-4 bg-slate-50 flex flex-col h-full overflow-y-auto">
           <div class="mb-3 space-y-2">
-            <!-- GENEL ÖĞRENCİ TAKİP & ANALİZ BUTONU -->
             <button onclick="openClassReportModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black py-2.5 px-3 rounded-xl transition shadow-sm flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-chart-column"></i>
               <span>📊 Genel Öğrenci Takip & Analiz</span>
@@ -1085,7 +1146,6 @@
 
           <div id="archive-items-list" class="space-y-2 flex-1 overflow-y-auto pr-1 text-xs"></div>
 
-          <!-- YEDEKLEME VE AKTARMA BUTONLARI -->
           <div class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-2 gap-2">
             <button onclick="exportArchiveJSON()" class="bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1" title="Tüm arşivi tablete veya başka cihaza aktarmak için JSON dosyası olarak indirir">
               <i class="fa-solid fa-cloud-arrow-down text-purple-700"></i>
@@ -1097,7 +1157,7 @@
               <input type="file" id="inp-import-archive-json" accept=".json" onchange="importArchiveJSON(event)" class="hidden">
             </label>
           </div>
-          <button onclick="exportArchiveExcel()" class="w-full mt-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1.5" title="Tüm öğrenci arşivini resmi Excel raporu olarak indirir">
+          <button onclick="exportArchiveExcel()" class="w-full mt-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold text-[11px] py-2 px-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
             <i class="fa-solid fa-file-excel text-emerald-600"></i>
             <span>Tüm Arşivi Excel (.xlsx) Olarak İndir</span>
           </button>
@@ -1135,7 +1195,6 @@
         </button>
       </div>
 
-      <!-- ANALİZ FİLTRELERİ & ÖZET KARTLARI -->
       <div class="p-4 bg-slate-50 border-b border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
         <div>
           <label class="block font-black text-slate-700 mb-1">Modül Filtresi</label>
@@ -1215,6 +1274,184 @@
     </div>
   </div>
 
+  <!-- ÖĞRENCİ BAZLI TÜM ZAMANLAR TOPLU RAPOR MODALI -->
+  <div id="modal-student-alltime-report" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-blue-700 to-indigo-800 text-white">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+          <div>
+            <h3 id="satr-modal-title" class="text-base font-black leading-tight">Öğrenci Tüm Zamanlar Toplu Raporu</h3>
+            <p class="text-xs text-blue-200 font-medium">Öğrencinin geçmişteki tüm ödev paketleri, toplam soru sayıları ve gelişim dökümü</p>
+          </div>
+        </div>
+        <button onclick="closeStudentAllTimeReportModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-4 text-xs text-slate-700" id="satr-modal-body"></div>
+
+      <div class="px-6 py-3.5 bg-slate-100 border-t border-slate-200 flex justify-between items-center">
+        <button type="button" onclick="printStudentAllTimeReport()" class="bg-slate-800 hover:bg-slate-900 text-white font-black text-xs px-4 py-2 rounded-xl transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-print"></i>
+          <span>Raporu Yazdır / PDF</span>
+        </button>
+        <button type="button" onclick="closeStudentAllTimeReportModal()" class="bg-slate-700 hover:bg-slate-800 text-white font-black text-xs px-5 py-2 rounded-xl transition">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAĞIMSIZ ÖĞRENCİ SEÇİMLİ KONU HARİTALARI MODALI -->
+  <div id="modal-topic-map-list" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-sky-600 to-indigo-700 text-white">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black leading-tight">Öğrenci Müfredat & Konu İlerleme Haritaları</h3>
+            <p class="text-xs text-sky-100 font-medium">Listeden öğrenci seçerek bitirilen konuları inceleyin ve dış kaynak ekleyin</p>
+          </div>
+        </div>
+        <button onclick="closeTopicMapModalList()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-4 bg-slate-50 border-b border-slate-200">
+        <input type="text" id="inp-search-topicmap-student" placeholder="Öğrenci adı ile ara..." oninput="renderTopicMapStudentList()" class="w-full text-xs font-semibold p-2.5 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500">
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-2.5 text-xs text-slate-700" id="tml-student-list-container"></div>
+
+      <div class="px-6 py-3.5 bg-slate-100 border-t border-slate-200 flex justify-end">
+        <button type="button" onclick="closeTopicMapModalList()" class="bg-slate-700 hover:bg-slate-800 text-white font-black text-xs px-5 py-2 rounded-xl transition">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEK ÖĞRENCİ DETAYLI KONU HARİTASI & YAZDIRMA BUTONLU MODAL -->
+  <div id="modal-single-topic-map" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-indigo-700 to-purple-800 text-white">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <h3 id="stm-modal-title" class="text-base font-black leading-tight">Öğrenci Konu İlerleme Haritası</h3>
+            <p class="text-xs text-indigo-200 font-medium">Bitirilen konular, kazanımlar ve dış kaynaklı (okul/kurs) onaylar</p>
+          </div>
+        </div>
+        <button onclick="closeSingleTopicMapModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 text-xs">
+        <span class="font-bold text-slate-600">Öğrencinin şimdiye kadar işlediği ve onaylanan tüm konuları aşağıdadır.</span>
+        <div class="flex items-center space-x-2">
+          <button onclick="printSingleTopicMap()" class="bg-slate-800 hover:bg-slate-900 text-white font-black px-3.5 py-2 rounded-xl transition shadow flex items-center space-x-1.5">
+            <i class="fa-solid fa-print"></i>
+            <span>Raporu Yazdır / PDF</span>
+          </button>
+          <button onclick="openExternalTopicSelectModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl transition shadow flex items-center space-x-1.5">
+            <i class="fa-solid fa-plus"></i>
+            <span>Dış Kaynaklı Konu Ekle (Seçimli)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-3 text-xs text-slate-700" id="stm-modal-body"></div>
+
+      <div class="px-6 py-3.5 bg-slate-100 border-t border-slate-200 flex justify-between items-center text-xs">
+        <span class="text-slate-400 font-black">odevver.com • Akıllı Müfredat Takibi</span>
+        <button type="button" onclick="closeSingleTopicMapModal()" class="bg-slate-700 hover:bg-slate-800 text-white font-black text-xs px-5 py-2 rounded-xl transition">
+          Geri Dön
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇİMLİ (DROPDOWN) DIŞ KAYNAKLI KONU EKLEME MODALI -->
+  <div id="modal-external-topic-select" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-sm font-black text-slate-900 uppercase flex items-center">
+          <i class="fa-solid fa-circle-check text-emerald-600 mr-2 text-base"></i> Dış Kaynaklı Konu Seç & Onayla
+        </h3>
+        <button onclick="closeExternalTopicSelectModal()" class="text-slate-400 hover:text-slate-600 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-800 mb-1">Modül Grubu</label>
+          <select id="ext-sel-module" onchange="onExtModuleChange()" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="ilkokul">İlkokul (1-4)</option>
+            <option value="ortaokul_maarif">Ortaokul Maarif (5-8)</option>
+            <option value="lise_maarif">Lise Maarif (9-12)</option>
+            <option value="lgs">LGS (8. Sınıf)</option>
+            <option value="yks">YKS (TYT/AYT)</option>
+          </select>
+        </div>
+
+        <div id="ext-wrapper-grade" class="hidden">
+          <label class="block font-bold text-slate-800 mb-1">Sınıf Düzeyi</label>
+          <select id="ext-sel-grade" onchange="onExtGradeChange()" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none"></select>
+        </div>
+
+        <div id="ext-wrapper-yks" class="hidden">
+          <label class="block font-bold text-slate-800 mb-1">Sınav Grubu</label>
+          <select id="ext-sel-yks" onchange="onExtYksChange()" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none">
+            <option value="tyt">TYT Konuları</option>
+            <option value="ayt">AYT Konuları</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-800 mb-1">Ders Seçimi</label>
+          <select id="ext-sel-subject" onchange="onExtSubjectChange()" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none"></select>
+        </div>
+
+        <div id="ext-wrapper-theme">
+          <label class="block font-bold text-slate-800 mb-1">Tema / Ünite / Konu</label>
+          <select id="ext-sel-theme" onchange="onExtThemeChange()" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none"></select>
+        </div>
+
+        <div id="ext-wrapper-kazanim" class="hidden">
+          <label class="block font-bold text-slate-800 mb-1">Alt Kazanım</label>
+          <select id="ext-sel-kazanim" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none"></select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <div>
+            <label class="block font-bold text-slate-800 mb-1">Tamamlanma Tarihi</label>
+            <input type="date" id="ext-inp-date" class="w-full font-bold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-800 mb-1">Kaynak / Not</label>
+            <input type="text" id="ext-inp-source" value="Okul / Özel Ders" class="w-full font-semibold p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none">
+          </div>
+        </div>
+
+        <button onclick="saveSelectedExternalTopic()" class="w-full mt-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl transition shadow flex items-center justify-center space-x-1.5">
+          <i class="fa-solid fa-plus"></i>
+          <span>Seçilen Konuyu Tamamlandı Olarak İşaretle</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOPLU ÖDEV MODAL -->
   <div id="modal-bulk" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 hidden no-print p-4">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
@@ -1276,7 +1513,7 @@
 
   <footer class="bg-white border-t border-slate-200 py-3.5 text-center text-xs text-slate-600 no-print font-medium mt-8">
     <div class="max-w-[1440px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="font-extrabold text-blue-700">ÖDEV-VER v1.3 • Tüm Hakları Saklıdır.</div>
+      <div class="font-extrabold text-blue-700">ÖDEV-VER v1.7 • odevver.com • Tüm Hakları Saklıdır.</div>
       <div>Eğitimde Verimlilik ve Dijital Ödev Takip Portalı</div>
       <div class="font-black text-slate-800">HAZIRLAYAN: YILDIRAY HOCA</div>
     </div>
@@ -1293,7 +1530,7 @@
   <script src="db.js"></script>
   <script>
     // ==========================================
-    // MODAL REHBER & İLETİŞİM
+    // MODAL REHBER, İLETİŞİM & SÜRÜM BİLDİRİMİ
     // ==========================================
     function openGuideModal() {
       document.getElementById('modal-guide').classList.remove('hidden');
@@ -1306,6 +1543,10 @@
     }
     function closeContactModal() {
       document.getElementById('modal-contact').classList.add('hidden');
+    }
+    function closeUpdateNoticeModal() {
+      localStorage.setItem('odevver_v17_seen', 'true');
+      document.getElementById('modal-update-notice').classList.add('hidden');
     }
 
     // ==========================================
@@ -1327,6 +1568,7 @@
     let customInstLogoBase64 = null;
     let selectedDays = [];
     let activeArchiveId = null;
+    let currentTopicMapStudentName = '';
 
     const QR_LINKS = {
       konu: 'https://ogmmateryal.eba.gov.tr/mebi-konu-ozeti-kitaplari',
@@ -1350,6 +1592,10 @@
         document.getElementById('btn-clear-logo').classList.remove('hidden');
       }
       updateArchiveButtonCount();
+
+      if (!localStorage.getItem('odevver_v17_seen')) {
+        document.getElementById('modal-update-notice').classList.remove('hidden');
+      }
     }
 
     function onProfileFieldChange() {
@@ -1600,6 +1846,7 @@
 
       if (themeVal === '' || !subject || typeof DB === 'undefined') {
         freqBox.classList.add('hidden');
+        checkAlreadyCompletedWarning();
         return;
       }
 
@@ -1632,6 +1879,51 @@
           if (item) {
             freqText.innerText = `2026: ${item.y26} Soru | 2025: ${item.y25} Soru | 2024: ${item.y24} Soru`;
             freqBox.classList.remove('hidden');
+          }
+        }
+      }
+      checkAlreadyCompletedWarning();
+    }
+
+    // ==========================================
+    // AKILLI MÜKERRER UYARI
+    // ==========================================
+    function checkAlreadyCompletedWarning() {
+      const studentName = document.getElementById('inp-student-name').value.trim();
+      const warningBox = document.getElementById('box-completion-warning');
+      const warningTxt = document.getElementById('txt-completion-warning');
+      warningBox.classList.add('hidden');
+
+      if (!studentName) return;
+
+      const subject = document.getElementById('sel-subject').value;
+      const themeVal = document.getElementById('sel-theme').value;
+      if (!subject) return;
+
+      let topicNameToCheck = subject;
+      const isCurriculum = (currentModule === 'ilkokul' || currentModule === 'ortaokul_maarif' || currentModule === 'lise_maarif');
+      
+      if (isCurriculum) {
+        topicNameToCheck = themeVal;
+      } else {
+        const list = (currentModule === 'lgs') ? DB.lgs[subject] : DB[currentYksSub][subject];
+        if (list && list[themeVal]) {
+          topicNameToCheck = list[themeVal].konu;
+        }
+      }
+
+      if (!topicNameToCheck) return;
+
+      const archive = getArchive();
+      const studentRecords = archive.filter(r => r.studentName.toLowerCase() === studentName.toLowerCase());
+
+      for (let rec of studentRecords) {
+        if (rec.completedTopics && rec.completedTopics.length > 0) {
+          const found = rec.completedTopics.find(ct => ct.topic.toLowerCase() === topicNameToCheck.toLowerCase());
+          if (found) {
+            warningTxt.innerText = `⚠️ "${studentName}" bu konuyu (${topicNameToCheck}) daha önce ${formatDateStr(found.date)} tarihinde bitirmiş! (Kaynak: ${found.source})`;
+            warningBox.classList.remove('hidden');
+            return;
           }
         }
       }
@@ -1823,7 +2115,7 @@
       }
 
       const templateData = {
-        version: "1.3",
+        version: "1.7",
         module: currentModule,
         grade: currentGrade,
         yksSub: currentYksSub,
@@ -2011,6 +2303,7 @@
         status: 'pending',
         completionRate: 0,
         tasks: JSON.parse(JSON.stringify(tasks)),
+        completedTopics: [],
         exam: {
           type: document.getElementById('sel-exam-type').value,
           branch: document.getElementById('inp-exam-branch').value,
@@ -2124,7 +2417,7 @@
     }
 
     // ==========================================
-    // GENEL ÖĞRENCİ TAKİP & ANALİZ MERKEZİ (FİLTRELİ & SIRALAMALI)
+    // GENEL ÖĞRENCİ TAKİP & ANALİZ MERKEZİ
     // ==========================================
     function openClassReportModal() {
       renderClassReportTable();
@@ -2141,7 +2434,6 @@
       const statusFilter = document.getElementById('cls-filter-status').value;
       const sortBy = document.getElementById('cls-sort-by').value;
 
-      // Filtreleme
       let filtered = archive.filter(r => {
         if (modFilter !== 'all' && r.module !== modFilter) return false;
 
@@ -2156,7 +2448,6 @@
         return true;
       });
 
-      // Sıralama
       filtered.sort((a, b) => {
         if (sortBy === 'date_desc') {
           return new Date(b.givenDate || 0) - new Date(a.givenDate || 0);
@@ -2168,7 +2459,6 @@
         return 0;
       });
 
-      // Özet Kartları Güncelleme
       document.getElementById('cls-stat-total').innerText = filtered.length;
 
       let totalQSum = 0;
@@ -2224,12 +2514,450 @@
       const printWindow = window.open('', '', 'height=600,width=900');
       printWindow.document.write('<html><head><title>Genel Öğrenci Analiz Raporu</title>');
       printWindow.document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
-      printWindow.document.write('</<head><body class="p-6 bg-white">');
+      printWindow.document.write('</head><body class="p-6 bg-white">');
       printWindow.document.write('<h1 class="text-xl font-black mb-4 text-slate-900">KURUM / KOÇLUK GENEL ÖĞRENCİ ANALİZ RAPORU</h1>');
       printWindow.document.write(modalContent);
       printWindow.document.write('</body></html>');
       printWindow.document.close();
       setTimeout(() => { printWindow.print(); }, 500);
+    }
+
+    // ==========================================
+    // ÖĞRENCİ BAZLI "TÜM ZAMANLAR TOPLU RAPORU"
+    // ==========================================
+    function viewStudentAllTimeReport(studentName) {
+      const archive = getArchive();
+      const studentRecords = archive.filter(r => r.studentName.toLowerCase() === studentName.toLowerCase());
+      
+      document.getElementById('satr-modal-title').innerText = `${studentName} - Tüm Zamanlar Toplu Raporu`;
+      const bodyEl = document.getElementById('satr-modal-body');
+
+      if (studentRecords.length === 0) {
+        bodyEl.innerHTML = '<p class="text-slate-400 text-center py-6">Bu öğrenciye ait geçmiş ödev kaydı bulunamadı.</p>';
+        document.getElementById('modal-student-alltime-report').classList.remove('hidden');
+        return;
+      }
+
+      let totalSoruHedefi = 0;
+      let totalCozulen = 0;
+      let completedCount = 0;
+      let sumSuccess = 0;
+
+      studentRecords.forEach(r => {
+        totalSoruHedefi += (r.totalQuestions || 0);
+        totalCozulen += (r.solvedQuestions || 0);
+        if (r.status === 'completed') {
+          completedCount++;
+          sumSuccess += (r.completionRate || 0);
+        }
+      });
+
+      const avgSuccess = completedCount > 0 ? Math.round(sumSuccess / completedCount) : 0;
+
+      let historyHtml = studentRecords.map((r, idx) => `
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <div>
+              <span class="font-black text-slate-900 text-sm">#${studentRecords.length - idx} • Veriliş: ${formatDateStr(r.givenDate)}</span>
+              <span class="ml-2 text-[10px] font-black uppercase bg-purple-100 text-purple-800 px-2 py-0.5 rounded">${r.module}</span>
+            </div>
+            <div>
+              ${r.status === 'completed' ? `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg font-black text-xs">Tamamlandı (%${r.completionRate})</span>` : '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-lg font-black text-xs">Bekliyor / Devam</span>'}
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-slate-600">
+            <div><b>Teslim Tarihi:</b> ${formatDateStr(r.dueDate)}</div>
+            <div><b>Hedef Soru:</b> ${r.totalQuestions} Soru</div>
+            <div><b>Rozet:</b> ${r.badgeType || 'Yok'}</div>
+            <div><b>Öğretmen:</b> ${r.teacherName}</div>
+          </div>
+          ${r.feedbackNote ? `<div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-slate-700 italic"><b>Öğretmen Notu:</b> ${r.feedbackNote}</div>` : ''}
+        </div>
+      `).join('');
+
+      bodyEl.innerHTML = `
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-2xl border border-blue-200 grid grid-cols-3 gap-3 text-center">
+          <div>
+            <span class="block text-slate-500 font-bold uppercase text-[10px]">Toplam Ödev Paketi</span>
+            <span class="text-base font-black text-blue-950">${studentRecords.length} Hafta</span>
+          </div>
+          <div>
+            <span class="block text-slate-500 font-bold uppercase text-[10px]">Toplam Hedef / Çözülen</span>
+            <span class="text-base font-black text-emerald-700">${totalCozulen} / ${totalSoruHedefi} Soru</span>
+          </div>
+          <div>
+            <span class="block text-slate-500 font-bold uppercase text-[10px]">Ortalama Başarı</span>
+            <span class="text-base font-black text-purple-800">%${avgSuccess}</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <h4 class="font-extrabold text-slate-800 uppercase tracking-wide text-xs">Geçmiş Ödev Dökümleri</h4>
+          ${historyHtml}
+        </div>
+
+        <div class="pt-2 text-center text-[10px] text-slate-400 font-bold">odevver.com • Tüm Zamanlar Gelişim Raporu</div>
+      `;
+
+      document.getElementById('modal-student-alltime-report').classList.remove('hidden');
+    }
+
+    function closeStudentAllTimeReportModal() {
+      document.getElementById('modal-student-alltime-report').classList.add('hidden');
+    }
+
+    function printStudentAllTimeReport() {
+      const modalContent = document.getElementById('satr-modal-body').innerHTML;
+      const printWindow = window.open('', '', 'height=600,width=900');
+      printWindow.document.write('<html><head><title>Öğrenci Tüm Zamanlar Raporu</title>');
+      printWindow.document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+      printWindow.document.write('</head><body class="p-6 bg-white">');
+      printWindow.document.write(modalContent);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      setTimeout(() => { printWindow.print(); }, 500);
+    }
+
+    // ==========================================
+    // BAĞIMSIZ ÖĞRENCİ SEÇİMLİ KONU HARİTALARI
+    // ==========================================
+    function openTopicMapModalList() {
+      renderTopicMapStudentList();
+      document.getElementById('modal-topic-map-list').classList.remove('hidden');
+    }
+
+    function closeTopicMapModalList() {
+      document.getElementById('modal-topic-map-list').classList.add('hidden');
+    }
+
+    function renderTopicMapStudentList() {
+      const archive = getArchive();
+      const container = document.getElementById('tml-student-list-container');
+      const search = document.getElementById('inp-search-topicmap-student').value.toLowerCase().trim();
+
+      const uniqueNamesMap = new Map();
+      archive.forEach(r => {
+        if (r.studentName && !uniqueNamesMap.has(r.studentName.toLowerCase())) {
+          uniqueNamesMap.set(r.studentName.toLowerCase(), r.studentName);
+        }
+      });
+
+      const uniqueNames = Array.from(uniqueNamesMap.values()).filter(name => name.toLowerCase().includes(search));
+
+      if (uniqueNames.length === 0) {
+        container.innerHTML = '<p class="text-slate-400 italic text-center py-6">Kayıtlı öğrenci bulunamadı. Önce arşivde bir ödev kaydediniz.</p>';
+        return;
+      }
+
+      container.innerHTML = uniqueNames.map(name => {
+        const studentRecs = archive.filter(r => r.studentName.toLowerCase() === name.toLowerCase());
+        let totalCompletedTopicsCount = 0;
+        studentRecs.forEach(sr => {
+          if (sr.completedTopics) totalCompletedTopicsCount += sr.completedTopics.length;
+        });
+
+        return `
+          <div onclick="openSingleTopicMap('${name}')" class="bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-sky-400 cursor-pointer transition flex items-center justify-between shadow-2xs">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-black">
+                <i class="fa-solid fa-user-graduate"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-slate-900 text-sm">${name}</h4>
+                <p class="text-[11px] text-slate-500 font-medium">${studentRecs.length} Ödev Kaydı • <span class="text-emerald-700 font-bold">${totalCompletedTopicsCount} Konu Tamamlandı</span></p>
+              </div>
+            </div>
+            <div class="text-sky-600 font-black text-xs flex items-center space-x-1 bg-sky-50 px-3 py-1.5 rounded-xl border border-sky-200">
+              <span>Haritayı Aç</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openSingleTopicMap(studentName) {
+      currentTopicMapStudentName = studentName;
+      document.getElementById('stm-modal-title').innerText = `${studentName} - Müfredat & Konu İlerleme Haritası`;
+      renderSingleTopicMapContent();
+      closeTopicMapModalList();
+      document.getElementById('modal-single-topic-map').classList.remove('hidden');
+    }
+
+    function closeSingleTopicMapModal() {
+      document.getElementById('modal-single-topic-map').classList.add('hidden');
+    }
+
+    function renderSingleTopicMapContent() {
+      const archive = getArchive();
+      const records = archive.filter(r => r.studentName.toLowerCase() === currentTopicMapStudentName.toLowerCase());
+      const bodyEl = document.getElementById('stm-modal-body');
+      if (!bodyEl) return;
+
+      let allCompleted = [];
+      records.forEach(r => {
+        if (r.completedTopics) {
+          allCompleted = allCompleted.concat(r.completedTopics);
+        }
+      });
+
+      if (allCompleted.length === 0) {
+        bodyEl.innerHTML = `
+          <div class="text-center py-12 text-slate-400 space-y-2">
+            <i class="fa-solid fa-folder-open text-4xl text-slate-300"></i>
+            <p class="font-bold text-sm">Bu öğrenciye ait tamamlanan konu bulunmuyor.</p>
+            <p class="text-xs">Ödevler tamamlandıkça veya sağ üstteki "Dış Kaynaklı Konu Ekle" butonuyla eklendikçe burada listelenir.</p>
+          </div>
+        `;
+        return;
+      }
+
+      bodyEl.innerHTML = `
+        <div class="grid grid-cols-1 gap-2.5">
+          ${allCompleted.map((ct, idx) => `
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between shadow-2xs">
+              <div>
+                <span class="font-black text-blue-900 text-sm">${idx + 1}. ${ct.subject}</span> • <span class="font-bold text-slate-800">${ct.topic}</span>
+                <div class="text-[11px] text-slate-500 mt-0.5">Tarih: ${formatDateStr(ct.date)} | Kaynak / Not: <b>${ct.source || 'Ödev Onayı'}</b></div>
+              </div>
+              <button onclick="removeCompletedTopicByTopicName('${ct.topic}')" class="text-red-400 hover:text-red-600 p-1.5" title="Kaldır">
+                <i class="fa-solid fa-trash text-xs"></i>
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function printSingleTopicMap() {
+      const modalContent = document.getElementById('stm-modal-body').innerHTML;
+      const modalTitle = document.getElementById('stm-modal-title').innerText;
+      const printWindow = window.open('', '', 'height=600,width=900');
+      printWindow.document.write('<html><head><title>' + modalTitle + '</title>');
+      printWindow.document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+      printWindow.document.write('</head><body class="p-6 bg-white">');
+      printWindow.document.write('<h1 class="text-xl font-black mb-4 text-slate-950">' + modalTitle + '</h1>');
+      printWindow.document.write(modalContent);
+      printWindow.document.write('<div class="mt-8 pt-4 border-t border-slate-300 flex justify-between text-xs font-bold text-slate-500"><span>ÖDEV-VER Konu Takip Raporu</span><span>odevver.com</span></div>');
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      setTimeout(() => { printWindow.print(); }, 500);
+    }
+
+    function removeCompletedTopicByTopicName(topicName) {
+      if (confirm(`"${topicName}" konusunu öğrencinin haritasından kaldırmak istiyor musunuz?`)) {
+        const archive = getArchive();
+        archive.forEach(r => {
+          if (r.studentName.toLowerCase() === currentTopicMapStudentName.toLowerCase() && r.completedTopics) {
+            r.completedTopics = r.completedTopics.filter(ct => ct.topic !== topicName);
+          }
+        });
+        saveArchive(archive);
+        renderSingleTopicMapContent();
+      }
+    }
+
+    // ==========================================
+    // SEÇİMLİ (DROPDOWN) DIŞ KAYNAKLI KONU EKLEME
+    // ==========================================
+    let extCurrentMod = 'ilkokul';
+    let extCurrentGrade = '1. Sınıf';
+    let extCurrentYksSub = 'tyt';
+
+    function openExternalTopicSelectModal() {
+      document.getElementById('ext-sel-module').value = 'ilkokul';
+      document.getElementById('ext-inp-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('ext-inp-source').value = 'Okul / Özel Ders';
+      extCurrentMod = 'ilkokul';
+      onExtModuleChange();
+      document.getElementById('modal-external-topic-select').classList.remove('hidden');
+    }
+
+    function closeExternalTopicSelectModal() {
+      document.getElementById('modal-external-topic-select').classList.add('hidden');
+    }
+
+    function onExtModuleChange() {
+      extCurrentMod = document.getElementById('ext-sel-module').value;
+      const gradeWrap = document.getElementById('ext-wrapper-grade');
+      const yksWrap = document.getElementById('ext-wrapper-yks');
+
+      gradeWrap.classList.add('hidden');
+      yksWrap.classList.add('hidden');
+
+      if (extCurrentMod === 'ilkokul' || extCurrentMod === 'ortaokul_maarif' || extCurrentMod === 'lise_maarif') {
+        gradeWrap.classList.remove('hidden');
+        let grades = [];
+        if (extCurrentMod === 'ilkokul') grades = ['1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf'];
+        if (extCurrentMod === 'ortaokul_maarif') grades = ['5. Sınıf', '6. Sınıf', '7. Sınıf', '8. Sınıf'];
+        if (extCurrentMod === 'lise_maarif') grades = ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf'];
+
+        const sel = document.getElementById('ext-sel-grade');
+        sel.innerHTML = grades.map(g => `<option value="${g}">${g}</option>`).join('');
+        extCurrentGrade = grades[0];
+      } else if (extCurrentMod === 'yks') {
+        yksWrap.classList.remove('hidden');
+        extCurrentYksSub = 'tyt';
+      }
+      populateExtSubjects();
+    }
+
+    function onExtGradeChange() {
+      extCurrentGrade = document.getElementById('ext-sel-grade').value;
+      populateExtSubjects();
+    }
+
+    function onExtYksChange() {
+      extCurrentYksSub = document.getElementById('ext-sel-yks').value;
+      populateExtSubjects();
+    }
+
+    function populateExtSubjects() {
+      const subSelect = document.getElementById('ext-sel-subject');
+      subSelect.innerHTML = '<option value="">Ders Seçiniz</option>';
+
+      let subjects = [];
+      if (typeof DB !== 'undefined') {
+        if (extCurrentMod === 'ilkokul') subjects = Object.keys((DB.ilkokul && DB.ilkokul[extCurrentGrade]) || {});
+        else if (extCurrentMod === 'ortaokul_maarif') subjects = Object.keys((DB.ortaokul_maarif && DB.ortaokul_maarif[extCurrentGrade]) || {});
+        else if (extCurrentMod === 'lise_maarif') subjects = Object.keys((DB.lise_maarif && DB.lise_maarif[extCurrentGrade]) || {});
+        else if (extCurrentMod === 'lgs') subjects = Object.keys(DB.lgs || {});
+        else if (extCurrentMod === 'yks') subjects = Object.keys(DB[extCurrentYksSub] || {});
+      }
+
+      subjects.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        subSelect.appendChild(opt);
+      });
+
+      onExtSubjectChange();
+    }
+
+    function onExtSubjectChange() {
+      const subject = document.getElementById('ext-sel-subject').value;
+      const themeSelect = document.getElementById('ext-sel-theme');
+      const kazanimWrapper = document.getElementById('ext-wrapper-kazanim');
+      const kazanimSelect = document.getElementById('ext-sel-kazanim');
+      
+      themeSelect.innerHTML = '';
+      kazanimSelect.innerHTML = '';
+      kazanimWrapper.classList.add('hidden');
+
+      if (!subject || typeof DB === 'undefined') {
+        themeSelect.innerHTML = '<option value="">Önce Ders Seçiniz</option>';
+        return;
+      }
+
+      const isCurriculum = (extCurrentMod === 'ilkokul' || extCurrentMod === 'ortaokul_maarif' || extCurrentMod === 'lise_maarif');
+
+      if (isCurriculum) {
+        kazanimWrapper.classList.remove('hidden');
+        themeSelect.innerHTML = '<option value="">Tema / Ünite Seçiniz</option>';
+
+        let items = [];
+        if (extCurrentMod === 'ilkokul') items = DB.ilkokul[extCurrentGrade][subject] || [];
+        else if (extCurrentMod === 'ortaokul_maarif') items = DB.ortaokul_maarif[extCurrentGrade][subject] || [];
+        else if (extCurrentMod === 'lise_maarif') items = DB.lise_maarif[extCurrentGrade][subject] || [];
+
+        const uniqueThemes = [...new Set(items.map(it => it.tema || 'Genel Temalar'))];
+        uniqueThemes.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          opt.textContent = t;
+          themeSelect.appendChild(opt);
+        });
+
+        onExtThemeChange();
+      } else {
+        themeSelect.innerHTML = '<option value="">Konu Seçiniz</option>';
+        let list = [];
+        if (extCurrentMod === 'lgs') list = DB.lgs[subject] || [];
+        else if (extCurrentMod === 'yks') list = DB[extCurrentYksSub][subject] || [];
+
+        list.forEach((item, idx) => {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = item.konu;
+          themeSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function onExtThemeChange() {
+      const subject = document.getElementById('ext-sel-subject').value;
+      const themeVal = document.getElementById('ext-sel-theme').value;
+      const kazanimSelect = document.getElementById('ext-sel-kazanim');
+
+      kazanimSelect.innerHTML = '<option value="">Tüm Kazanımlar / Genel</option>';
+
+      if (themeVal === '' || !subject || typeof DB === 'undefined') return;
+
+      const isCurriculum = (extCurrentMod === 'ilkokul' || extCurrentMod === 'ortaokul_maarif' || extCurrentMod === 'lise_maarif');
+      if (isCurriculum) {
+        let items = [];
+        if (extCurrentMod === 'ilkokul') items = DB.ilkokul[extCurrentGrade][subject] || [];
+        else if (extCurrentMod === 'ortaokul_maarif') items = DB.ortaokul_maarif[extCurrentGrade][subject] || [];
+        else if (extCurrentMod === 'lise_maarif') items = DB.lise_maarif[extCurrentGrade][subject] || [];
+
+        const filtered = items.filter(it => (it.tema || 'Genel Temalar') === themeVal);
+        filtered.forEach((it, idx) => {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = (it.kod ? `[${it.kod}] ` : '') + it.kazanim;
+          kazanimSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function saveSelectedExternalTopic() {
+      const subject = document.getElementById('ext-sel-subject').value;
+      const themeSelect = document.getElementById('ext-sel-theme');
+      const kazanimSelect = document.getElementById('ext-sel-kazanim');
+      const date = document.getElementById('ext-inp-date').value;
+      const source = document.getElementById('ext-inp-source').value.trim() || 'Okul / Kurs';
+
+      if (!subject || themeSelect.value === '') {
+        alert('Lütfen ders ve konu/tema seçiniz!');
+        return;
+      }
+
+      let displaySub = subject;
+      let topicName = themeSelect.value;
+
+      const isCurriculum = (extCurrentMod === 'ilkokul' || extCurrentMod === 'ortaokul_maarif' || extCurrentMod === 'lise_maarif');
+      if (isCurriculum) {
+        const kazText = kazanimSelect.selectedIndex > 0 ? kazanimSelect.options[kazanimSelect.selectedIndex].text : '';
+        topicName = kazText ? `${themeSelect.value} • ${kazText}` : themeSelect.value;
+      } else {
+        const list = (extCurrentMod === 'lgs') ? DB.lgs[subject] : DB[extCurrentYksSub][subject];
+        if (list && list[themeSelect.value]) {
+          topicName = list[themeSelect.value].konu;
+        }
+      }
+
+      const archive = getArchive();
+      let record = archive.find(r => r.studentName.toLowerCase() === currentTopicMapStudentName.toLowerCase());
+
+      if (!record) {
+        record = buildAssignmentRecord(currentTopicMapStudentName);
+        archive.unshift(record);
+      }
+
+      if (!record.completedTopics) record.completedTopics = [];
+
+      record.completedTopics.push({
+        subject: displaySub,
+        topic: topicName,
+        date: date,
+        source: source
+      });
+
+      saveArchive(archive);
+      closeExternalTopicSelectModal();
+      renderSingleTopicMapContent();
+      alert(`✅ "${topicName}" konusu öğrencinin müfredat haritasına işlendi!`);
     }
 
     function renderArchiveList() {
@@ -2338,9 +3066,12 @@
               </p>
             </div>
 
-            <div class="flex items-center space-x-2">
-              <button onclick="downloadStudentCardImage('${record.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm flex items-center" title="Velinin telefonunda açabileceği görsel karne üretir">
-                <i class="fa-solid fa-image mr-1"></i> Veli Karnesi İndir (PNG)
+            <div class="flex items-center flex-wrap gap-2">
+              <button onclick="viewStudentAllTimeReport('${record.studentName}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm flex items-center" title="Tüm zamanlar toplu raporu">
+                <i class="fa-solid fa-chart-line mr-1"></i> Toplu Rapor
+              </button>
+              <button onclick="downloadStudentCardImage('${record.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm flex items-center">
+                <i class="fa-solid fa-image mr-1"></i> Veli Karnesi (PNG)
               </button>
               <button onclick="copyParentReport('${record.id}')" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm flex items-center">
                 <i class="fa-regular fa-copy mr-1"></i> Rapor Metni
@@ -2370,7 +3101,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h4 class="text-xs font-black text-slate-800 uppercase flex items-center">
-                  <i class="fa-solid fa-list-check mr-1.5 text-purple-600"></i> 1. Ders Kazanım Ödevleri
+                  <i class="fa-solid fa-list-check mr-1.5 text-purple-600"></i> Ders Kazanım Ödevleri
                 </h4>
                 <span class="text-[11px] text-slate-500 font-semibold">Öğrencinin kağıdına göre işaretleyin</span>
               </div>
@@ -2411,7 +3142,7 @@
                 </button>
               </div>
 
-              <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması ve deneme performansı çok başarılıydı. (İsterseniz mikrofona konuşarak otomatik yazdırabilirsiniz)" class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
+              <textarea id="inp-archive-feedback" rows="2" placeholder="Örn: Konu çalışması ve deneme performansı çok başarılıydı." class="w-full text-xs font-medium text-slate-900 p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none">${record.feedbackNote || ''}</textarea>
               
               ${record.audioDataUrl ? `
                 <div class="mt-2 flex items-center space-x-2 bg-purple-50 p-2 rounded-xl border border-purple-200">
@@ -2431,7 +3162,7 @@
 
             <button onclick="commitAssignmentCheck('${record.id}')" class="w-full mt-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-black py-2.5 rounded-xl transition shadow flex items-center justify-center space-x-2">
               <i class="fa-solid fa-floppy-disk"></i>
-              <span>Kontrolü Kaydet & Başarıyı Güncelle</span>
+              <span>Kontrolü Kaydet & Konu Haritasını Güncelle</span>
             </button>
           </div>
 
@@ -2445,7 +3176,7 @@
       const textarea = document.getElementById('inp-archive-feedback');
 
       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert('Tarayıcınız ses tanıma (Speech-to-Text) özelliğini desteklemiyor. Lütfen Chrome kullanın.');
+        alert('Tarayıcınız ses tanıma (Speech-to-Text) özelliğini desteklemiyor.');
         return;
       }
 
@@ -2565,11 +3296,25 @@
       let scoreTotal = 0;
       let scoreMax = 0;
 
+      if (!record.completedTopics) record.completedTopics = [];
+
       if (record.tasks && record.tasks.length > 0) {
         let taskScore = 0;
         record.tasks.forEach(t => {
-          if (t.status === 'done') taskScore += 1;
-          else if (t.status === 'partial') taskScore += 0.5;
+          if (t.status === 'done') {
+            taskScore += 1;
+            const exists = record.completedTopics.find(ct => ct.topic.toLowerCase() === t.topic.toLowerCase());
+            if (!exists) {
+              record.completedTopics.push({
+                subject: t.subject,
+                topic: t.topic,
+                date: record.dueDate || new Date().toISOString().split('T')[0],
+                source: 'Ödev Onayı'
+              });
+            }
+          } else if (t.status === 'partial') {
+            taskScore += 0.5;
+          }
         });
         const taskRate = taskScore / record.tasks.length;
         scoreTotal += taskRate * 100;
@@ -2584,7 +3329,7 @@
       saveArchive(archive);
       selectArchiveItem(recId);
       renderArchiveList();
-      alert('✅ Ödev teslimi ve değerlendirmeler kaydedildi!');
+      alert('✅ Ödev teslimi onaylandı ve biten konular haritası otomatik güncellendi!');
     }
 
     async function downloadStudentCardImage(recId) {
@@ -2623,11 +3368,14 @@
         </div>
       ` : '';
 
+      let logoImgTag = customInstLogoBase64 ? `<img src="${customInstLogoBase64}" style="max-height:36px; max-width:60px; object-fit:contain; margin-bottom:4px;" />` : '';
+
       cardDiv.innerHTML = `
         <div style="border-bottom:2px solid #4f46e5; padding-bottom:12px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
           <div>
-            <h2 style="font-size:18px; font-weight:900; color:#312e81; margin:0;">HAFTALIK ÖDEV GELİŞİM KARNESİ</h2>
-            <div style="font-size:11px; font-weight:800; color:#4f46e5; margin-top:2px;">${(record.institutionName || 'ÖDEV-VER PORTALI').toUpperCase()}</div>
+            ${logoImgTag}
+            <h2 style="font-size:16px; font-weight:900; color:#312e81; margin:0;">HAFTALIK ÖDEV GELİŞİM KARNESİ</h2>
+            <div style="font-size:10.5px; font-weight:800; color:#4f46e5; margin-top:2px;">${(record.institutionName || 'ÖDEV-VER PORTALI').toUpperCase()}</div>
           </div>
           <div style="text-align:right; font-size:11px; font-weight:700; color:#64748b;">
             <div>Teslim: ${formatDateStr(record.dueDate)}</div>
@@ -2656,6 +3404,11 @@
         <div style="background:#f1f5f9; padding:12px; border-radius:12px; margin-top:14px; font-size:11.5px;">
           <div style="font-weight:800; color:#1e293b; margin-bottom:2px;">📌 Öğretmen Notu / Hibrit Mesaj:</div>
           <div style="font-style:italic; color:#334155;">${record.feedbackNote || 'Haftalık hedeflere odaklanıldı.'}</div>
+        </div>
+
+        <div style="margin-top:16px; pt-2; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; font-size:10px; color:#64748b; font-weight:700;">
+          <span>ÖDEV-VER Gelişim Raporu</span>
+          <span style="color:#4f46e5; font-weight:900;">odevver.com</span>
         </div>
       `;
 
@@ -2698,7 +3451,7 @@
       if (record.feedbackNote) {
         msg += `\n📌 Öğretmen Görüşü: ${record.feedbackNote}\n`;
       }
-      msg += `\nÖğrencimizi tebrik eder, desteğiniz için teşekkür ederiz.\n— ${record.teacherName}`;
+      msg += `\nÖğrencimizi tebrik eder, desteğiniz için teşekkür ederiz.\n— ${record.teacherName}\n[odevver.com]`;
 
       navigator.clipboard.writeText(msg).then(() => {
         alert('Veli gelişim raporu panoya kopyalandı!');
@@ -2898,7 +3651,7 @@
       if (dueDate !== '-') {
         note += `📅 Son Teslim Tarihi: ${dueDate}\n`;
       }
-      note += `Öğrencimizin çalışmalarını zamanında tamamlaması için takibinizi rica eder, başarılar dileriz.\n— ${teacher}`;
+      note += `Öğrencimizin çalışmalarını zamanında tamamlaması için takibinizi rica eder, başarılar dileriz.\n— ${teacher}\n[odevver.com]`;
 
       navigator.clipboard.writeText(note).then(() => {
         alert('Veli bilgilendirme metni panoya kopyalandı!');
